@@ -18,11 +18,13 @@
     /* 不得改变页面的任何html结构 */
 
     /*Task-1*/
+    /*0 2 1*/
     body > p:first-of-type {
       color: #FF0000;
     }
 
     /*Task-2*/
+    /*0 2 1*/
     p[tabindex="-1"]:focus {
       color: #0000ff;
     }
@@ -36,10 +38,12 @@
     }
 
     /*Task-3*/
+    /*0 2 2*/
     p.a.c > span {
       color: #ff0000;
     }
 
+    /*0 3 3*/
     p.a.c > span > span:first-child {
       color: #008000;
     }
@@ -49,10 +53,12 @@
     }
 
     /*Task-4 修改链接颜色*/
+    /*0 1 1*/
     a:link {
       color: pink;
     }
 
+    /*0 1 1*/
     a[href^="mailto:" i] {
       color: #0000ff;
     }
@@ -71,23 +77,29 @@
     }
 
     /*Task-5 修改 4567 元素颜色*/
+    /*0 3 1*/
     .a li:nth-child(-n + 7):nth-child(n + 4) {
       color: #ff0000;
     }
 
     /*Task-6 修改指定元素颜色*/
+    /*0 2 1*/
     .b li:nth-child(-n + 25) {
       color: #ff0000;
     }
 
+    /*0 3 1*/
     .b li:nth-child(-n + 50):nth-child(n+35) {
       color: #0000ff;
     }
+
+    /*0 2 1*/
     .b li:nth-child(n+65) {
       color: #008000;
     }
 
     /*Task-7 设置质数和合数元素不同颜色*/
+    /*0 2 1*/
     .prime li:nth-child(n + 2) {
       color: #ff0000;
     }
