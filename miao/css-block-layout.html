@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>css-block-layout</title>
+  <style>
+    body {
+      margin: 0;
+    }
+
+    p {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+
+    header {
+      background-color: #000000;
+    }
+
+    header p {
+      color: #ffffff;
+      width: 600px;
+      margin: 0 auto;
+    }
+
+    footer {
+      margin-top: 15px;
+      background-color: #ee82ee;
+    }
+
+    footer p {
+      width: fit-content;
+      margin: auto;
+    }
+
+    main {
+      width: 600px;
+      margin: 0 auto;
+    }
+
+    section {
+      margin: 15px 0;
+    }
+
+    .box {
+      width: 180px;
+      height: 40px;
+      box-sizing: border-box;
+      border: 3px solid;
+      background-color: #ffc0cb;
+      text-align: center;
+      line-height: 34px;
+    }
+
+    .box:nth-of-type(3n+1) {
+      margin-top: 15px;
+      margin-bottom: 15px;
+    }
+
+    .box:nth-of-type(3n+2) {
+      margin-left: 210px;
+      margin-top: -55px;
+    }
+
+    .box:nth-of-type(3n+3) {
+      margin-left: 420px;
+      margin-top: -40px;
+      margin-bottom: 15px;
+    }
+
+    .link-container div {
+      border-style: dotted;
+      border-width: 1px 0 0 0;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <p>
+    hello world 请调整浏览器窗口大小查看效果
+  </p>
+</header>
+<main>
+  <section>页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px</section>
+  <div>
+    <div class="box">宽180高40(包含边框)</div>
+    <div class="box">产品</div>
+    <div class="box">产品</div>
+    <div class="box">水平间隙 30px</div>
+    <div class="box">产品</div>
+    <div class="box">产品</div>
+    <div class="box">垂直间隙15px</div>
+    <div class="box">产品</div>
+    <div class="box">产品</div>
+    <div class="box">边框宽度3px</div>
+    <div class="box">产品</div>
+    <div class="box">产品</div>
+  </div>
+
+  <div class="link-container">
+    <p>link</p>
+    <div class="line-divider"></div>
+    <p>link</p>
+    <div class="line-divider"></div>
+    <p>link</p>
+    <div class="line-divider"></div>
+    <p>link</p>
+    <div class="line-divider"></div>
+    <p>link</p>
+  </div>
+</main>
+<footer>
+  <p>&#169;版权所有</p>
+  <p>本页所有布局均使用块元素</p>
+</footer>
+</body>
+</html>
