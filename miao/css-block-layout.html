@@ -42,7 +42,8 @@
       margin: 15px 0;
     }
 
-    .box {
+    .box,
+    .box2 {
       width: 180px;
       height: 40px;
       box-sizing: border-box;
@@ -52,17 +53,38 @@
       line-height: 34px;
     }
 
+    .box:hover,
+    .box2:hover {
+      background-color: #ff0000;
+    }
+
+    /*块元素水平布局方案 1*/
     .box:nth-of-type(3n+1) {
       margin-top: 15px;
-      margin-bottom: 15px;
     }
 
     .box:nth-of-type(3n+2) {
       margin-left: 210px;
-      margin-top: -55px;
+      margin-top: -40px;
     }
 
     .box:nth-of-type(3n+3) {
+      margin-left: 420px;
+      margin-top: -40px;
+      margin-bottom: 15px;
+    }
+
+    /*块元素水平布局方案 2*/
+    .inline-boxes .box2:nth-child(1) {
+      margin-top: 15px;
+    }
+
+    .inline-boxes .box2:nth-child(2) {
+      margin-left: 210px;
+      margin-top: -40px;
+    }
+
+    .inline-boxes .box2:nth-child(3) {
       margin-left: 420px;
       margin-top: -40px;
       margin-bottom: 15px;
@@ -72,6 +94,7 @@
       border-style: dotted;
       border-width: 1px 0 0 0;
     }
+
   </style>
 </head>
 <body>
@@ -82,7 +105,9 @@
 </header>
 <main>
   <section>页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px</section>
-  <div>
+
+  <fieldset class="boxes-container">
+    <legend>方案 1</legend>
     <div class="box">宽180高40(包含边框)</div>
     <div class="box">产品</div>
     <div class="box">产品</div>
@@ -95,7 +120,32 @@
     <div class="box">边框宽度3px</div>
     <div class="box">产品</div>
     <div class="box">产品</div>
-  </div>
+  </fieldset>
+
+  <fieldset class="boxes-container2">
+    <legend>方案 2</legend>
+    <div class="inline-boxes">
+      <div class="box2">宽180高40(包含边框)</div>
+      <div class="box2">产品</div>
+      <div class="box2">产品</div>
+    </div>
+    <div class="inline-boxes">
+      <div class="box2">水平间隙 30px</div>
+      <div class="box2">产品</div>
+      <div class="box2">产品</div>
+    </div>
+    <div class="inline-boxes">
+      <div class="box2">垂直间隙15px</div>
+      <div class="box2">产品</div>
+      <div class="box2">产品</div>
+    </div>
+    <div class="inline-boxes">
+      <div class="box2">边框宽度3px</div>
+      <div class="box2">产品</div>
+      <div class="box2">产品</div>
+    </div>
+  </fieldset>
+
 
   <div class="link-container">
     <p>link</p>
