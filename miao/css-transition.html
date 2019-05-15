@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+  <meta charset="UTF-8">
+  <title>CSS Transition Practice</title>
+  <style>
+
+    .msg {
+      padding: 8px;
+      padding-bottom: 0;
+      border: 1px dotted;
+    }
+
+    .msg > p {
+      margin: 0;
+    }
+
+    .status-bar {
+      position: relative;
+    }
+
+    .icon-like {
+      height: 50px;
+      width: 50px;
+      display: inline-block;
+
+      position: absolute;
+      margin-top: auto;
+      margin-bottom: auto;
+      left: 0;
+      bottom: 0;
+      top: 0;
+
+      background: url("assert/web_heart_animation_edge.png") no-repeat;
+      background-size: 1450px 50px;
+    }
+
+    .ck-vote:hover + .icon-like {
+      background-position: -50px 0;
+    }
+
+    .ck-vote:checked + .icon-like {
+      background-position: -1400px 0;
+      transition: background-position 2s steps(27);
+    }
+
+    .status-bar {
+      height: 50px;
+      width: 50px;
+    }
+
+    .ck-vote {
+      display: none;
+    }
+
+    .label-vote {
+      display: block;
+      height: 30px;
+      width: 30px;
+      position: absolute;
+      top: 15px;
+      left: 10px;
+      z-index: 3;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="msg">
+      <p>这是一条 Twitter !</p>
+      <div class="status-bar">
+        <label for="ck-vote-1" class="label-vote"></label>
+        <input type="checkbox" id="ck-vote-1" class="ck-vote">
+        <i class="icon-like"></i>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

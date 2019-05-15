@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CSS NavBar Practice2</title>
+  <style>
+    * {
+      xbackground-color: rgba(0,0,0,0.15);
+    }
+
+    .inline-block {
+      display: inline-block;
+    }
+
+    nav {
+      border: 1px solid;
+    }
+
+    nav ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    nav li {
+      padding: 0 8px;
+    }
+
+    .menu {
+      position: relative;
+    }
+
+    .sub-menu {
+      display: none;
+      position: absolute;
+      border: 1px #BBBBBB solid;
+      border-radius: 5px;
+      box-shadow: #BBBBBB 1px 0;
+    }
+
+    .sub-menu-lv-1 .sub-menu {
+      top: 0;
+      left: 100%;
+    }
+
+    .menu:hover > .sub-menu {
+      display: block;
+    }
+
+
+
+    /*对于可扩展的二级及更低级菜单, 生成三角箭头*/
+    .menu-can-expand .title {
+      position: relative;
+    }
+    .menu-can-expand .title::after {
+      content: " ";
+      display: inline-block;
+      box-sizing: border-box;
+      width: 8px;
+      height: 8px;
+      border-width: 8px 0 8px 8px;
+      border-style: solid;
+      border-color: transparent red transparent black;
+
+      position: absolute;
+      margin-top: auto;
+      margin-bottom: auto;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: auto;
+    }
+
+    /*设置一级下拉菜单的宽度*/
+    nav > .menu:first-child > .sub-menu {
+      width: 100px;
+    }
+
+  </style>
+</head>
+<body>
+<header>
+  <nav>
+    <div class="menu inline-block">
+      <div class="title icon-arrow">文件</div>
+      <div class="sub-menu sub-menu-lv-1">
+        <ul>
+          <li class="menu menu-can-expand">
+            <div class="title">打开</div>
+            <div class="sub-menu">
+              <ul>
+                <li>a.css</li>
+                <li>b.js</li>
+                <li>c.md</li>
+              </ul>
+            </div>
+          </li>
+          <li class="menu menu-can-expand">
+            <div class="title">新建</div>
+            <div class="sub-menu">
+              <ul>
+                <li>HTML 文件</li>
+                <li>CSS 文件</li>
+                <li>JS 文件</li>
+              </ul>
+            </div>
+          </li>
+          <li>保存</li>
+          <li>退出</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="menu inline-block">
+      <div class="title">编辑</div>
+    </div>
+  </nav>
+</header>
+</body>
+</html>
