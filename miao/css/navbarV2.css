@@ -1,0 +1,44 @@
+nav.scheme-2 ul {
+    padding: 0;
+    list-style: none;
+    position: absolute;
+}
+
+nav.scheme-2 li {
+    position: relative;
+    padding: 0 2em 0 1em;
+    white-space: nowrap;
+    background-color: rgba(124, 216, 255, 0.3);
+}
+
+/*设置鼠标动作控制菜单展开/折叠*/
+nav.scheme-2 li ul {
+    pointer-events: none;
+}
+
+nav.scheme-2 li li {
+    opacity: 0;
+    transition: opacity .5s;
+}
+
+nav.scheme-2 li:hover > ul > li {
+    pointer-events: auto;
+    opacity: 1;
+    transition: opacity .8s;
+}
+
+/*设置子菜单展开时的位置*/
+nav.scheme-2 li > ul {
+    top: 0;
+    left: 100%;
+}
+
+/*设置箭头伪元素*/
+nav.scheme-2 li > ul::before {
+    content: '>';
+    position: absolute;
+    /*height: 22px;*/
+    /*line-height: 22px;*/
+    top: -2px;
+    left: -1em;
+}

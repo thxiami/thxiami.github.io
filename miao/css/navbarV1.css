@@ -1,0 +1,68 @@
+
+nav.scheme-1 {
+    border: 1px solid;
+}
+
+nav.scheme-1 ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    border: 1px #BBBBBB solid;
+    border-radius: 5px;
+    background-color: #ffffff;
+    box-shadow: #BBBBBB 1px 0;
+    white-space: nowrap;
+}
+
+nav.scheme-1 li {
+    padding: 0 8px;
+}
+
+nav.scheme-1 .menu {
+    position: relative;
+}
+
+nav.scheme-1 .sub-menu {
+    display: none;
+    position: absolute;
+}
+
+nav.scheme-1 .sub-menu-lv-1 .sub-menu {
+    top: 0;
+    left: 100%;
+}
+
+nav.scheme-1 .menu:hover > .sub-menu {
+    display: block;
+}
+
+
+
+/*对于可扩展的二级及更低级菜单, 生成三角箭头*/
+nav.scheme-1 .menu-can-expand .title {
+    position: relative;
+}
+nav.scheme-1 .menu-can-expand .title::after {
+    content: " ";
+    display: inline-block;
+    box-sizing: border-box;
+    width: 8px;
+    height: 8px;
+    border-width: 8px 0 8px 8px;
+    border-style: solid;
+    border-color: transparent red transparent black;
+
+    position: absolute;
+    margin-top: auto;
+    margin-bottom: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: auto;
+}
+
+/*设置一级下拉菜单的宽度*/
+nav.scheme-1 > .menu:first-child > .sub-menu {
+    width: 100px;
+}

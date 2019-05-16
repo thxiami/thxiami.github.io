@@ -1,0 +1,19 @@
+* {
+    xbackground-color: rgba(0, 0, 0, 0.15);
+}
+
+body {
+    font-size: 18px;
+}
+
+.inline-block {
+    display: inline-block;
+}
+
+ul li:hover {
+    background-color: rgba(65, 164, 255, 0.5);
+}
+
+fieldset {
+    padding-bottom: 150px;
+}
