@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Radio Slider</title>
+  <style>
+
+    fieldset {
+      box-sizing: border-box;
+      height: 500px;
+      margin: 0;
+    }
+
+    .fieldset-title {
+      font-size: 2em;
+    }
+
+    [type="radio"]:nth-child(1):checked ~ .img-container .slider-img:nth-child(1) {
+      left: 0;
+      transition: left .8s;
+    }
+
+    [type="radio"]:nth-child(2):checked ~ .img-container .slider-img:nth-child(2) {
+      left: 0;
+      transition: left .8s;
+    }
+
+    [type="radio"]:nth-child(3):checked ~ .img-container .slider-img:nth-child(3) {
+      left: 0;
+      transition: left .8s;
+    }
+
+    [type="radio"]:nth-child(4):checked ~ .img-container .slider-img:nth-child(4) {
+      left: 0;
+      transition: left .8s;
+    }
+
+    /*设置图片的位置*/
+    .img-container {
+      width: calc(100% - 24px);
+      height: 400px;
+      position: absolute;
+      overflow: hidden;
+    }
+
+    .slider-img {
+      width: 800px;
+      position: absolute;
+      margin: 0 auto;
+      left: 100%;
+      right: 0;
+      transition: left .8s;
+    }
+
+    /*设置 indicators 的样式*/
+    fieldset {
+      position: relative;
+    }
+    [type="radio"] {
+      display: none;
+    }
+
+    .indicators {
+      width: 120px;
+      position: absolute;
+      bottom: 50px;
+      left: 0;
+      right: 0;
+      margin: 0 auto;
+    }
+
+    .indicators label {
+      display: inline-block;
+      height: 10px;
+      width: 10px;
+      margin: 0 8px;
+      background-color: gainsboro;
+      border-radius: 10px;
+
+      cursor: pointer;
+    }
+
+    .indicators label:focus {
+      background-color: #000000;
+      outline: none;
+    }
+
+  </style>
+</head>
+<body>
+<header>
+  <h1>纯 CSS Slider 实现</h1>
+</header>
+<main>
+  <fieldset>
+    <legend>
+      <span class="fieldset-title">方案 1</span>
+    </legend>
+    <div class="scheme-1">
+      <input type="radio" checked id="id-1" name="current-slider">
+      <input type="radio" id="id-2" name="current-slider">
+      <input type="radio" id="id-3" name="current-slider">
+      <input type="radio" id="id-4" name="current-slider">
+      <div class="img-container">
+        <img src="assert/img/slider-1.jpg" alt="小米电视" class="slider-img">
+        <img src="assert/img/slider-2.jpg" alt="音响" class="slider-img">
+        <img src="assert/img/slider-3.jpg" alt="小米笔记本" class="slider-img">
+        <img src="assert/img/slider-4.jpg" alt="红米手机" class="slider-img">
+      </div>
+      <div class="indicators">
+        <label for="id-1"
+               tabindex="1"
+        ></label>
+        <label for="id-2"
+               tabindex="2"
+
+        ></label>
+        <label for="id-3"
+               tabindex="3"
+
+        ></label>
+        <label for="id-4"
+               tabindex="4"
+
+        ></label>
+      </div>
+    </div>
+  </fieldset>
+</main>
+</body>
+</html>
