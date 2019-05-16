@@ -1,0 +1,71 @@
+
+.msg {
+    margin-top: 8px;
+    padding: 8px 8px 0 8px;
+    border: 1px dotted;
+}
+
+.msg > p {
+    margin: 0;
+}
+
+.status-bar {
+    position: relative;
+}
+
+.icon-like {
+    height: 50px;
+    width: 50px;
+    display: inline-block;
+
+    position: absolute;
+    margin-top: auto;
+    margin-bottom: auto;
+    left: 0;
+    bottom: 0;
+    top: 0;
+
+    background: url("../assert/web_heart_animation_edge.png") no-repeat;
+    background-size: 1450px 50px;
+}
+
+.ck-vote:hover + .icon-transition,
+.ck-vote:hover + .icon-transition2 {
+    background-position: -50px 0;
+}
+
+.ck-vote:checked + .icon-transition {
+    background-position: -1400px 0;
+    transition: background-position 0.45s steps(27);
+}
+
+/*动画方案 2*/
+/*
+   利用显示器刷新频率 60HZ, 1s 刷新 60 帧
+   所以保证动画线性变化的时间为显示器刷新 27 帧所用时间即可
+   1/60*27=0.45s
+   tips: 1/60*9=0.15s  // 此时相当于每次刷新时跳过了 2 帧, 会显得更快
+*/
+.ck-vote:checked + .icon-transition2 {
+    background-position: -1400px 0;
+    transition: background-position 0.45s linear;
+}
+
+.status-bar {
+    height: 50px;
+    width: 50px;
+}
+
+.ck-vote {
+    display: none;
+}
+
+.label-vote {
+    display: block;
+    height: 30px;
+    width: 30px;
+    position: absolute;
+    top: 15px;
+    left: 10px;
+    z-index: 3;
+}
