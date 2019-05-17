@@ -8,13 +8,11 @@
       display: none;
     }
 
-    .control-board > div {
-      display: inline-block;
-      height: 36px;
+    .control-board  {
       line-height: 36px;
     }
 
-    .ios-style-ckbox {
+    .ios-style-btn {
       height: 36px;
       width: 70px;
       display: inline-block;
@@ -22,6 +20,7 @@
       outline: none;
       background-color: #dddddd;
       position: relative;
+      vertical-align: bottom;
     }
 
     .circle {
@@ -29,35 +28,40 @@
       width: 30px;
       border-radius: 15px;
       background-color: #ffffff;
-      box-shadow: rgba(0,0,0,0.3) 2px 4px 6px;
+      box-shadow: rgba(0,0,0,0.3) 2px 2px 4px;
+    }
 
+    .circle-transition {
       position: absolute;
       top: 3px;
       left: 3px;
       transition: left .3s;
     }
 
-    #ckbox-1:checked + .ios-style-ckbox .circle {
+    #ckbox-1:checked + .ios-style-btn .circle-transition,
+    #ckbox-2:checked + .ios-style-btn .circle-transition {
       left: calc(100% - 33px);
-      box-shadow: rgba(0,0,0,0.3) -2px 4px 6px;
+      box-shadow: rgba(0,0,0,0.3) -2px 2px 4px;
       transition: left .3s;
     }
 
-    #ckbox-1:checked + .ios-style-ckbox {
+    /*方案 1*/
+    /*直接改变背景色*/
+    #ckbox-1:checked + .ios-style-btn {
       background-color: #5cdd67;
     }
 
-    .c {
-      height: 30px;
-      width: 30px;
-      display: inline-block;
-      background-color: #ff0000;
+    /*方案 2*/
+    /*背景色从周围向内渐变*/
+    .scheme-2 .ios-style-btn {
+      background-color: #ffffff;
+      box-shadow: #d3d3d3 0 0 0 1px inset;
+      transition: .5s ease;
     }
 
-    .p .text {
-      display: inline-block;
-      height: 30px;
-      line-height: 30px;
+    #ckbox-2:checked + .ios-style-btn {
+      box-shadow: #5cdd67 0 0 5px 30px inset;
+      transition: .5s ease;
     }
 
   </style>
@@ -70,22 +74,34 @@
     </legend>
 
     <div class="control-board">
-      <div>启动</div>
+      <span>启动</span>
       <input type="checkbox"
              id="ckbox-1"
              class="ios-ckbox"
       >
-      <label for="ckbox-1" class="ios-style-ckbox">
-        <div class="circle"></div>
+      <label for="ckbox-1" class="ios-style-btn">
+        <div class="circle circle-transition"></div>
       </label>
     </div>
   </fieldset>
 
 
-  <div class="p">
-    <span class="text">123</span>
-    <div class="c"></div>
-    <div class="c"></div>
+  <fieldset class="scheme-2">
+    <legend>
+      <h2>方案 2</h2>
+    </legend>
+
+    <div class="control-board">
+      <span>启动</span>
+      <input type="checkbox"
+             id="ckbox-2"
+             class="ios-ckbox"
+      >
+      <label for="ckbox-2" class="ios-style-btn">
+          <div class="circle circle-transition"></div>
+      </label>
+    </div>
+  </fieldset>
   </div>
 </main>
 </body>
