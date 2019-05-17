@@ -3,89 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <title>Radio Slider</title>
-  <style>
-
-    fieldset {
-      box-sizing: border-box;
-      height: 500px;
-      margin: 0;
-    }
-
-    .fieldset-title {
-      font-size: 2em;
-    }
-
-    [type="radio"]:nth-child(1):checked ~ .img-container .slider-img:nth-child(1) {
-      left: 0;
-      transition: left .8s;
-    }
-
-    [type="radio"]:nth-child(2):checked ~ .img-container .slider-img:nth-child(2) {
-      left: 0;
-      transition: left .8s;
-    }
-
-    [type="radio"]:nth-child(3):checked ~ .img-container .slider-img:nth-child(3) {
-      left: 0;
-      transition: left .8s;
-    }
-
-    [type="radio"]:nth-child(4):checked ~ .img-container .slider-img:nth-child(4) {
-      left: 0;
-      transition: left .8s;
-    }
-
-    /*设置图片的位置*/
-    .img-container {
-      width: calc(100% - 24px);
-      height: 400px;
-      position: absolute;
-      overflow: hidden;
-    }
-
-    .slider-img {
-      width: 800px;
-      position: absolute;
-      margin: 0 auto;
-      left: 100%;
-      right: 0;
-      transition: left .8s;
-    }
-
-    /*设置 indicators 的样式*/
-    fieldset {
-      position: relative;
-    }
-    [type="radio"] {
-      display: none;
-    }
-
-    .indicators {
-      width: 120px;
-      position: absolute;
-      bottom: 50px;
-      left: 0;
-      right: 0;
-      margin: 0 auto;
-    }
-
-    .indicators label {
-      display: inline-block;
-      height: 10px;
-      width: 10px;
-      margin: 0 8px;
-      background-color: gainsboro;
-      border-radius: 10px;
-
-      cursor: pointer;
-    }
-
-    .indicators label:focus {
-      background-color: #000000;
-      outline: none;
-    }
-
-  </style>
+  <link rel="stylesheet" href="css/radio-slider/layout.css">
+  <link rel="stylesheet" href="css/radio-slider/theme.css">
+  <link rel="stylesheet" href="css/radio-slider/transition.css">
 </head>
 <body>
 <header>
@@ -122,6 +42,36 @@
         <label for="id-4"
                tabindex="4"
 
+        ></label>
+      </div>
+
+      <div class="arrow-left-container">
+        <label class="arrow arrow-left"
+               for="id-4"
+        ></label>
+        <label class="arrow arrow-left"
+               for="id-3"
+        ></label>
+        <label class="arrow arrow-left"
+               for="id-2"
+        ></label>
+        <label class="arrow arrow-left"
+               for="id-1"
+        ></label>
+      </div>
+
+      <div class="arrow-right-container">
+        <label class="arrow arrow-right"
+               for="id-2"
+        ></label>
+        <label class="arrow arrow-right"
+               for="id-3"
+        ></label>
+        <label class="arrow arrow-right"
+               for="id-4"
+        ></label>
+        <label class="arrow arrow-right"
+               for="id-1"
         ></label>
       </div>
     </div>

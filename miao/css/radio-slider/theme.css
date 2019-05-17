@@ -1,0 +1,12 @@
+.fieldset-title {
+    font-size: 2em;
+}
+
+.indicators label:focus {
+    background-color: #000000;
+    outline: none;
+}
+
+.arrow {
+    cursor: pointer;
+}
