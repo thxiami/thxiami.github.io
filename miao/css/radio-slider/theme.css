@@ -2,11 +2,66 @@
     font-size: 2em;
 }
 
+/*Indicators Style*/
 .indicators label:focus {
-    background-color: #000000;
     outline: none;
 }
 
-.arrow {
+.indicators label {
+    border: 2px rgba(255,255,255,0.3) solid;
+    border-radius: 10px;
+    background-color: rgba(0,0,0,0.4);
     cursor: pointer;
+}
+
+.indicators label:hover {
+    border-color: rgba(0,0,0,0.4);
+    background-color: rgba(255,255,255,0.4);
+}
+
+/*Arrow Style*/
+.arrow-container {
+    background: url("../../assert/img/icon-slides.png") no-repeat;
+}
+
+.arrow-left-container {
+    background-position: -84px 50%;
+}
+
+.arrow-right-container {
+    background-position: -125px 50%;
+}
+
+.arrow-left-container:hover {
+    background-position: 0 50%;
+}
+
+.arrow-right-container:hover {
+    background-position: -43px 50%;
+}
+
+.arrow-container label {
+    cursor: pointer;
+}
+
+/*Slide Image*/
+.img-container .slider-img {
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.img-container .slider-img:nth-child(1) {
+    background-image: url(../../assert/img/slider-1.jpg);
+}
+
+.img-container .slider-img:nth-child(2) {
+    background-image: url(../../assert/img/slider-2.jpg);
+}
+
+.img-container .slider-img:nth-child(3) {
+    background-image: url(../../assert/img/slider-3.jpg);
+}
+
+.img-container .slider-img:nth-child(4) {
+    background-image: url(../../assert/img/slider-4.jpg);
 }
