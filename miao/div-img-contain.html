@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>不同尺寸的图片适配</title>
+  <link rel="stylesheet" href="css/div-img-contain/layout.css">
+  <link rel="stylesheet" href="css/div-img-contain/theme.css">
+  <link rel="stylesheet" href="css/div-img-contain/transition.css">
+</head>
+<body>
+<header>
+  <h1>不同尺寸的图片适配显示</h1>
+  <dl>
+    <dt>说明:</dt>
+    <dd>图片父元素框(以下简称图框)的宽高和比例不确定; 图片宽高和比例不确定;</dd>
+    <dt>要求:</dt>
+    <dd>1. 图框大于图片尺寸时, 不对图片进行放大缩小</dd>
+    <dd>2. 图框小图片尺寸时, 保持图片原有比例进行缩放</dd>
+
+    <dt>方案:</dt>
+    <dd>&lt;img&gt;标签设置 <code>object-fit: scale-down;</code></dd>
+  </dl>
+</header>
+<main>
+  <input type="radio" checked id="id-1" name="current-slider">
+  <input type="radio" id="id-2" name="current-slider">
+  <input type="radio" id="id-3" name="current-slider">
+  <fieldset>
+    <legend>
+      <span class="fieldset-title">方案 1</span>
+    </legend>
+    <div class="scheme-1">
+      <div class="img-container">
+        <img class="slider-img"
+             src="assert/img/different-size/small.jpg"
+        />
+        <img class="slider-img"
+             src="assert/img/different-size/width-narrow.jpg"
+        />
+        <img class="slider-img"
+             src="assert/img/different-size/height-narrow.jpg"
+        />
+
+        <div class="arrow-container arrow-left-container">
+          <label for="id-3"></label>
+          <label for="id-2"></label>
+          <label for="id-1"></label>
+        </div>
+
+        <div class="arrow-container arrow-right-container">
+          <label for="id-2"></label>
+          <label for="id-3"></label>
+          <label for="id-1"></label>
+        </div>
+      </div>
+      <div class="indicators">
+        <label for="id-1"></label>
+        <label for="id-2"></label>
+        <label for="id-3"></label>
+      </div>
+    </div>
+  </fieldset>
+
+
+  <fieldset>
+    <legend>
+      <span class="fieldset-title">方案 2</span>
+    </legend>
+    <div class="scheme-2">
+      <div class="img-container">
+        <img class="slider-img"
+             src="assert/img/different-size/small.jpg"
+        />
+        <img class="slider-img"
+             src="assert/img/different-size/width-narrow.jpg"
+        />
+        <img class="slider-img"
+             src="assert/img/different-size/height-narrow.jpg"
+        />
+
+        <div class="arrow-container arrow-left-container">
+          <label for="id-3"></label>
+          <label for="id-2"></label>
+          <label for="id-1"></label>
+        </div>
+
+        <div class="arrow-container arrow-right-container">
+          <label for="id-2"></label>
+          <label for="id-3"></label>
+          <label for="id-1"></label>
+        </div>
+      </div>
+
+      <div class="indicators">
+        <label for="id-1"></label>
+        <label for="id-2"></label>
+        <label for="id-3"></label>
+      </div>
+    </div>
+  </fieldset>
+</main>
+</body>
