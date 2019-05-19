@@ -1,0 +1,36 @@
+.horizontal-align .parent {
+    /*设置宽度只是为了便于查看*/
+    height: 15vh;
+    position: relative;
+}
+
+.h-scheme-1 .child {
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+}
+
+.h-scheme-2-1 .child {
+    margin-left: 50%;
+    transform: translateX(-50%);
+}
+
+
+.h-scheme-2-2 .child {
+    margin-left: calc(50% - 40px);
+}
+
+.h-scheme-3 .parent {
+    text-align: center;
+}
+
+.h-scheme-3 .child {
+    display: inline-block;
+}
+
+.h-scheme-4 .parent {
+    display: flex;
+    justify-content: center;
+}

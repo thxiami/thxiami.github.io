@@ -1,0 +1,43 @@
+.vertical-align .parent{
+    height: 15vh;
+}
+
+.v-scheme-1 .parent {
+    position: relative;
+}
+
+.v-scheme-1 .child {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.v-scheme-2 .child {
+    position: relative;
+    top: calc(50% - 3vh);
+}
+
+.v-scheme-3 .parent {
+    line-height: 15vh;
+}
+
+.v-scheme-3 .child {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+
+.v-scheme-4-1 .parent {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.v-scheme-4-2 .parent {
+    display: flex;
+    align-items: center;
+}
+
+

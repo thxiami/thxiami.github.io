@@ -1,19 +1,27 @@
 * {
-    xbackground-color: rgba(0, 0, 0, 0.15);
+    box-sizing: border-box;
 }
 
 body {
-    font-size: 18px;
+    margin: 0;
 }
 
 .inline-block {
     display: inline-block;
 }
 
-ul li:hover {
-    background-color: rgba(65, 164, 255, 0.5);
-}
 
 fieldset {
     padding-bottom: 150px;
+}
+
+.frame {
+    width: 700px;
+    margin: 8px;
+    padding: 8px;
+    border: 1px dotted;
+}
+
+.frame > div {
+    margin: 0 auto;
 }

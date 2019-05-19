@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Abs-Center</title>
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/align/vertical-align.css">
+  <link rel="stylesheet" href="css/align/horizontal-align.css">
+  <style>
+    .frame {
+      width: 800px;
+    }
+
+    header {
+      padding-left: 8px;
+    }
+
+    .box {
+      border: 1px solid;
+    }
+
+    .box.parent {
+      margin: 1em auto;
+    }
+
+    .parent {
+      width: 200px;
+    }
+
+    .child {
+      width: 80px;
+      height: 6vh;
+    }
+
+  </style>
+</head>
+<body>
+<header>
+  <h1>CSS 实现子元素在父元素垂直和水平居中</h1>
+  <p>说明:父元素和子元素宽度固定, 高度可变</p>
+</header>
+<main>
+  <div class="vertical-align frame">
+    <h2>垂直居中</h2>
+    <h3>方案 1: 定位(子元素过分受限配合 margin:atuo)</h3>
+      <ol>
+        <li>父元素 <code>position: relative;</code> 子元素 <code>position: absolute</code></li>
+        <li>子元素设置高度</li>
+        <li>子元素过分受限: <code>top:0;bottom:0;</code> </li>
+        <li>子元素设置 <code>margin-top: auto;margin-bottom: auto;</code> </li>
+      </ol>
+    <div class="v-scheme-1">
+      <div class="box parent">
+        <div class="box child"></div>
+      </div>
+    </div>
+    <hr>
+
+    <h3>方案 2: 定位(子元素过分受限配合 margin:atuo)</h3>
+    <ol>
+      <li>父元素position: relative; 子元素 position: absolute</li>
+      <li>子元素设置 top: 父元素高度的 50% - 子元素高度的50%</li>
+    </ol>
+    <div class="v-scheme-2">
+      <div class="box parent">
+        <div class="box child"></div>
+      </div>
+    </div>
+    <hr>
+
+    <h3>方案 3: 行内布局</h3>
+    <ol>
+      <li>子元素设为行内元素</li>
+      <li>子元素 line-height 等于父元素 content-area 高度(父元素内的匿名文本垂直居中)</li>
+      <li>子元素 <code>vertical-align: middle</code> (设置子元素行内框的中间位置对齐匿名文本中 x 字符 baseline 向上 0.5ex 的位置)</li>
+    </ol>
+    <div class="v-scheme-3">
+      <div class="box parent">
+        <div class="box child"></div>
+      </div>
+    </div>
+    <hr>
+
+    <h3>方案 4: flex 布局</h3>
+    <ol>
+      <li>父元素设置 flex 布局: <code>display: flex;</code></li></li>
+      <li>
+        <span>方法 1--利用主轴方向居中</span>
+        <ol>
+          <li>父元素设置 flex 布局主轴方向为垂直: <code>flex-direction: column;</code> </li>
+          <li>父元素设置主轴方向内容居中: <code>justify-content: center;</code></li>
+        </ol>
+        <div class="v-scheme-4-1">
+          <div class="box parent">
+            <div class="box child"></div>
+          </div>
+        </div>
+        <span>方法 2--利用从轴方向居中</span>
+        <ol>
+          <li>父元素设置主轴方向内容居中: <code>align-items: center;</code></li>
+        </ol>
+        <div class="v-scheme-4-2">
+          <div class="box parent">
+            <div class="box child"></div>
+          </div>
+        </div>
+      </li>
+    </ol>
+
+    <hr>
+  </div>
+
+  <div class="horizontal-align frame">
+    <h2>水平居中</h2>
+    <h3>方案 1:定位(子元素过分受限配合 margin:atuo)</h3>
+    <ol>
+      <li>定位: 父元素 <code>position: relative;</code>子元素 <code>postion: absolute;</code></li>
+      <li>子元素过分受限: <code> top:0;bottom:0;left:0;right:0;</code></li>
+      <li>子元素自动外边距: <code>margin-top: auto; margin-bottom:auto;</code></li>
+    </ol>
+    <div class="h-scheme-1">
+      <div class="box parent">
+        <div class="box child"></div>
+      </div>
+    </div>
+    <hr>
+
+    <h3>方案 2:定位(设置子元素 top)</h3>
+    <ul>
+      <li>
+        <span>方法 1:子元素 margin-left 设置为(父元素 content-area 宽度 - 子元素宽度) * 50%</span>
+        <div class="h-scheme-2-1">
+          <div class="box parent">
+            <div class="box child"></div>
+          </div>
+        </div>
+      </li>
+      <li>
+        <span>方法 2:子元素 margin-left 设置为 父元素 content-area * 50%, 同时 transform: translateX(-50%);</span>
+        <div class="h-scheme-2-2">
+          <div class="box parent">
+            <div class="box child"></div>
+          </div>
+        </div>
+      </li>
+    </ul>
+    <hr>
+
+    <h3>方案 3:行内布局</h3>
+    <ol>
+      <li>子元素设为行内元素</li>
+      <li>父元素行内文字水平居中 text-align: center;</li>
+    </ol>
+    <div class="h-scheme-3">
+      <div class="box parent">
+        <div class="box child"></div>
+      </div>
+    </div>
+    <hr>
+
+    <h3>方案 4:flex 布局</h3>
+    <p>参考垂直居中方案可做</p>
+    <div class="h-scheme-4">
+      <div class="box parent">
+        <div class="box child"></div>
+      </div>
+    </div>
+    <hr>
+
+  </div>
+</main>
+
+</body>
+</html>
