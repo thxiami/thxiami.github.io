@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>CSS Delay Hover Menu</title>
+  <style>
+    * {
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+    }
+
+    /* 辅助用的背景色 */
+    /* 展示效果时注释掉, 调试时取消注释 */
+    .mouseLocateBlock {
+      background-color: rgba(0,0,255,0.2);
+    }
+
+    .mouseLocateBlock:hover {
+      background-color: rgba(0,255,0,0.2);
+    }
+
+    .transparentBar {
+      background-color: rgba(255,0,0,0.2);
+    }
+    /* 功能代码 */
+    ul {
+      width: 100px;
+      list-style-type: none;
+      background-color: rgba(0,0,0,0.1);
+      padding: 0;
+    }
+
+    li {
+      height: 32px;
+      padding-left: 2em;
+    }
+
+    .menu,
+    .menu > li {
+      position: relative;
+    }
+
+    ul.submenu {
+      display: none;
+      position: absolute;
+      top:0;
+      left: 100%;
+    }
+
+    li:hover > ul {
+      display: block;
+    }
+
+    /* 模拟追踪鼠标位置 */
+    /* 将 li 等分为若干个区域, 每个区域放一个透明块
+       鼠标悬停该块元素时, 在块右下方显示另一个透明块,
+       用于鼠标右上/右下滑动至子菜单时主菜单不折叠.
+       划分得越细, 可追踪鼠标的精细度越高
+       POC 中为 4 等分 */
+    .mouseLocateBlock {
+      height: 32px; /* 等于 li 高度*/
+      width: 25%; /* 与等分份数有关 */
+      position: absolute;
+      top: 0;
+    }
+
+    .submenu ~ .mouseLocateBlock:nth-of-type(1) {
+      left:0;
+    }
+
+    .submenu ~ .mouseLocateBlock:nth-of-type(2) {
+      left:25%;
+    }
+
+    .submenu ~ .mouseLocateBlock:nth-of-type(3) {
+      left:50%;
+    }
+
+    .submenu ~ .mouseLocateBlock:nth-of-type(4) {
+      left:75%;
+    }
+
+    .transparentBar {
+      height: 0;
+      position: absolute;
+      left: 0;
+      /* 当 li 设为 position:relative 后, 下一级的 li 会盖住上一级 li 下方的透明块* /
+      /* 所以设置 z-index */
+      z-index:2
+    }
+
+    .topBar {
+      bottom: 32px; /*需要改为百分比之类的*/
+    }
+
+    .bottomBar {
+      top: 32px; /*需要改为百分比之类的*/
+    }
+
+    .menu .submenu:hover ~ .mouseLocateBlock .transparentBar {
+      height: 0;
+    }
+
+    .menu .mouseLocateBlock:hover > .transparentBar {
+      height: 320px;
+      left: 50%;
+    }
+
+    .menu .mouseLocateBlock:nth-of-type(1):hover > .transparentBar {
+      width: calc(100px - 50%);
+    }
+
+    .menu .mouseLocateBlock:nth-of-type(2):hover > .transparentBar {
+      width: calc(100px - 25px - 50%);
+
+    }
+
+    .menu .mouseLocateBlock:nth-of-type(3):hover > .transparentBar {
+      width: calc(100px - 50px - 50%);
+    }
+
+    .menu .mouseLocateBlock:nth-of-type(4):hover > .transparentBar {
+      width: calc(100px - 75px - 50%);
+    }
+
+    .menu .mouseLocateBlock:hover .transparentBar:hover {
+      height: 0;
+      transition: height 0s 1s;
+    }
+
+    li:hover {
+      background-color: rgba(0,0,0,0.1);
+    }
+
+  </style>
+</head>
+<body>
+<header>
+  <h1>纯 CSS 实现菜单延时 hover </h1>
+  <h3>0 效果说明: </h3>
+  <p>1. 一级菜单 hover 展开子菜单后: 在一级菜单原鼠标位置向右上/右下滑动时, 子菜单保持显示 1s后折叠, 然后会展开移动后鼠标所在的一级菜单的子菜单</p>
+  <p>2. 鼠标在一级菜单之间上下滑动或左上/左下滑动时, 展开的子菜单会直接折叠, 然后展开当前鼠标所在的一级菜单的子菜单</p>
+  <p>3. 鼠标从子菜单滑动至一级菜单时, 会直接折叠当前子菜单, 然后展开当前鼠标所在的一级菜单的子菜单</p>
+  <p>可参考小米官网首页的竖排导航菜单</p>
+  <h3>1 原理及调试说明: </h3>
+  <p>取消 CSS 区域辅助用的背景色观察即可</p>
+</header>
+<div class="wraper">
+  <h3>2 示例:</h3>
+  <ul class="menu">
+    <li>
+      <span>1-01 ></span>
+      <ul class="submenu">
+        <li>2-01</li>
+        <li>2-02</li>
+        <li>2-03</li>
+        <li>2-04</li>
+        <li>2-05</li>
+        <li>2-06</li>
+        <li>2-07</li>
+        <li>2-08</li>
+        <li>2-09</li>
+        <li>2-10</li>
+      </ul>
+      <div class="mouseLocateBlock">
+        <div class="transparentBar topBar"></div>
+        <div class="transparentBar bottomBar"></div>
+      </div>
+      <div class="mouseLocateBlock">
+        <div class="transparentBar topBar"></div>
+        <div class="transparentBar bottomBar"></div>
+      </div>
+      <div class="mouseLocateBlock">
+        <div class="transparentBar topBar"></div>
+        <div class="transparentBar bottomBar"></div>
+      </div>
+      <div class="mouseLocateBlock">
+        <div class="transparentBar topBar"></div>
+        <div class="transparentBar bottomBar"></div>
+      </div>
+    </li>
+    <li>
+      <span>1-02 ></span>
+      <ul class="submenu">
+        <li>2-01</li>
+        <li>2-02</li>
+        <li>2-03</li>
+        <li>2-04</li>
+        <li>2-05</li>
+        <li>2-06</li>
+        <li>2-07</li>
+        <li>2-08</li>
+        <li>2-09</li>
+        <li>2-10</li>
+      </ul>
+      <div class="mouseLocateBlock">
+        <div class="transparentBar topBar"></div>
+        <div class="transparentBar bottomBar"></div>
+      </div>
+      <div class="mouseLocateBlock">
+        <div class="transparentBar topBar"></div>
+        <div class="transparentBar bottomBar"></div>
+      </div>
+      <div class="mouseLocateBlock">
+        <div class="transparentBar topBar"></div>
+        <div class="transparentBar bottomBar"></div>
+      </div>
+      <div class="mouseLocateBlock">
+        <div class="transparentBar topBar"></div>
+        <div class="transparentBar bottomBar"></div>
+      </div>
+    </li>
+    <li>
+      <span>1-03 ></span>
+      <ul class="submenu">
+        <li>2-01</li>
+        <li>2-02</li>
+        <li>2-03</li>
+        <li>2-04</li>
+        <li>2-05</li>
+        <li>2-06</li>
+        <li>2-07</li>
+        <li>2-08</li>
+        <li>2-09</li>
+        <li>2-10</li>
+      </ul>
+      <div class="mouseLocateBlock">
+        <div class="transparentBar topBar"></div>
+        <div class="transparentBar bottomBar"></div>
+      </div>
+      <div class="mouseLocateBlock">
+        <div class="transparentBar topBar"></div>
+        <div class="transparentBar bottomBar"></div>
+      </div>
+      <div class="mouseLocateBlock">
+        <div class="transparentBar topBar"></div>
+        <div class="transparentBar bottomBar"></div>
+      </div>
+      <div class="mouseLocateBlock">
+        <div class="transparentBar topBar"></div>
+        <div class="transparentBar bottomBar"></div>
+      </div>
+    </li>
+    <li>
+      <span>1-04 ></span>
+      <ul class="submenu">
+        <li>2-01</li>
+        <li>2-02</li>
+        <li>2-03</li>
+        <li>2-04</li>
+        <li>2-05</li>
+        <li>2-06</li>
+        <li>2-07</li>
+        <li>2-08</li>
+        <li>2-09</li>
+        <li>2-10</li>
+      </ul>
+      <div class="mouseLocateBlock">
+        <div class="transparentBar topBar"></div>
+        <div class="transparentBar bottomBar"></div>
+      </div>
+      <div class="mouseLocateBlock">
+        <div class="transparentBar topBar"></div>
+        <div class="transparentBar bottomBar"></div>
+      </div>
+      <div class="mouseLocateBlock">
+        <div class="transparentBar topBar"></div>
+        <div class="transparentBar bottomBar"></div>
+      </div>
+      <div class="mouseLocateBlock">
+        <div class="transparentBar topBar"></div>
+        <div class="transparentBar bottomBar"></div>
+      </div>
+    </li>
+    <li>
+      <span>1-05 ></span>
+      <ul class="submenu">
+        <li>2-01</li>
+        <li>2-02</li>
+        <li>2-03</li>
+        <li>2-04</li>
+        <li>2-05</li>
+        <li>2-06</li>
+        <li>2-07</li>
+        <li>2-08</li>
+        <li>2-09</li>
+        <li>2-10</li>
+      </ul>
+      <div class="mouseLocateBlock">
+        <div class="transparentBar topBar"></div>
+        <div class="transparentBar bottomBar"></div>
+      </div>
+      <div class="mouseLocateBlock">
+        <div class="transparentBar topBar"></div>
+        <div class="transparentBar bottomBar"></div>
+      </div>
+      <div class="mouseLocateBlock">
+        <div class="transparentBar topBar"></div>
+        <div class="transparentBar bottomBar"></div>
+      </div>
+      <div class="mouseLocateBlock">
+        <div class="transparentBar topBar"></div>
+        <div class="transparentBar bottomBar"></div>
+      </div>
+    </li>
+  </ul>
+</div>
+</body>
+</html>
