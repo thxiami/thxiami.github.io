@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>9 Grid Practice</title>
+  <style>
+
+    fieldset {
+      width: 360px;
+      height: 130px;
+      margin: 16px;
+      display: inline-block;
+      vertical-align: top;
+    }
+
+    fieldset table,
+    fieldset .grid-container {
+      margin: 0 auto;
+    }
+
+    /*方案 1*/
+    td {
+      width: 30px;
+      height: 30px;
+      vertical-align: middle;
+      text-align: center;
+      padding: 0;
+    }
+
+    table {
+      border-collapse: collapse;
+    }
+
+    .scheme-1 table tr,
+    .scheme-1 table col {
+      border: 6px solid blue;
+    }
+
+    .scheme-1 td:hover {
+      border: 6px solid red;
+    }
+
+    /*方案 2*/
+    .scheme-2 .grid-container,
+    .scheme-3 .grid-container {
+      width: 114px;
+      height: 126px;
+      font-size: 0; /*解决行内元素之间的匿名空格*/
+    }
+
+    .scheme-2 .grid,
+    .scheme-3 .grid {
+      width: 30px;
+      height: 30px;
+      margin: 3px;
+      font-size: 16px;
+      display: inline-block;
+      line-height: 30px;
+      text-align: center;
+      position: relative;
+    }
+
+    .scheme-2 .grid {
+      position: relative;
+      box-shadow: 0 0 0 6px blue;
+    }
+
+    .scheme-2 .grid:hover {
+      z-index: 2;
+      box-shadow: 0 0 0 6px red;
+    }
+
+    /*方案 3*/
+    .scheme-3 .grid {
+      box-shadow:
+        /*4 条边, 上右下左的顺序*/
+        0 -6px 0 0 blue,
+        6px 0 0 0 blue,
+        0 6px 0 0 blue,
+        -6px 0 0 0 blue,
+          /* 4 个角, 左上,右上,右下, 左下的顺序 */
+        -6px -6px 0 0 blue,
+        6px -6px 0 0 blue,
+        6px 6px 0 0 blue,
+        -6px 6px 0 0 blue;
+    }
+
+    .scheme-3 .grid:hover {
+      z-index: 2; /* 防止阴影被后方元素的阴影覆盖 */
+      box-shadow:
+        /*4 条边, 上右下左的顺序*/
+        0 -6px 0 0 red,
+        6px 0 0 0 red,
+        0 6px 0 0 red,
+        -6px 0 0 0 red,
+          /* 4 个角, 左上,右上,右下, 左下的顺序 */
+        -6px -6px 0 0 red,
+        6px -6px 0 0 red,
+        6px 6px 0 0 red,
+        -6px 6px 0 0 red;
+    }
+
+    /*方案 4*/
+    .scheme-4 .grid-container {
+      width: 108px;
+      height: 108px;
+      border-left: 6px solid blue;
+      border-top: 6px solid blue;
+      font-size: 0;
+    }
+
+    .scheme-4 .grid {
+      width: 30px;
+      height: 30px;
+      display: inline-block;
+      font-size: 16px;
+      line-height: 30px;
+      text-align: center;
+      border-right: 6px solid blue;
+      border-bottom: 6px solid blue;
+    }
+
+    .scheme-4 .grid:hover {
+      border-color: red;
+      box-shadow:
+        /*2 条边, 上/左的顺序*/
+        0 -6px 0 0 red,
+        -6px 0 0 0 red,
+        /* 1 个角, 左上角 */
+        -6px -6px 0 0 red;
+    }
+
+    /*方案 4*/
+
+  </style>
+</head>
+<body>
+<header>
+  <h1>随鼠标移动改变九宫格格子边框颜色</h1>
+</header>
+<main>
+  <fieldset class="scheme-1">
+   <legend>方案 1: Table</legend>
+   <table>
+     <col>
+     <col>
+     <col>
+     <tbody>
+     <tr>
+       <td>1</td>
+       <td>2</td>
+       <td>3</td>
+     </tr>
+     <tr>
+       <td>4</td>
+       <td>5</td>
+       <td>6</td>
+     </tr>
+     <tr>
+       <td>7</td>
+       <td>8</td>
+       <td>9</td>
+     </tr>
+     </tbody>
+   </table>
+  </fieldset>
+
+  <fieldset class="scheme-2">
+    <legend>方案 2: inline-block + box-shadow</legend>
+    <div class="grid-container">
+      <div class="grid">1</div>
+      <div class="grid">2</div>
+      <div class="grid">3</div>
+      <div class="grid">4</div>
+      <div class="grid">5</div>
+      <div class="grid">6</div>
+      <div class="grid">7</div>
+      <div class="grid">8</div>
+      <div class="grid">9</div>
+    </div>
+  </fieldset>
+
+  <fieldset class="scheme-3">
+    <legend>方案 3: inline-block + box-shadow</legend>
+    <div class="grid-container">
+      <div class="grid">1</div>
+      <div class="grid">2</div>
+      <div class="grid">3</div>
+      <div class="grid">4</div>
+      <div class="grid">5</div>
+      <div class="grid">6</div>
+      <div class="grid">7</div>
+      <div class="grid">8</div>
+      <div class="grid">9</div>
+    </div>
+  </fieldset>
+
+  <fieldset class="scheme-4">
+    <legend>方案 4: inline-block + border + box-shadow</legend>
+    <div class="grid-container">
+      <div class="grid">1</div>
+      <div class="grid">2</div>
+      <div class="grid">3</div>
+      <div class="grid">4</div>
+      <div class="grid">5</div>
+      <div class="grid">6</div>
+      <div class="grid">7</div>
+      <div class="grid">8</div>
+      <div class="grid">9</div>
+    </div>
+  </fieldset>
+</main>
+</body>
+</html>
