@@ -6,9 +6,9 @@
   <style>
 
     fieldset {
-      width: 360px;
+      width: 450px;
       height: 130px;
-      margin: 16px;
+      margin: 0 16px 7em;
       display: inline-block;
       vertical-align: top;
     }
@@ -28,7 +28,7 @@
       padding: 0;
     }
 
-    table {
+    .scheme-1 table {
       border-collapse: collapse;
     }
 
@@ -131,7 +131,21 @@
         -6px -6px 0 0 red;
     }
 
-    /*方案 4*/
+    /*方案 5*/
+    .scheme-5 table {
+      border-collapse: separate;
+      border-spacing: 6px;
+    }
+
+    .scheme-5 td {
+      position: relative;
+      box-shadow: 0 0 0 6px blue;
+    }
+
+    .scheme-5 td:hover {
+      z-index:2;
+      box-shadow: 0 0 0 6px red;
+    }
 
   </style>
 </head>
@@ -141,7 +155,7 @@
 </header>
 <main>
   <fieldset class="scheme-1">
-   <legend>方案 1: Table</legend>
+   <legend>方案 1: Table(reflow)</legend>
    <table>
      <col>
      <col>
@@ -164,6 +178,10 @@
      </tr>
      </tbody>
    </table>
+    <ul>
+      <li>td hover 前如果不定义 border, 只在 hover 后定义宽度, hover 时浏览器 reflow;</li>
+      <li>td hover 前定义 border 且与 tr 和 col 的 border 同宽, 但样式优先级低于 tr 和 col 的 border 样式, hover 时浏览器 repaint;</li>
+    </ul>
   </fieldset>
 
   <fieldset class="scheme-2">
@@ -209,6 +227,34 @@
       <div class="grid">8</div>
       <div class="grid">9</div>
     </div>
+  </fieldset>
+
+  <fieldset class="scheme-5">
+    <legend>方案 5: Table + box-shadow </legend>
+    <table>
+      <tbody>
+      <tr>
+        <td>1</td>
+        <td>2</td>
+        <td>3</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>5</td>
+        <td>6</td>
+      </tr>
+      <tr>
+        <td>7</td>
+        <td>8</td>
+        <td>9</td>
+      </tr>
+      </tbody>
+    </table>
+  </fieldset>
+
+  <fieldset class="scheme-6">
+    <legend>方案 6: ul + box-shadow </legend>
+    <p>把 ul 用 float 排好, 然后自己试一试好了</p>
   </fieldset>
 </main>
 </body>
