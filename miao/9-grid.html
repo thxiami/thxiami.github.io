@@ -256,6 +256,16 @@
     <legend>方案 6: ul + box-shadow </legend>
     <p>把 ul 用 float 排好, 然后自己试一试好了</p>
   </fieldset>
+
+  <fieldset class="scheme-7">
+    <legend>方案 7: ul + border + hover 时调高 z-index </legend>
+    <p>注意把 position:relative 放在 hover 前, 因为放在 hover 时可能引起 reflow</p>
+  </fieldset>
+
+  <fieldset class="scheme-8">
+    <legend>方案 8: inline-block + border + hover 时调高 z-index </legend>
+    <p>注意把 position:relative 放在 hover 前, 因为放在 hover 时可能引起 reflow</p>
+  </fieldset>
 </main>
 </body>
 </html>
