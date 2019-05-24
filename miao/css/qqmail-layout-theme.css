@@ -1,0 +1,22 @@
+html,
+body {
+    height: 100%;
+    margin: 0;
+}
+
+.wrapper {
+    height: 100%;
+}
+
+/*背景色*/
+nav {
+    background-color: red;
+}
+
+aside {
+    background-color: yellow;
+}
+
+main {
+    background-color: limegreen;
+}
