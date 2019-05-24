@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>QQ mail-Position layout</title>
+  <link rel="stylesheet" href="css/qqmail-layout-theme.css">
+  <style>
+    .wrapper {
+      position: relative;
+    }
+
+    .wrapper > * {
+      position: absolute;
+    }
+
+    nav {
+      left: 0;
+      right: 0;
+      top: 0;
+      height: 100px;
+    }
+
+    aside {
+      left: 0;
+      top: 100px;
+      bottom: 0;
+      width: 100px;
+    }
+
+    main {
+      left: 100px;
+      top: 100px;
+      bottom: 0;
+    }
+  </style>
+</head>
+<body>
+<div class="wrapper">
+  <nav>
+    <span>QQ mail 布局 -- 使用 Position 元素布局</span>
+  </nav>
+  <aside></aside>
+  <main>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae dolor earum est. Necessitatibus, pariatur, voluptate!
+  </main>
+</div>
+</html>
