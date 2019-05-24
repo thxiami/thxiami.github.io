@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Oald Layout</title>
+  <style>
+    * {  background-color: rgba(0,0,0,0.15);}
+
+    html,body {
+      height: 100%;
+      margin: 0;
+    }
+
+    .wrapper {
+      height: 100%;
+      position: relative;
+    }
+
+    aside {
+      width: 20%;
+      height: 100%;
+      position: absolute;
+    }
+
+    main {
+      width: 40%;
+      height: 100%;
+      position: absolute;
+    }
+
+    .aside-1 {
+      left: 0;
+      top: 0;
+    }
+
+    .aside-2 {
+      right: 20%;
+      top: 0;
+    }
+
+    .aside-3 {
+      right: 0;
+      top: 0;
+    }
+
+    main {
+      left: 20%;
+      position: relative;
+    }
+
+    .topBar {
+      height: 10vw;
+    }
+
+    .content {
+      position: absolute;
+      top: 10vw;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
+
+    /*背景色*/
+
+    .aside-1 {
+      background-color: #80cbc4;
+    }
+
+    .aside-2 {
+      background-color: #42a5f5;
+    }
+
+    .aside-3 {
+      background-color: #0d47a1;
+    }
+
+    main {
+      background-color: #fff;
+    }
+
+    .content {
+      background-color: limegreen;
+    }
+
+  </style>
+</head>
+<body>
+<div class="wrapper">
+  <aside class="aside-1"></aside>
+  <main>
+    <div class="topBar"></div>
+    <div class="content"></div>
+  </main>
+  <aside class="aside-2"></aside>
+  <aside class="aside-3"></aside>
+</div>
+</body>
+</html>
