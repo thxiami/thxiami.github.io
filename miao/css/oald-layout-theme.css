@@ -1,0 +1,33 @@
+html,body {
+    height: 100%;
+    margin: 0;
+}
+
+.wrapper {
+    height: 100%;
+}
+
+/*背景色*/
+.aside-1 {
+    background-color: #80cbc4;
+}
+
+.aside-2 {
+    background-color: #42a5f5;
+}
+
+.aside-3 {
+    background-color: #0d47a1;
+}
+
+main {
+    background-color: #fff;
+}
+
+.topBar {
+    background-color: pink;
+}
+
+.content {
+    background-color: limegreen;
+}
