@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>oald-layout-inline</title>
+  <link rel="stylesheet" href="css/oald-layout-theme.css">
+  <style>
+    .wrapper {
+      font-size: 0;
+    }
+
+    .wrapper > * {
+      display: inline-block;
+      font-size: initial;
+      vertical-align: top;
+    }
+
+    aside {
+      width: 20%;
+      height: 100%;
+    }
+
+    main {
+      width: 40%;
+      height: 100%;
+    }
+
+    .topBar {
+      height: 10vw;
+      width: 100%;
+    }
+
+    .content {
+      height: calc(100% - 10vw);
+      width: 100%;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <aside class="aside-1"></aside>
+    <main>
+      <div class="topBar">Inline Layout</div>
+      <div class="content"></div>
+    </main>
+    <aside class="aside-2"></aside>
+    <aside class="aside-3"></aside>
+  </div>
+</body>
+</html>
