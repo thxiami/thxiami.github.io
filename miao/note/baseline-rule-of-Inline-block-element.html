@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Rule to determine the baseline of inline-block element</title>
+  <style>
+    * {
+      text-decoration: underline;
+    }
+    .wrapper {
+      height: 100px;
+      border: 1px solid;
+      font-size: 20px;
+      margin: 8px;
+    }
+
+    .ib {
+      display: inline-block;
+      width: 10em;
+      height: 3em;
+      color: red;
+      border: 1px solid;
+      text-decoration: underline
+    }
+
+    .ib2 {
+      display: inline-block;
+      width: 100px;
+      height: 3em;
+      color: red;
+      border: 1px solid;
+    }
+
+    .ib3-1 {
+      display: inline-block;
+      width: 50px;
+      height: 1em;
+      color: red;
+      border: 1px solid;
+    }
+
+    .ib3-2 {
+      display: inline-block;
+      width: 50px;
+      height: 1em;
+      color: red;
+      border: 1px solid;
+    }
+
+    .ib4 {
+      display: inline-block;
+      width: 50px;
+      height: 3em;
+      color: red;
+      border: 1px solid;
+      xoverflow: auto;
+      contain: layout;
+    }
+  </style>
+</head>
+<body>
+<p>
+  详情笔记见:
+  <a
+    href="https://github.com/thxiami/thxiami.github.io/blob/master/miao/note/Rule%20to%20determine%20the%20baseline%20of%20inline-block%20element.md">Rule to determine the baseline of inline-block element</a>
+</p>
+<p>Example1: </p>
+<p>inline-block 元素(用红框标识)内有在流内(in-flow) inline 元素(比如文本), inline-block 元素的基线对齐最后一个 line box 的基线</p>
+
+<div class="wrapper">
+  x
+  <span class="ib">this is a inline-block element</span>
+</div>
+
+<p>Example2: </p>
+<p>inline-block 元素(用红框标识)内没有在流内(in-flow)的 inline 元素, inline-block 元素的基线对齐自己下 marigin 的最下边缘</p>
+
+<div class="wrapper">
+  x
+  <span class="ib2"></span>
+</div>
+
+<p>Example3: </p>
+<p>inline-block 元素(用红框标识)内有 inline-block 子元素, inline-block 父元素的基线与 inline-block 子元素的基线对齐, 子元素的基线按上述两个例子中给定的规则决定</p>
+
+<div class="wrapper">
+  x
+  <span class="ib2">
+      <span class="ib3-1"></span>
+    </span>
+  x
+  <span class="ib2">
+      <span class="ib3-2">xx xx xx</span>
+    </span>
+</div>
+
+<p>Example4: </p>
+<p>inline-block 元素(用红框标识) 触发了 BFC 时, inline-block 元素的基线对齐自己下 marigin 的最下边缘</p>
+<div class="wrapper">
+  x
+  <span class="ib4">
+      xxx
+    </span>
+
+</div>
+</body>
+</html>

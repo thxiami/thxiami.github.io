@@ -5,7 +5,7 @@
   - 如果有流内的`inline`/`inline-block`元素时, 按最后一个`line box`的 `baseline`计算
     - 最后一个`line box` 是 `inline`元素(即文本)时, 按文本的`baseline`
     - 最后一个`line box` 是 `inline-block`元素时, 按本规则继续判断(根据子`inline-block`元素内包含文本还是 `inline-block`元素确定`baseline`)
-  - [Demo](https://jsbin.com/bidatucexo/2/edit?html,css,output)
+  - [Demo](http://thxiami.github.io/miao/note/baseline-rule-of-Inline-block-element.html)
 
 - `line box`的定义
   - [w3中关于 line box 的定义](<https://www.w3.org/TR/CSS2/visuren.html#inline-formatting>)
