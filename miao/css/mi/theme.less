@@ -1,0 +1,117 @@
+header {
+    background-color: #333;
+}
+
+* {
+    xbackground-color: rgba(0,0,0,0.15);
+}
+
+div {
+    box-shadow: 0 0 0 2px lime inset;
+}
+
+/*Home-hero-nav site-category*/
+.site-category {
+    font-size: 14px;
+}
+
+.category-menu {
+    background-color: rgba(0,0,0,0.6);
+}
+.category-menu .dynamic-item-menu {
+    display: none;
+    background-color: #fff;
+}
+
+.category-menu > li:hover {
+    background-color: #ff6700;
+
+    .dynamic-item-menu {
+        display: block;
+    }
+}
+
+a.category-menu-link {
+    text-decoration: none;
+    color: #fff;
+}
+
+i.icon-arrow-right {
+    background: url(http://localhost:3000/assert/img/icon-slides.png) no-repeat;
+    background-size: auto 26px;
+    background-position: -16px -5px;
+}
+
+
+a.dynamic-item-link {
+    text-decoration: none;
+    color: #333;
+
+    &:hover {
+        color: #ff6700;
+    }
+}
+
+/*Slide*/
+/*Slide - Indicators Style*/
+.indicators label:focus {
+    outline: none;
+}
+
+.indicators label {
+    border-color: rgba(255,255,255,0.3);
+    background-color: rgba(0,0,0,0.4);
+    cursor: pointer;
+}
+
+.indicators label:hover {
+    border-color: rgba(0,0,0,0.4);
+    background-color: rgba(255,255,255,0.4);
+}
+
+/*Slide - Arrow Style*/
+.arrow-container {
+    background: url("../../assert/img/icon-slides.png") no-repeat;
+}
+
+.arrow-left-container {
+    background-position: -84px 50%;
+}
+
+.arrow-right-container {
+    background-position: -125px 50%;
+}
+
+.arrow-left-container:hover {
+    background-position: 0 50%;
+}
+
+.arrow-right-container:hover {
+    background-position: -43px 50%;
+}
+
+.arrow-container label {
+    cursor: pointer;
+}
+
+/*Slide - Image*/
+.img-container .slider-img {
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.img-container .slider-img:nth-child(1) {
+    background-image: url(../../assert/img/slider-1.jpg);
+}
+
+.img-container .slider-img:nth-child(2) {
+    background-image: url(../../assert/img/slider-2.jpg);
+}
+
+.img-container .slider-img:nth-child(3) {
+    background-image: url(../../assert/img/slider-3.jpg);
+}
+
+.img-container .slider-img:nth-child(4) {
+    background-image: url(../../assert/img/slider-4.jpg);
+}
