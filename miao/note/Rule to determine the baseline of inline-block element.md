@@ -1,4 +1,4 @@
-### 行内放 inline-block 元素时, 如何计算其父元素的行框高度
+### 行内放 inline-block 元素时, 如何确定  inline-block 元素的基线
 
 - 先下结论
   - `inline-block `内部无流内的`inline`/`inline-block`元素 或者触发了 BFC([Block Format Context](<https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Block_formatting_context>))时(比如`overflow`为除`visible`外其他值), 其 `baseline`对齐下 margin 的下边缘
