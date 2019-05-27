@@ -4,7 +4,7 @@
   - `inline-block `内部无流内的`inline`/`inline-block`元素 或者触发了 BFC([Block Format Context](<https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Block_formatting_context>))时(比如`overflow`为除`visible`外其他值), 其 `baseline`对齐下 margin 的下边缘
   - 如果有流内的`inline`/`inline-block`元素时, 按最后一个`line box`的 `baseline`计算
     - 最后一个`line box` 是 `inline`元素(即文本)时, 按文本的`baseline`
-    - 最后一个`line box` 是 `inline-block`元素时, 按本规则继续判断(分是文本还是 `inline-block`确定`baseline`)
+    - 最后一个`line box` 是 `inline-block`元素时, 按本规则继续判断(根据子`inline-block`元素内包含文本还是 `inline-block`元素确定`baseline`)
   - [Demo](https://jsbin.com/bidatucexo/2/edit?html,css,output)
 
 - `line box`的定义
