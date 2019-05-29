@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MoBike Index-Responsible Layout</title>
+  <style>
+    body {
+      margin: 0;
+    }
+
+    div {
+      box-shadow: 0 0 0 2px lime inset;
+    }
+
+    div > div {
+      box-shadow: 0 0 0 1px dodgerblue inset;
+    }
+
+    html {
+      box-sizing: border-box;
+    }
+
+    * {
+      box-sizing: inherit;
+    }
+
+    .clearfix::after {
+      content: " ";
+      display: block;
+      height: 0;
+      visibility: hidden;
+      clear: both;
+    }
+
+    .hero-bg-wrap {
+      height: 805px;
+      margin-bottom: 2px;
+    }
+
+    .hero-promo {
+      width: 25%;
+      height:260px;
+      box-sizing: border-box;
+      border: 1px solid white;
+      float: left;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /*不显示左右的 1px border */
+    .inner-wrap {
+      margin-left: -1px;
+      margin-right: -1px;
+    }
+
+    .hero-promos-wrap {
+      overflow: hidden;
+    }
+
+    .links-wrap {
+      padding: 0 20px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+
+    .link {
+      width: 200px;
+      height: 156px;
+      padding: 45px 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .main-info,
+    .footer-list-wrap,
+    .footer-list {
+      float: left;
+    }
+
+    .main-info {
+      width: 40%;
+      height: 150px;
+      padding-right: 20px;
+      margin-bottom: 20px;
+    }
+
+    .footer-list-wrap {
+      width: 60%;
+    }
+
+    .footer-list {
+      width: 25%;
+      height: 150px;
+    }
+
+    @media (max-width: 1080px) {
+      .hero-bg-wrap {
+        height: 645px;
+      }
+
+      .hero-promo {
+        width: 50%;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero-bg-wrap {
+        height: 617px;
+      }
+
+      .hero-promo {
+        width: 100%;
+      }
+
+      /*footer 区域的响应式样式规则*/
+      .main-info {
+        /* 256  = 640 * 40% */
+        width: 256px;
+      }
+
+      .footer-list-wrap {
+        width: calc(100% - 256px);
+      }
+
+      .footer-list {
+        width: 50%;
+      }
+    }
+
+    /*背景图*/
+    .hero-bg-wrap {
+      background: center / cover no-repeat url("assert/img/mobike/hero-bg-7.jpg");
+    }
+
+    .hero-promo:nth-child(1) {
+      background: center / cover no-repeat url("assert/img/mobike/promo-01.jpg");
+    }
+
+    .hero-promo:nth-child(2) {
+      background: center / cover no-repeat url("assert/img/mobike/promo-02.jpg");
+    }
+
+    .hero-promo:nth-child(3) {
+      background: center / cover no-repeat url("assert/img/mobike/promo-03.jpg");
+    }
+
+    .hero-promo:nth-child(4) {
+      background: center / cover no-repeat url("assert/img/mobike/promo-04.jpg");
+    }
+
+    .promp-title {
+      font-size: 24px;
+      color: #ffffff;
+    }
+  </style>
+</head>
+<body>
+<div class="hero-bg-wrap"></div>
+<div class="hero-promos-wrap ">
+  <div class="inner-wrap clearfix">
+    <div class="hero-promo">
+      <span class="promp-title">大国品牌</span>
+    </div>
+    <div class="hero-promo">
+      <span class="promp-title">摩拜科技</span>
+    </div>
+    <div class="hero-promo">
+      <span class="promp-title">摩拜生活</span>
+    </div>
+    <div class="hero-promo">
+      <span class="promp-title">摩拜校招</span>
+    </div>
+  </div>
+</div>
+<div class="links-wrap">
+  <div class="link">
+    <span class="link-title">微信小程序</span>
+  </div>
+  <div class="link">
+    <span class="link-title">红包车</span>
+  </div>
+  <div class="link">
+    <span class="link-title">摩拜分</span>
+  </div>
+</div>
+<div class="footer clearfix">
+  <div class="main-info">
+    北京摩拜科技有限公司
+  </div>
+  <div class="footer-list-wrap clearfix">
+    <div class="footer-list">产品</div>
+    <div class="footer-list">生活</div>
+    <div class="footer-list">关于</div>
+    <div class="footer-list">社交网络</div>
+  </div>
+</div>
+</body>
+</html>
