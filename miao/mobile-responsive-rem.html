@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>移动端适配-Rem 方案1</title>
+  <meta name="viewport" content="width=800">
+  <style>
+    html {
+      /*
+        按照 设计稿宽度 800px, viewport width=800px
+        1rem = 100 * (viewport width) / (设计稿宽度) = 100px
+       */
+      font-size: 100px;
+    }
+    html * {
+      font-size: initial;
+    }
+
+    header {
+      border-bottom: 1px solid;
+      overflow: hidden;
+    }
+
+    .name {
+      float: left;
+    }
+
+    .nav {
+      float: right;
+    }
+
+    .nav span {
+      margin: 0 5px;
+    }
+
+    main {
+      position: relative;
+    }
+
+    .photo {
+      width: 2.66rem;
+      height: 4rem;
+      position: absolute;
+    }
+
+    .photo:nth-child(1) {
+      top: .9rem;
+      left: 1.35rem;
+      background: center / cover no-repeat url("assert/img/responsible/portrait.jpg");
+    }
+
+    .photo:nth-child(2) {
+      top: calc(.9rem + 1.35rem);
+      left: calc(1.35rem + 2.66rem / 2);
+      background: center / cover no-repeat url("assert/img/responsible/GenArt-low.png");
+    }
+
+    .photo:nth-child(3) {
+      top: calc(.9rem + 1.35rem * 2);
+      left: calc(1.35rem + 2.66rem);
+      background: center / cover no-repeat url("assert/img/responsible/home.jpeg");
+    }
+
+  </style>
+</head>
+<body>
+<header>
+  <div class="name">Daniel Eden, Designer</div>
+  <div class="nav">
+    <span>Blog</span><span>Protfolio</span><span>Library</span>
+  </div>
+  <h3>移动端适配-Rem 方案1: viewport 固定为 800</h3>
+</header>
+<main>
+  <div class="photo"></div>
+  <div class="photo"></div>
+  <div class="photo"></div>
+</main>
+</body>
+</html>

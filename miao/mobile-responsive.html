@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>移动端自适应方案练习</title>
+  <style>
+    header {
+      border-bottom: 1px solid;
+      overflow: hidden;
+    }
+    .name {
+      float: left;
+    }
+
+    .nav {
+      float: right;
+    }
+
+    .nav span {
+      margin: 0 5px;
+    }
+
+    main {
+      position: relative;
+    }
+
+    .photo {
+      width: 33.33vw;
+      height: 50vw;
+      position: absolute;
+    }
+
+    .photo:nth-child(1) {
+      top: 10vw;
+      left: 16.67vw;
+      background: center / contain no-repeat url("assert/img/responsible/portrait.jpg");
+    }
+
+    .photo:nth-child(2) {
+      top: 23vw;
+      left: calc(16.67vw + 33.33vw / 2);
+      background: center / contain no-repeat url("assert/img/responsible/GenArt-low.png");
+    }
+
+    .photo:nth-child(3) {
+      top: 33vw;
+      left: calc(16.67vw + 33.33vw);
+      background: center / contain no-repeat url("assert/img/responsible/home.jpeg");
+    }
+
+  </style>
+</head>
+<body>
+<header>
+  <div class="name">Daniel Eden, Designer</div>
+  <div class="nav">
+    <span>Blog</span><span>Protfolio</span><span>Library</span>
+  </div>
+</header>
+<main>
+  <div class="photo"></div>
+  <div class="photo"></div>
+  <div class="photo"></div>
+</main>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>移动端适配-Rem 方案2</title>
+  <meta name="viewport" content="width=device-width">
+  <style>
+    html {
+      /*
+        按照 设计稿宽度 800px, viewport width=device-width=screen.width
+        1rem = 100 * (viewport width) / (设计稿宽度)
+       */
+      /*font-size: 100px;*/
+    }
+
+    header {
+      border-bottom: 1px solid;
+      overflow: hidden;
+      font-size: .12rem;
+    }
+
+    h3 {
+      font-size: calc(1.17 * .12rem);
+      margin: 0;
+      clear: both;
+    }
+
+    .name {
+      float: left;
+    }
+
+    .nav {
+      float: right;
+    }
+
+    .nav span {
+      margin: 0 5px;
+    }
+
+    main {
+      position: relative;
+    }
+
+    .photo {
+      width: 2.66rem;
+      height: 4rem;
+      position: absolute;
+    }
+
+    .photo:nth-child(1) {
+      top: .9rem;
+      left: 1.35rem;
+      background: center / cover no-repeat url("assert/img/responsible/portrait.jpg");
+    }
+
+    .photo:nth-child(2) {
+      top: calc(.9rem + 1.35rem);
+      left: calc(1.35rem + 2.66rem / 2);
+      background: center / cover no-repeat url("assert/img/responsible/GenArt-low.png");
+    }
+
+    .photo:nth-child(3) {
+      top: calc(.9rem + 1.35rem * 2);
+      left: calc(1.35rem + 2.66rem);
+      background: center / cover no-repeat url("assert/img/responsible/home.jpeg");
+    }
+
+  </style>
+  <script>
+    function getRem() {
+      const hm = document.getElementsByTagName('html')[0]
+      hm.style.fontSize = (100 * screen.width / 800) + 'px'
+    }
+
+    function main() {
+      getRem()
+    }
+
+    main()
+  </script>
+</head>
+<body>
+<header>
+  <div class="name">Daniel Eden, Designer</div>
+  <div class="nav">
+    <span>Blog</span><span>Protfolio</span><span>Library</span>
+  </div>
+</header>
+<h3>移动端适配-Rem 方案2: viewport 为 device-width</h3>
+<main>
+  <div class="photo"></div>
+  <div class="photo"></div>
+  <div class="photo"></div>
+</main>
+</body>
+</html>
