@@ -1,4 +1,4 @@
-###   `flex`布局中各个`flex-item`位置和尺寸的确定(重点是交叉轴上的布局)
+###   flex`布局中各个`flex-item`位置和尺寸的确定(重点是交叉轴上的布局)
 
 #### 0 先看一个`Demo`
 
@@ -31,7 +31,10 @@
 
 ```
 
-- 效果: ![](https://ws1.sinaimg.cn/large/006tNc79ly1g3mwhuxg3cj307g08tglv.jpg)
+- 效果
+
+  -  ![](https://raw.githubusercontent.com/thxiami/thxiami.github.io/master/miao/note/img/flex-demo-1.png)    ![](<https://raw.githubusercontent.com/thxiami/thxiami.github.io/master/miao/note/img/flex-demo-2.jpeg>)
+
 - [Demo](<https://jsbin.com/melafuk/edit?html,css,output>)
 
 图上可以看出两个`flex-item` : `C1`和 `C2`高度分别为 `150px`, 看来是均分了`flex-container`在`cross-axis`方向上的空间. 经过查阅[规范](<https://www.w3.org/TR/css-flexbox-1/#layout-algorithm>), 背后的计算过程是这样的
@@ -172,7 +175,7 @@ tips:第1步其实要先确定`flex container`在主轴方向上的尺寸. 但�
   }
   ```
 
-- 效果如图:   ![](https://ws2.sinaimg.cn/large/006tNc79ly1g3n6ceqsb5j30pg0d10uh.jpg)
+- 效果如图:   ![](https://raw.githubusercontent.com/thxiami/thxiami.github.io/master/miao/note/img/flex-test-1.png)
 - [Jsbin Demo](<https://jsbin.com/xihivis/4/edit?html,css,output>)
 
 #### 2. 如果给`C1` 和 `C2`设置了不同高度, 又会怎么样呢?
@@ -192,7 +195,7 @@ tips:第1步其实要先确定`flex container`在主轴方向上的尺寸. 但�
 }
 ```
 
-- 效果如图: ![](https://ws2.sinaimg.cn/large/006tNc79ly1g3n6eq6phoj307n08xt8m.jpg)
+- 效果如图: ![](https://raw.githubusercontent.com/thxiami/thxiami.github.io/master/miao/note/img/flex-test-2.jpeg)
 
 - [Jsbin Demo](https://jsbin.com/xihivis/6/edit?html,css,output)
 
@@ -209,7 +212,7 @@ tips:第1步其实要先确定`flex container`在主轴方向上的尺寸. 但�
 }
 ```
 
-- 效果如图: ![](https://ws1.sinaimg.cn/large/006tNc79ly1g3n6gie9lvj307w0970sn.jpg)
+- 效果如图: ![](https://raw.githubusercontent.com/thxiami/thxiami.github.io/master/miao/note/img/flex-test-3.jpeg)
 - [Jsbin Demo](https://jsbin.com/xihivis/7/edit?html,css,output)
 
 #### 4. 如果给`C1` 和 `C2`设置了相同高度, 设置了 `margin-top:auto;margin-bottom:固定值`, 又会怎么样呢?
@@ -226,7 +229,7 @@ tips:第1步其实要先确定`flex container`在主轴方向上的尺寸. 但�
 
 ```
 
-- 效果如图: ![](https://ws4.sinaimg.cn/large/006tNc79ly1g3n6n2oek8j307l08uq2u.jpg)
+- 效果如图: ![](https://raw.githubusercontent.com/thxiami/thxiami.github.io/master/miao/note/img/flex-test-4.jpeg)
 - [Jsbin Demo](<https://jsbin.com/xihivis/12/edit?html,css,output>)
 
 #### 5. 如果一行内的 flex-item 高度不同, 同时有多行, 又设置了 `margin-top/ margin-bottom` 为`auto`又会怎么样呢?
@@ -260,7 +263,7 @@ tips:第1步其实要先确定`flex container`在主轴方向上的尺寸. 但�
 }
 ```
 
-- 效果如图: ![](https://ws1.sinaimg.cn/large/006tNc79ly1g3n6lr1mpaj3081097zk7.jpg)
+- 效果如图: ![](https://raw.githubusercontent.com/thxiami/thxiami.github.io/master/miao/note/img/flex-test-5.jpeg)
 - [Jsbin Demo](https://jsbin.com/xihivis/10/edit?html,css,output)
 
 
