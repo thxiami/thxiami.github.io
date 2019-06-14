@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>二元一次方程组求解</title>
+  <style>
+    #solution {
+      display: none;
+    }
+
+    .sub {
+      vertical-align: sub;
+    }
+
+  </style>
+</head>
+<body>
+<header>
+  <h1>Linear equations group solver</h1>
+  <p>方程组形式如下: </p>
+  <pre>
+    <code>
+      <span>ax<span class="sub">1</span>+bx<span class="sub">2</span>=e</span>
+      <span>cx<span class="sub">1</span>+dx<span class="sub">2</span>=f</span>
+    </code>
+  </pre>
+  <p>点击按钮开始输入方程组系数并求解:
+    <button onclick="entry()">Go!!</button>
+  </p>
+</header>
+<main id="content" style="display: none">
+  <p>您要求解的方程组为:</p>
+  <pre>
+    <code>
+      <span id="equ1">ax<span class="sub">1</span>+bx<span class="sub">2</span>=e</span>
+      <span id="equ2">cx<span class="sub">1</span>+dx<span class="sub">2</span>=f</span>
+    </code>
+  </pre>
+  <h2>是否有解: <span id="hasSolution"></span></h2>
+  <div id="solution">
+    <h2>x<span class="sub">1</span>: <span id="x1"></span></h2>
+    <h2>x<span class="sub">2</span>: <span id="x2"></span></h2>
+  </div>
+</main>
+<script>
+  let domHasSolution = document.getElementById('hasSolution')
+  let domSolution = document.getElementById('solution')
+  let domX1 = document.getElementById('x1')
+  let domX2 = document.getElementById('x2')
+  let domContent = document.getElementById('content')
+
+  function entry() {
+    var a, b, c, d, e, f, isValid
+
+    a = getInput("请输入第1个线性方程的系数 a, 不输入默认为 0")
+    b = getInput("请输入第1个线性方程的系数 b, 不输入默认为 0")
+    isValid = validate(a, b)
+    while (!isValid) {
+      alert("线性方程的系数不能同时为 0,点击确定后重新输入方程的两个系数")
+      a = getInput("请输入第1个线性方程的系数 a, 不输入默认为 0")
+      b = getInput("请输入第1个线性方程的系数 b, 不输入默认为 0")
+      isValid = validate(a, b)
+    }
+
+    e = getInput("请输入第1个线性方程的截距 e, 不输入默认为 0")
+
+    c = getInput("请输入第2个线性方程的系数 c, 不输入默认为 0")
+    d = getInput("请输入第2个线性方程的系数 d, 不输入默认为 0")
+    isValid = validate(c, d)
+    while (!isValid) {
+      alert("线性方程的系数不能同时为 0,点击确定后重新输入方程的两个系数")
+      c = getInput("请输入第2个线性方程的系数 c, 不输入默认为 0")
+      d = getInput("请输入第2个线性方程的系数 d, 不输入默认为 0")
+      isValid = validate(c, d)
+    }
+
+    f = getInput("请输入第2个线性方程的截距 f, 不输入默认为 0")
+
+    setEquationGroupCoefficient(a, b, c, d, e, f)
+    solver(a, b, c, d, e, f)
+  }
+
+
+  function getInput(hint) {
+    let v = Number(prompt(hint))
+    while (isNaN(v)) {
+      alert("输入的值不符合要求, 请输入数字!点击确定后重新输入")
+      v = Number(prompt(hint))
+    }
+    return v
+  }
+
+  function validate(a, b) {
+    console.log("a:", a)
+    console.log("b:", b)
+    console.log("a === 0 && b === 0:", a === 0 && b === 0)
+
+    return !(a === 0 && b === 0)
+  }
+
+  /**
+   * 二元线性方程组求解函数
+   * @param a{number} 第1个线性方程的未知数 x 的系数
+   * @param b{number} 第1个线性方程的未知数 y 的系数
+   * @param c{number} 第2个线性方程的未知数 x 的系数
+   * @param d{number} 第2个线性方程的未知数 y 的系数
+   * @param e{number} 第1个线性方程的截距
+   * @param f{number} 第2个线性方程的截距
+   */
+  function solver(a, b, c, d, e, f) {
+    let delta = a * d - b * c
+    let hint
+
+    if (delta === 0) {
+      // 无解
+      hideSolutionDom()
+      if (a !== 0) {
+        if (e / a * c === f) {
+          // 说明第1 个方程的解 (e/a, 0) 也是第 2 个方程的解
+          // 说明两个方程代表的直线重合, 有无数解
+          hint = "有无数解"
+        } else {
+          hint = "无解"
+        }
+      } else {
+        //  b !== 0
+        if (e / b * d === f) {
+          // 说明第1 个方程的解 (0, e / b) 也是第 2 个方程的解
+          // 说明两个方程代表的直线重合, 有无数解
+          hint = "有无数解"
+        } else {
+          hint = "无解"
+        }
+      }
+    } else {
+      // 有唯一解
+      showSolutionDom()
+
+      hint = "有唯一解"
+      let x1 = (e * d - b * f) / delta
+      let x2 = (a * f - e * c) / delta
+      domX1.innerText = String(x1)
+      domX2.innerText = String(x2)
+    }
+
+    domHasSolution.innerText = hint
+    domContent.style.display = 'block'
+  }
+
+  function showSolutionDom() {
+    domSolution.style.display = "block"
+  }
+
+  function hideSolutionDom() {
+    domSolution.style.display = "none"
+  }
+
+  function setEquationGroupCoefficient(a, b, c, d, e, f) {
+    let domEqu1 = document.getElementById('equ1')
+    let domEqu2 = document.getElementById('equ2')
+
+    a = a === 1 ? '' : a
+    b = b === 1 ? '' : b
+    c = c === 1 ? '' : c
+    d = d === 1 ? '' : d
+
+    domEqu1.innerHTML =  `${a}x<span class="sub">1</span>+${b}x<span class="sub">2</span>=${e}`
+    domEqu2.innerHTML =  `${c}x<span class="sub">1</span>+${d}x<span class="sub">2</span>=${f}`
+  }
+</script>
+</body>
+</html>
