@@ -92,7 +92,7 @@
   }
 </script>
 
-<script id="ch0105/01">
+<script id="ch0105/01" type="x">
   let count = getNumber('请输入学生总数n, n 的允许取值范围为: 1 <= n <= 100', {
     min: 1,
     max: 100,
@@ -310,7 +310,7 @@
 
   do {
     numsArr = numsStr.split(' ')
-    isValid = numsArr.length !== count || validator_ch0105_03(numsArr)
+    isValid = numsArr.length === count && validator_ch0105_03(numsArr)
     if (!isValid) {
       alert(`输入的样本数据总数量不等于${count}, 点击确定后重新输入`)
       numsStr = prompt("请输入 n 个绝对值不超过1000的浮点数，代表各个样本数据")
@@ -353,6 +353,7 @@
       return num <= range.max
     }
   }
+
   function isNumber(num) {
     return typeof num !== 'number'
   }
@@ -381,16 +382,6 @@
 
   }
 
-  /**
-   * 自定义保留小数的方法, 规则为四舍五入, 解决 toFixed() 方法的问题
-   * 因为javascript 内部对于小数的存储机制的问题, 使用 toFixed 方法有时候会出现五舍六入情况, 不便于工程使用
-   * 比如: "3.155".toFixed(2)  // "3.15"
-   * @param {string/number}value  需要舍入的浮点数
-   * @param {number}n             需要保留的位数
-   * @return {string}             处理后的数字
-   *                              以 string 形式返回,目的是为了能保留如 1.0 这样的形式,
-   *                              如果以 number 形式返回, 则会返回 1
-   */
   function roundFun(value, n) {
     // JavaScript 的 Math.round()函数对于 -1.5 的情况, 与预期不同
     // Math.round(-1.5) ----> -1
@@ -404,45 +395,3203 @@
     }
   }
 </script>
-<script id="ch0105/04"></script>
-<script id="ch0105/05"></script>
-<script id="ch0105/06"></script>
-<script id="ch0105/07"></script>
-<script id="ch0105/08"></script>
-<script id="ch0105/09"></script>
-<script id="ch0105/10"></script>
-<script id="ch0105/11"></script>
-<script id="ch0105/12"></script>
-<script id="ch0105/13"></script>
-<script id="ch0105/14"></script>
-<script id="ch0105/15"></script>
-<script id="ch0105/16"></script>
-<script id="ch0105/17"></script>
-<script id="ch0105/18"></script>
-<script id="ch0105/19"></script>
-<script id="ch0105/20"></script>
-<script id="ch0105/21"></script>
-<script id="ch0105/22"></script>
-<script id="ch0105/23"></script>
-<script id="ch0105/24"></script>
-<script id="ch0105/25"></script>
-<script id="ch0105/26"></script>
-<script id="ch0105/27"></script>
-<script id="ch0105/28"></script>
-<script id="ch0105/29"></script>
-<script id="ch0105/30"></script>
-<script id="ch0105/31"></script>
-<script id="ch0105/32"></script>
-<script id="ch0105/33"></script>
-<script id="ch0105/34"></script>
-<script id="ch0105/35"></script>
-<script id="ch0105/36"></script>
-<script id="ch0105/37"></script>
-<script id="ch0105/38"></script>
-<script id="ch0105/39"></script>
-<script id="ch0105/40"></script>
-<script id="ch0105/41"></script>
-<script id="ch0105/42"></script>
-<script id="ch0105/43"></script>
-<script id="ch0105/44"></script>
-<script id="ch0105/45"></script>
+<script id="ch0105/04">
+  let count = getNumber('请输入考试总人数 n（1 <= n < 100）', {min: 1, max: 99})
+  let highestScore = 0
+  let tempScore
+  for (let i = 0; i < count; i++) {
+    tempScore = getNumber(`请输入第${i+1}个考生的分数 score（0 <= n <= 100）`, {min: 0, max: 100})
+    if (tempScore > highestScore) highestScore = tempScore
+  }
+  console.log(highestScore)
+
+    //  utils
+  function rangeValidator(num, range) {
+    if (typeof num !== 'number') {
+      throw new TypeError('Type of variable num is error! Wanted type: number, get:' + typeof num)
+    }
+
+    if (typeof range !== 'object') {
+      throw new TypeError('Type of variable range is error! Wanted type: object, get:' + typeof range)
+    }
+
+    if (range.hasOwnProperty('min')) {
+      if (typeof range.min !== 'number') {
+        throw new TypeError('Type of variable range.min is error! Wanted type: number, get:' + typeof range.min)
+      }
+    }
+
+    if (range.hasOwnProperty('max')) {
+      if (typeof range.max !== 'number') {
+        throw new TypeError('Type of variable range.max is error! Wanted type: number, get:' + typeof range.max)
+      }
+    }
+
+    if (range.hasOwnProperty('min') && range.hasOwnProperty('max')) {
+      return num >= range.min && num <= range.max
+
+    } else if (range.hasOwnProperty('min')) {
+      return num >= range.min
+
+    } else if (range.hasOwnProperty('max')) {
+      return num <= range.max
+    }
+  }
+
+  function isNumber(num) {
+    return typeof num !== 'number'
+  }
+
+  function getNumber(hint, range) {
+    if (typeof hint !== 'string') {
+      throw new TypeError('Type of variable hint is error! Wanted type: string, get:' + typeof num)
+    }
+
+    let num
+    let isValid
+
+    do {
+      num = +prompt(hint)
+      if (range === undefined) {
+        isValid = isNumber(num)
+      } else {
+        isValid = rangeValidator(num, range)
+      }
+      if (!isValid) {
+        alert('输入的数字超出允许范围或者输入的不是数字, 请点击确定后重新输入!')
+      }
+    } while (!isValid)
+
+    return num
+
+  }
+
+  function roundFun(value, n) {
+    // JavaScript 的 Math.round()函数对于 -1.5 的情况, 与预期不同
+    // Math.round(-1.5) ----> -1
+    // 需要先转换为绝对值进行取整
+    let num = Math.round(Math.abs(value) * Math.pow(10, n)) / Math.pow(10, n)
+
+    if (Number(value) >= 0) {
+      return num.toFixed(n)
+    } else {
+      return '-' + num.toFixed(n)
+    }
+  }
+</script>
+<script id="ch0105/05">
+
+    //  utils
+  function rangeValidator(num, range) {
+    if (typeof num !== 'number') {
+      throw new TypeError('Type of variable num is error! Wanted type: number, get:' + typeof num)
+    }
+
+    if (typeof range !== 'object') {
+      throw new TypeError('Type of variable range is error! Wanted type: object, get:' + typeof range)
+    }
+
+    if (range.hasOwnProperty('min')) {
+      if (typeof range.min !== 'number') {
+        throw new TypeError('Type of variable range.min is error! Wanted type: number, get:' + typeof range.min)
+      }
+    }
+
+    if (range.hasOwnProperty('max')) {
+      if (typeof range.max !== 'number') {
+        throw new TypeError('Type of variable range.max is error! Wanted type: number, get:' + typeof range.max)
+      }
+    }
+
+    if (range.hasOwnProperty('min') && range.hasOwnProperty('max')) {
+      return num >= range.min && num <= range.max
+
+    } else if (range.hasOwnProperty('min')) {
+      return num >= range.min
+
+    } else if (range.hasOwnProperty('max')) {
+      return num <= range.max
+    }
+  }
+
+  function isNumber(num) {
+    return typeof num !== 'number'
+  }
+
+  function getNumber(hint, range) {
+    if (typeof hint !== 'string') {
+      throw new TypeError('Type of variable hint is error! Wanted type: string, get:' + typeof num)
+    }
+
+    let num
+    let isValid
+
+    do {
+      num = +prompt(hint)
+      if (range === undefined) {
+        isValid = isNumber(num)
+      } else {
+        isValid = rangeValidator(num, range)
+      }
+      if (!isValid) {
+        alert('输入的数字超出允许范围或者输入的不是数字, 请点击确定后重新输入!')
+      }
+    } while (!isValid)
+
+    return num
+
+  }
+
+  function roundFun(value, n) {
+    // JavaScript 的 Math.round()函数对于 -1.5 的情况, 与预期不同
+    // Math.round(-1.5) ----> -1
+    // 需要先转换为绝对值进行取整
+    let num = Math.round(Math.abs(value) * Math.pow(10, n)) / Math.pow(10, n)
+
+    if (Number(value) >= 0) {
+      return num.toFixed(n)
+    } else {
+      return '-' + num.toFixed(n)
+    }
+  }
+</script>
+<script id="ch0105/06">
+
+    //  utils
+  function rangeValidator(num, range) {
+    if (typeof num !== 'number') {
+      throw new TypeError('Type of variable num is error! Wanted type: number, get:' + typeof num)
+    }
+
+    if (typeof range !== 'object') {
+      throw new TypeError('Type of variable range is error! Wanted type: object, get:' + typeof range)
+    }
+
+    if (range.hasOwnProperty('min')) {
+      if (typeof range.min !== 'number') {
+        throw new TypeError('Type of variable range.min is error! Wanted type: number, get:' + typeof range.min)
+      }
+    }
+
+    if (range.hasOwnProperty('max')) {
+      if (typeof range.max !== 'number') {
+        throw new TypeError('Type of variable range.max is error! Wanted type: number, get:' + typeof range.max)
+      }
+    }
+
+    if (range.hasOwnProperty('min') && range.hasOwnProperty('max')) {
+      return num >= range.min && num <= range.max
+
+    } else if (range.hasOwnProperty('min')) {
+      return num >= range.min
+
+    } else if (range.hasOwnProperty('max')) {
+      return num <= range.max
+    }
+  }
+
+  function isNumber(num) {
+    return typeof num !== 'number'
+  }
+
+  function getNumber(hint, range) {
+    if (typeof hint !== 'string') {
+      throw new TypeError('Type of variable hint is error! Wanted type: string, get:' + typeof num)
+    }
+
+    let num
+    let isValid
+
+    do {
+      num = +prompt(hint)
+      if (range === undefined) {
+        isValid = isNumber(num)
+      } else {
+        isValid = rangeValidator(num, range)
+      }
+      if (!isValid) {
+        alert('输入的数字超出允许范围或者输入的不是数字, 请点击确定后重新输入!')
+      }
+    } while (!isValid)
+
+    return num
+
+  }
+
+  function roundFun(value, n) {
+    // JavaScript 的 Math.round()函数对于 -1.5 的情况, 与预期不同
+    // Math.round(-1.5) ----> -1
+    // 需要先转换为绝对值进行取整
+    let num = Math.round(Math.abs(value) * Math.pow(10, n)) / Math.pow(10, n)
+
+    if (Number(value) >= 0) {
+      return num.toFixed(n)
+    } else {
+      return '-' + num.toFixed(n)
+    }
+  }
+</script>
+<script id="ch0105/07">
+
+    //  utils
+  function rangeValidator(num, range) {
+    if (typeof num !== 'number') {
+      throw new TypeError('Type of variable num is error! Wanted type: number, get:' + typeof num)
+    }
+
+    if (typeof range !== 'object') {
+      throw new TypeError('Type of variable range is error! Wanted type: object, get:' + typeof range)
+    }
+
+    if (range.hasOwnProperty('min')) {
+      if (typeof range.min !== 'number') {
+        throw new TypeError('Type of variable range.min is error! Wanted type: number, get:' + typeof range.min)
+      }
+    }
+
+    if (range.hasOwnProperty('max')) {
+      if (typeof range.max !== 'number') {
+        throw new TypeError('Type of variable range.max is error! Wanted type: number, get:' + typeof range.max)
+      }
+    }
+
+    if (range.hasOwnProperty('min') && range.hasOwnProperty('max')) {
+      return num >= range.min && num <= range.max
+
+    } else if (range.hasOwnProperty('min')) {
+      return num >= range.min
+
+    } else if (range.hasOwnProperty('max')) {
+      return num <= range.max
+    }
+  }
+
+  function isNumber(num) {
+    return typeof num !== 'number'
+  }
+
+  function getNumber(hint, range) {
+    if (typeof hint !== 'string') {
+      throw new TypeError('Type of variable hint is error! Wanted type: string, get:' + typeof num)
+    }
+
+    let num
+    let isValid
+
+    do {
+      num = +prompt(hint)
+      if (range === undefined) {
+        isValid = isNumber(num)
+      } else {
+        isValid = rangeValidator(num, range)
+      }
+      if (!isValid) {
+        alert('输入的数字超出允许范围或者输入的不是数字, 请点击确定后重新输入!')
+      }
+    } while (!isValid)
+
+    return num
+
+  }
+
+  function roundFun(value, n) {
+    // JavaScript 的 Math.round()函数对于 -1.5 的情况, 与预期不同
+    // Math.round(-1.5) ----> -1
+    // 需要先转换为绝对值进行取整
+    let num = Math.round(Math.abs(value) * Math.pow(10, n)) / Math.pow(10, n)
+
+    if (Number(value) >= 0) {
+      return num.toFixed(n)
+    } else {
+      return '-' + num.toFixed(n)
+    }
+  }
+</script>
+<script id="ch0105/08">
+
+    //  utils
+  function rangeValidator(num, range) {
+    if (typeof num !== 'number') {
+      throw new TypeError('Type of variable num is error! Wanted type: number, get:' + typeof num)
+    }
+
+    if (typeof range !== 'object') {
+      throw new TypeError('Type of variable range is error! Wanted type: object, get:' + typeof range)
+    }
+
+    if (range.hasOwnProperty('min')) {
+      if (typeof range.min !== 'number') {
+        throw new TypeError('Type of variable range.min is error! Wanted type: number, get:' + typeof range.min)
+      }
+    }
+
+    if (range.hasOwnProperty('max')) {
+      if (typeof range.max !== 'number') {
+        throw new TypeError('Type of variable range.max is error! Wanted type: number, get:' + typeof range.max)
+      }
+    }
+
+    if (range.hasOwnProperty('min') && range.hasOwnProperty('max')) {
+      return num >= range.min && num <= range.max
+
+    } else if (range.hasOwnProperty('min')) {
+      return num >= range.min
+
+    } else if (range.hasOwnProperty('max')) {
+      return num <= range.max
+    }
+  }
+
+  function isNumber(num) {
+    return typeof num !== 'number'
+  }
+
+  function getNumber(hint, range) {
+    if (typeof hint !== 'string') {
+      throw new TypeError('Type of variable hint is error! Wanted type: string, get:' + typeof num)
+    }
+
+    let num
+    let isValid
+
+    do {
+      num = +prompt(hint)
+      if (range === undefined) {
+        isValid = isNumber(num)
+      } else {
+        isValid = rangeValidator(num, range)
+      }
+      if (!isValid) {
+        alert('输入的数字超出允许范围或者输入的不是数字, 请点击确定后重新输入!')
+      }
+    } while (!isValid)
+
+    return num
+
+  }
+
+  function roundFun(value, n) {
+    // JavaScript 的 Math.round()函数对于 -1.5 的情况, 与预期不同
+    // Math.round(-1.5) ----> -1
+    // 需要先转换为绝对值进行取整
+    let num = Math.round(Math.abs(value) * Math.pow(10, n)) / Math.pow(10, n)
+
+    if (Number(value) >= 0) {
+      return num.toFixed(n)
+    } else {
+      return '-' + num.toFixed(n)
+    }
+  }
+</script>
+<script id="ch0105/09">
+
+    //  utils
+  function rangeValidator(num, range) {
+    if (typeof num !== 'number') {
+      throw new TypeError('Type of variable num is error! Wanted type: number, get:' + typeof num)
+    }
+
+    if (typeof range !== 'object') {
+      throw new TypeError('Type of variable range is error! Wanted type: object, get:' + typeof range)
+    }
+
+    if (range.hasOwnProperty('min')) {
+      if (typeof range.min !== 'number') {
+        throw new TypeError('Type of variable range.min is error! Wanted type: number, get:' + typeof range.min)
+      }
+    }
+
+    if (range.hasOwnProperty('max')) {
+      if (typeof range.max !== 'number') {
+        throw new TypeError('Type of variable range.max is error! Wanted type: number, get:' + typeof range.max)
+      }
+    }
+
+    if (range.hasOwnProperty('min') && range.hasOwnProperty('max')) {
+      return num >= range.min && num <= range.max
+
+    } else if (range.hasOwnProperty('min')) {
+      return num >= range.min
+
+    } else if (range.hasOwnProperty('max')) {
+      return num <= range.max
+    }
+  }
+
+  function isNumber(num) {
+    return typeof num !== 'number'
+  }
+
+  function getNumber(hint, range) {
+    if (typeof hint !== 'string') {
+      throw new TypeError('Type of variable hint is error! Wanted type: string, get:' + typeof num)
+    }
+
+    let num
+    let isValid
+
+    do {
+      num = +prompt(hint)
+      if (range === undefined) {
+        isValid = isNumber(num)
+      } else {
+        isValid = rangeValidator(num, range)
+      }
+      if (!isValid) {
+        alert('输入的数字超出允许范围或者输入的不是数字, 请点击确定后重新输入!')
+      }
+    } while (!isValid)
+
+    return num
+
+  }
+
+  function roundFun(value, n) {
+    // JavaScript 的 Math.round()函数对于 -1.5 的情况, 与预期不同
+    // Math.round(-1.5) ----> -1
+    // 需要先转换为绝对值进行取整
+    let num = Math.round(Math.abs(value) * Math.pow(10, n)) / Math.pow(10, n)
+
+    if (Number(value) >= 0) {
+      return num.toFixed(n)
+    } else {
+      return '-' + num.toFixed(n)
+    }
+  }
+</script>
+<script id="ch0105/10">
+
+    //  utils
+  function rangeValidator(num, range) {
+    if (typeof num !== 'number') {
+      throw new TypeError('Type of variable num is error! Wanted type: number, get:' + typeof num)
+    }
+
+    if (typeof range !== 'object') {
+      throw new TypeError('Type of variable range is error! Wanted type: object, get:' + typeof range)
+    }
+
+    if (range.hasOwnProperty('min')) {
+      if (typeof range.min !== 'number') {
+        throw new TypeError('Type of variable range.min is error! Wanted type: number, get:' + typeof range.min)
+      }
+    }
+
+    if (range.hasOwnProperty('max')) {
+      if (typeof range.max !== 'number') {
+        throw new TypeError('Type of variable range.max is error! Wanted type: number, get:' + typeof range.max)
+      }
+    }
+
+    if (range.hasOwnProperty('min') && range.hasOwnProperty('max')) {
+      return num >= range.min && num <= range.max
+
+    } else if (range.hasOwnProperty('min')) {
+      return num >= range.min
+
+    } else if (range.hasOwnProperty('max')) {
+      return num <= range.max
+    }
+  }
+
+  function isNumber(num) {
+    return typeof num !== 'number'
+  }
+
+  function getNumber(hint, range) {
+    if (typeof hint !== 'string') {
+      throw new TypeError('Type of variable hint is error! Wanted type: string, get:' + typeof num)
+    }
+
+    let num
+    let isValid
+
+    do {
+      num = +prompt(hint)
+      if (range === undefined) {
+        isValid = isNumber(num)
+      } else {
+        isValid = rangeValidator(num, range)
+      }
+      if (!isValid) {
+        alert('输入的数字超出允许范围或者输入的不是数字, 请点击确定后重新输入!')
+      }
+    } while (!isValid)
+
+    return num
+
+  }
+
+  function roundFun(value, n) {
+    // JavaScript 的 Math.round()函数对于 -1.5 的情况, 与预期不同
+    // Math.round(-1.5) ----> -1
+    // 需要先转换为绝对值进行取整
+    let num = Math.round(Math.abs(value) * Math.pow(10, n)) / Math.pow(10, n)
+
+    if (Number(value) >= 0) {
+      return num.toFixed(n)
+    } else {
+      return '-' + num.toFixed(n)
+    }
+  }
+</script>
+<script id="ch0105/11">
+
+    //  utils
+  function rangeValidator(num, range) {
+    if (typeof num !== 'number') {
+      throw new TypeError('Type of variable num is error! Wanted type: number, get:' + typeof num)
+    }
+
+    if (typeof range !== 'object') {
+      throw new TypeError('Type of variable range is error! Wanted type: object, get:' + typeof range)
+    }
+
+    if (range.hasOwnProperty('min')) {
+      if (typeof range.min !== 'number') {
+        throw new TypeError('Type of variable range.min is error! Wanted type: number, get:' + typeof range.min)
+      }
+    }
+
+    if (range.hasOwnProperty('max')) {
+      if (typeof range.max !== 'number') {
+        throw new TypeError('Type of variable range.max is error! Wanted type: number, get:' + typeof range.max)
+      }
+    }
+
+    if (range.hasOwnProperty('min') && range.hasOwnProperty('max')) {
+      return num >= range.min && num <= range.max
+
+    } else if (range.hasOwnProperty('min')) {
+      return num >= range.min
+
+    } else if (range.hasOwnProperty('max')) {
+      return num <= range.max
+    }
+  }
+
+  function isNumber(num) {
+    return typeof num !== 'number'
+  }
+
+  function getNumber(hint, range) {
+    if (typeof hint !== 'string') {
+      throw new TypeError('Type of variable hint is error! Wanted type: string, get:' + typeof num)
+    }
+
+    let num
+    let isValid
+
+    do {
+      num = +prompt(hint)
+      if (range === undefined) {
+        isValid = isNumber(num)
+      } else {
+        isValid = rangeValidator(num, range)
+      }
+      if (!isValid) {
+        alert('输入的数字超出允许范围或者输入的不是数字, 请点击确定后重新输入!')
+      }
+    } while (!isValid)
+
+    return num
+
+  }
+
+  function roundFun(value, n) {
+    // JavaScript 的 Math.round()函数对于 -1.5 的情况, 与预期不同
+    // Math.round(-1.5) ----> -1
+    // 需要先转换为绝对值进行取整
+    let num = Math.round(Math.abs(value) * Math.pow(10, n)) / Math.pow(10, n)
+
+    if (Number(value) >= 0) {
+      return num.toFixed(n)
+    } else {
+      return '-' + num.toFixed(n)
+    }
+  }
+</script>
+<script id="ch0105/12">
+
+    //  utils
+  function rangeValidator(num, range) {
+    if (typeof num !== 'number') {
+      throw new TypeError('Type of variable num is error! Wanted type: number, get:' + typeof num)
+    }
+
+    if (typeof range !== 'object') {
+      throw new TypeError('Type of variable range is error! Wanted type: object, get:' + typeof range)
+    }
+
+    if (range.hasOwnProperty('min')) {
+      if (typeof range.min !== 'number') {
+        throw new TypeError('Type of variable range.min is error! Wanted type: number, get:' + typeof range.min)
+      }
+    }
+
+    if (range.hasOwnProperty('max')) {
+      if (typeof range.max !== 'number') {
+        throw new TypeError('Type of variable range.max is error! Wanted type: number, get:' + typeof range.max)
+      }
+    }
+
+    if (range.hasOwnProperty('min') && range.hasOwnProperty('max')) {
+      return num >= range.min && num <= range.max
+
+    } else if (range.hasOwnProperty('min')) {
+      return num >= range.min
+
+    } else if (range.hasOwnProperty('max')) {
+      return num <= range.max
+    }
+  }
+
+  function isNumber(num) {
+    return typeof num !== 'number'
+  }
+
+  function getNumber(hint, range) {
+    if (typeof hint !== 'string') {
+      throw new TypeError('Type of variable hint is error! Wanted type: string, get:' + typeof num)
+    }
+
+    let num
+    let isValid
+
+    do {
+      num = +prompt(hint)
+      if (range === undefined) {
+        isValid = isNumber(num)
+      } else {
+        isValid = rangeValidator(num, range)
+      }
+      if (!isValid) {
+        alert('输入的数字超出允许范围或者输入的不是数字, 请点击确定后重新输入!')
+      }
+    } while (!isValid)
+
+    return num
+
+  }
+
+  function roundFun(value, n) {
+    // JavaScript 的 Math.round()函数对于 -1.5 的情况, 与预期不同
+    // Math.round(-1.5) ----> -1
+    // 需要先转换为绝对值进行取整
+    let num = Math.round(Math.abs(value) * Math.pow(10, n)) / Math.pow(10, n)
+
+    if (Number(value) >= 0) {
+      return num.toFixed(n)
+    } else {
+      return '-' + num.toFixed(n)
+    }
+  }
+</script>
+<script id="ch0105/13">
+
+    //  utils
+  function rangeValidator(num, range) {
+    if (typeof num !== 'number') {
+      throw new TypeError('Type of variable num is error! Wanted type: number, get:' + typeof num)
+    }
+
+    if (typeof range !== 'object') {
+      throw new TypeError('Type of variable range is error! Wanted type: object, get:' + typeof range)
+    }
+
+    if (range.hasOwnProperty('min')) {
+      if (typeof range.min !== 'number') {
+        throw new TypeError('Type of variable range.min is error! Wanted type: number, get:' + typeof range.min)
+      }
+    }
+
+    if (range.hasOwnProperty('max')) {
+      if (typeof range.max !== 'number') {
+        throw new TypeError('Type of variable range.max is error! Wanted type: number, get:' + typeof range.max)
+      }
+    }
+
+    if (range.hasOwnProperty('min') && range.hasOwnProperty('max')) {
+      return num >= range.min && num <= range.max
+
+    } else if (range.hasOwnProperty('min')) {
+      return num >= range.min
+
+    } else if (range.hasOwnProperty('max')) {
+      return num <= range.max
+    }
+  }
+
+  function isNumber(num) {
+    return typeof num !== 'number'
+  }
+
+  function getNumber(hint, range) {
+    if (typeof hint !== 'string') {
+      throw new TypeError('Type of variable hint is error! Wanted type: string, get:' + typeof num)
+    }
+
+    let num
+    let isValid
+
+    do {
+      num = +prompt(hint)
+      if (range === undefined) {
+        isValid = isNumber(num)
+      } else {
+        isValid = rangeValidator(num, range)
+      }
+      if (!isValid) {
+        alert('输入的数字超出允许范围或者输入的不是数字, 请点击确定后重新输入!')
+      }
+    } while (!isValid)
+
+    return num
+
+  }
+
+  function roundFun(value, n) {
+    // JavaScript 的 Math.round()函数对于 -1.5 的情况, 与预期不同
+    // Math.round(-1.5) ----> -1
+    // 需要先转换为绝对值进行取整
+    let num = Math.round(Math.abs(value) * Math.pow(10, n)) / Math.pow(10, n)
+
+    if (Number(value) >= 0) {
+      return num.toFixed(n)
+    } else {
+      return '-' + num.toFixed(n)
+    }
+  }
+</script>
+<script id="ch0105/14">
+
+    //  utils
+  function rangeValidator(num, range) {
+    if (typeof num !== 'number') {
+      throw new TypeError('Type of variable num is error! Wanted type: number, get:' + typeof num)
+    }
+
+    if (typeof range !== 'object') {
+      throw new TypeError('Type of variable range is error! Wanted type: object, get:' + typeof range)
+    }
+
+    if (range.hasOwnProperty('min')) {
+      if (typeof range.min !== 'number') {
+        throw new TypeError('Type of variable range.min is error! Wanted type: number, get:' + typeof range.min)
+      }
+    }
+
+    if (range.hasOwnProperty('max')) {
+      if (typeof range.max !== 'number') {
+        throw new TypeError('Type of variable range.max is error! Wanted type: number, get:' + typeof range.max)
+      }
+    }
+
+    if (range.hasOwnProperty('min') && range.hasOwnProperty('max')) {
+      return num >= range.min && num <= range.max
+
+    } else if (range.hasOwnProperty('min')) {
+      return num >= range.min
+
+    } else if (range.hasOwnProperty('max')) {
+      return num <= range.max
+    }
+  }
+
+  function isNumber(num) {
+    return typeof num !== 'number'
+  }
+
+  function getNumber(hint, range) {
+    if (typeof hint !== 'string') {
+      throw new TypeError('Type of variable hint is error! Wanted type: string, get:' + typeof num)
+    }
+
+    let num
+    let isValid
+
+    do {
+      num = +prompt(hint)
+      if (range === undefined) {
+        isValid = isNumber(num)
+      } else {
+        isValid = rangeValidator(num, range)
+      }
+      if (!isValid) {
+        alert('输入的数字超出允许范围或者输入的不是数字, 请点击确定后重新输入!')
+      }
+    } while (!isValid)
+
+    return num
+
+  }
+
+  function roundFun(value, n) {
+    // JavaScript 的 Math.round()函数对于 -1.5 的情况, 与预期不同
+    // Math.round(-1.5) ----> -1
+    // 需要先转换为绝对值进行取整
+    let num = Math.round(Math.abs(value) * Math.pow(10, n)) / Math.pow(10, n)
+
+    if (Number(value) >= 0) {
+      return num.toFixed(n)
+    } else {
+      return '-' + num.toFixed(n)
+    }
+  }
+</script>
+<script id="ch0105/15">
+
+    //  utils
+  function rangeValidator(num, range) {
+    if (typeof num !== 'number') {
+      throw new TypeError('Type of variable num is error! Wanted type: number, get:' + typeof num)
+    }
+
+    if (typeof range !== 'object') {
+      throw new TypeError('Type of variable range is error! Wanted type: object, get:' + typeof range)
+    }
+
+    if (range.hasOwnProperty('min')) {
+      if (typeof range.min !== 'number') {
+        throw new TypeError('Type of variable range.min is error! Wanted type: number, get:' + typeof range.min)
+      }
+    }
+
+    if (range.hasOwnProperty('max')) {
+      if (typeof range.max !== 'number') {
+        throw new TypeError('Type of variable range.max is error! Wanted type: number, get:' + typeof range.max)
+      }
+    }
+
+    if (range.hasOwnProperty('min') && range.hasOwnProperty('max')) {
+      return num >= range.min && num <= range.max
+
+    } else if (range.hasOwnProperty('min')) {
+      return num >= range.min
+
+    } else if (range.hasOwnProperty('max')) {
+      return num <= range.max
+    }
+  }
+
+  function isNumber(num) {
+    return typeof num !== 'number'
+  }
+
+  function getNumber(hint, range) {
+    if (typeof hint !== 'string') {
+      throw new TypeError('Type of variable hint is error! Wanted type: string, get:' + typeof num)
+    }
+
+    let num
+    let isValid
+
+    do {
+      num = +prompt(hint)
+      if (range === undefined) {
+        isValid = isNumber(num)
+      } else {
+        isValid = rangeValidator(num, range)
+      }
+      if (!isValid) {
+        alert('输入的数字超出允许范围或者输入的不是数字, 请点击确定后重新输入!')
+      }
+    } while (!isValid)
+
+    return num
+
+  }
+
+  function roundFun(value, n) {
+    // JavaScript 的 Math.round()函数对于 -1.5 的情况, 与预期不同
+    // Math.round(-1.5) ----> -1
+    // 需要先转换为绝对值进行取整
+    let num = Math.round(Math.abs(value) * Math.pow(10, n)) / Math.pow(10, n)
+
+    if (Number(value) >= 0) {
+      return num.toFixed(n)
+    } else {
+      return '-' + num.toFixed(n)
+    }
+  }
+</script>
+<script id="ch0105/16">
+
+    //  utils
+  function rangeValidator(num, range) {
+    if (typeof num !== 'number') {
+      throw new TypeError('Type of variable num is error! Wanted type: number, get:' + typeof num)
+    }
+
+    if (typeof range !== 'object') {
+      throw new TypeError('Type of variable range is error! Wanted type: object, get:' + typeof range)
+    }
+
+    if (range.hasOwnProperty('min')) {
+      if (typeof range.min !== 'number') {
+        throw new TypeError('Type of variable range.min is error! Wanted type: number, get:' + typeof range.min)
+      }
+    }
+
+    if (range.hasOwnProperty('max')) {
+      if (typeof range.max !== 'number') {
+        throw new TypeError('Type of variable range.max is error! Wanted type: number, get:' + typeof range.max)
+      }
+    }
+
+    if (range.hasOwnProperty('min') && range.hasOwnProperty('max')) {
+      return num >= range.min && num <= range.max
+
+    } else if (range.hasOwnProperty('min')) {
+      return num >= range.min
+
+    } else if (range.hasOwnProperty('max')) {
+      return num <= range.max
+    }
+  }
+
+  function isNumber(num) {
+    return typeof num !== 'number'
+  }
+
+  function getNumber(hint, range) {
+    if (typeof hint !== 'string') {
+      throw new TypeError('Type of variable hint is error! Wanted type: string, get:' + typeof num)
+    }
+
+    let num
+    let isValid
+
+    do {
+      num = +prompt(hint)
+      if (range === undefined) {
+        isValid = isNumber(num)
+      } else {
+        isValid = rangeValidator(num, range)
+      }
+      if (!isValid) {
+        alert('输入的数字超出允许范围或者输入的不是数字, 请点击确定后重新输入!')
+      }
+    } while (!isValid)
+
+    return num
+
+  }
+
+  function roundFun(value, n) {
+    // JavaScript 的 Math.round()函数对于 -1.5 的情况, 与预期不同
+    // Math.round(-1.5) ----> -1
+    // 需要先转换为绝对值进行取整
+    let num = Math.round(Math.abs(value) * Math.pow(10, n)) / Math.pow(10, n)
+
+    if (Number(value) >= 0) {
+      return num.toFixed(n)
+    } else {
+      return '-' + num.toFixed(n)
+    }
+  }
+</script>
+<script id="ch0105/17">
+
+    //  utils
+  function rangeValidator(num, range) {
+    if (typeof num !== 'number') {
+      throw new TypeError('Type of variable num is error! Wanted type: number, get:' + typeof num)
+    }
+
+    if (typeof range !== 'object') {
+      throw new TypeError('Type of variable range is error! Wanted type: object, get:' + typeof range)
+    }
+
+    if (range.hasOwnProperty('min')) {
+      if (typeof range.min !== 'number') {
+        throw new TypeError('Type of variable range.min is error! Wanted type: number, get:' + typeof range.min)
+      }
+    }
+
+    if (range.hasOwnProperty('max')) {
+      if (typeof range.max !== 'number') {
+        throw new TypeError('Type of variable range.max is error! Wanted type: number, get:' + typeof range.max)
+      }
+    }
+
+    if (range.hasOwnProperty('min') && range.hasOwnProperty('max')) {
+      return num >= range.min && num <= range.max
+
+    } else if (range.hasOwnProperty('min')) {
+      return num >= range.min
+
+    } else if (range.hasOwnProperty('max')) {
+      return num <= range.max
+    }
+  }
+
+  function isNumber(num) {
+    return typeof num !== 'number'
+  }
+
+  function getNumber(hint, range) {
+    if (typeof hint !== 'string') {
+      throw new TypeError('Type of variable hint is error! Wanted type: string, get:' + typeof num)
+    }
+
+    let num
+    let isValid
+
+    do {
+      num = +prompt(hint)
+      if (range === undefined) {
+        isValid = isNumber(num)
+      } else {
+        isValid = rangeValidator(num, range)
+      }
+      if (!isValid) {
+        alert('输入的数字超出允许范围或者输入的不是数字, 请点击确定后重新输入!')
+      }
+    } while (!isValid)
+
+    return num
+
+  }
+
+  function roundFun(value, n) {
+    // JavaScript 的 Math.round()函数对于 -1.5 的情况, 与预期不同
+    // Math.round(-1.5) ----> -1
+    // 需要先转换为绝对值进行取整
+    let num = Math.round(Math.abs(value) * Math.pow(10, n)) / Math.pow(10, n)
+
+    if (Number(value) >= 0) {
+      return num.toFixed(n)
+    } else {
+      return '-' + num.toFixed(n)
+    }
+  }
+</script>
+<script id="ch0105/18">
+
+    //  utils
+  function rangeValidator(num, range) {
+    if (typeof num !== 'number') {
+      throw new TypeError('Type of variable num is error! Wanted type: number, get:' + typeof num)
+    }
+
+    if (typeof range !== 'object') {
+      throw new TypeError('Type of variable range is error! Wanted type: object, get:' + typeof range)
+    }
+
+    if (range.hasOwnProperty('min')) {
+      if (typeof range.min !== 'number') {
+        throw new TypeError('Type of variable range.min is error! Wanted type: number, get:' + typeof range.min)
+      }
+    }
+
+    if (range.hasOwnProperty('max')) {
+      if (typeof range.max !== 'number') {
+        throw new TypeError('Type of variable range.max is error! Wanted type: number, get:' + typeof range.max)
+      }
+    }
+
+    if (range.hasOwnProperty('min') && range.hasOwnProperty('max')) {
+      return num >= range.min && num <= range.max
+
+    } else if (range.hasOwnProperty('min')) {
+      return num >= range.min
+
+    } else if (range.hasOwnProperty('max')) {
+      return num <= range.max
+    }
+  }
+
+  function isNumber(num) {
+    return typeof num !== 'number'
+  }
+
+  function getNumber(hint, range) {
+    if (typeof hint !== 'string') {
+      throw new TypeError('Type of variable hint is error! Wanted type: string, get:' + typeof num)
+    }
+
+    let num
+    let isValid
+
+    do {
+      num = +prompt(hint)
+      if (range === undefined) {
+        isValid = isNumber(num)
+      } else {
+        isValid = rangeValidator(num, range)
+      }
+      if (!isValid) {
+        alert('输入的数字超出允许范围或者输入的不是数字, 请点击确定后重新输入!')
+      }
+    } while (!isValid)
+
+    return num
+
+  }
+
+  function roundFun(value, n) {
+    // JavaScript 的 Math.round()函数对于 -1.5 的情况, 与预期不同
+    // Math.round(-1.5) ----> -1
+    // 需要先转换为绝对值进行取整
+    let num = Math.round(Math.abs(value) * Math.pow(10, n)) / Math.pow(10, n)
+
+    if (Number(value) >= 0) {
+      return num.toFixed(n)
+    } else {
+      return '-' + num.toFixed(n)
+    }
+  }
+</script>
+<script id="ch0105/19">
+
+    //  utils
+  function rangeValidator(num, range) {
+    if (typeof num !== 'number') {
+      throw new TypeError('Type of variable num is error! Wanted type: number, get:' + typeof num)
+    }
+
+    if (typeof range !== 'object') {
+      throw new TypeError('Type of variable range is error! Wanted type: object, get:' + typeof range)
+    }
+
+    if (range.hasOwnProperty('min')) {
+      if (typeof range.min !== 'number') {
+        throw new TypeError('Type of variable range.min is error! Wanted type: number, get:' + typeof range.min)
+      }
+    }
+
+    if (range.hasOwnProperty('max')) {
+      if (typeof range.max !== 'number') {
+        throw new TypeError('Type of variable range.max is error! Wanted type: number, get:' + typeof range.max)
+      }
+    }
+
+    if (range.hasOwnProperty('min') && range.hasOwnProperty('max')) {
+      return num >= range.min && num <= range.max
+
+    } else if (range.hasOwnProperty('min')) {
+      return num >= range.min
+
+    } else if (range.hasOwnProperty('max')) {
+      return num <= range.max
+    }
+  }
+
+  function isNumber(num) {
+    return typeof num !== 'number'
+  }
+
+  function getNumber(hint, range) {
+    if (typeof hint !== 'string') {
+      throw new TypeError('Type of variable hint is error! Wanted type: string, get:' + typeof num)
+    }
+
+    let num
+    let isValid
+
+    do {
+      num = +prompt(hint)
+      if (range === undefined) {
+        isValid = isNumber(num)
+      } else {
+        isValid = rangeValidator(num, range)
+      }
+      if (!isValid) {
+        alert('输入的数字超出允许范围或者输入的不是数字, 请点击确定后重新输入!')
+      }
+    } while (!isValid)
+
+    return num
+
+  }
+
+  function roundFun(value, n) {
+    // JavaScript 的 Math.round()函数对于 -1.5 的情况, 与预期不同
+    // Math.round(-1.5) ----> -1
+    // 需要先转换为绝对值进行取整
+    let num = Math.round(Math.abs(value) * Math.pow(10, n)) / Math.pow(10, n)
+
+    if (Number(value) >= 0) {
+      return num.toFixed(n)
+    } else {
+      return '-' + num.toFixed(n)
+    }
+  }
+</script>
+<script id="ch0105/20">
+
+    //  utils
+  function rangeValidator(num, range) {
+    if (typeof num !== 'number') {
+      throw new TypeError('Type of variable num is error! Wanted type: number, get:' + typeof num)
+    }
+
+    if (typeof range !== 'object') {
+      throw new TypeError('Type of variable range is error! Wanted type: object, get:' + typeof range)
+    }
+
+    if (range.hasOwnProperty('min')) {
+      if (typeof range.min !== 'number') {
+        throw new TypeError('Type of variable range.min is error! Wanted type: number, get:' + typeof range.min)
+      }
+    }
+
+    if (range.hasOwnProperty('max')) {
+      if (typeof range.max !== 'number') {
+        throw new TypeError('Type of variable range.max is error! Wanted type: number, get:' + typeof range.max)
+      }
+    }
+
+    if (range.hasOwnProperty('min') && range.hasOwnProperty('max')) {
+      return num >= range.min && num <= range.max
+
+    } else if (range.hasOwnProperty('min')) {
+      return num >= range.min
+
+    } else if (range.hasOwnProperty('max')) {
+      return num <= range.max
+    }
+  }
+
+  function isNumber(num) {
+    return typeof num !== 'number'
+  }
+
+  function getNumber(hint, range) {
+    if (typeof hint !== 'string') {
+      throw new TypeError('Type of variable hint is error! Wanted type: string, get:' + typeof num)
+    }
+
+    let num
+    let isValid
+
+    do {
+      num = +prompt(hint)
+      if (range === undefined) {
+        isValid = isNumber(num)
+      } else {
+        isValid = rangeValidator(num, range)
+      }
+      if (!isValid) {
+        alert('输入的数字超出允许范围或者输入的不是数字, 请点击确定后重新输入!')
+      }
+    } while (!isValid)
+
+    return num
+
+  }
+
+  function roundFun(value, n) {
+    // JavaScript 的 Math.round()函数对于 -1.5 的情况, 与预期不同
+    // Math.round(-1.5) ----> -1
+    // 需要先转换为绝对值进行取整
+    let num = Math.round(Math.abs(value) * Math.pow(10, n)) / Math.pow(10, n)
+
+    if (Number(value) >= 0) {
+      return num.toFixed(n)
+    } else {
+      return '-' + num.toFixed(n)
+    }
+  }
+</script>
+<script id="ch0105/21">
+
+    //  utils
+  function rangeValidator(num, range) {
+    if (typeof num !== 'number') {
+      throw new TypeError('Type of variable num is error! Wanted type: number, get:' + typeof num)
+    }
+
+    if (typeof range !== 'object') {
+      throw new TypeError('Type of variable range is error! Wanted type: object, get:' + typeof range)
+    }
+
+    if (range.hasOwnProperty('min')) {
+      if (typeof range.min !== 'number') {
+        throw new TypeError('Type of variable range.min is error! Wanted type: number, get:' + typeof range.min)
+      }
+    }
+
+    if (range.hasOwnProperty('max')) {
+      if (typeof range.max !== 'number') {
+        throw new TypeError('Type of variable range.max is error! Wanted type: number, get:' + typeof range.max)
+      }
+    }
+
+    if (range.hasOwnProperty('min') && range.hasOwnProperty('max')) {
+      return num >= range.min && num <= range.max
+
+    } else if (range.hasOwnProperty('min')) {
+      return num >= range.min
+
+    } else if (range.hasOwnProperty('max')) {
+      return num <= range.max
+    }
+  }
+
+  function isNumber(num) {
+    return typeof num !== 'number'
+  }
+
+  function getNumber(hint, range) {
+    if (typeof hint !== 'string') {
+      throw new TypeError('Type of variable hint is error! Wanted type: string, get:' + typeof num)
+    }
+
+    let num
+    let isValid
+
+    do {
+      num = +prompt(hint)
+      if (range === undefined) {
+        isValid = isNumber(num)
+      } else {
+        isValid = rangeValidator(num, range)
+      }
+      if (!isValid) {
+        alert('输入的数字超出允许范围或者输入的不是数字, 请点击确定后重新输入!')
+      }
+    } while (!isValid)
+
+    return num
+
+  }
+
+  function roundFun(value, n) {
+    // JavaScript 的 Math.round()函数对于 -1.5 的情况, 与预期不同
+    // Math.round(-1.5) ----> -1
+    // 需要先转换为绝对值进行取整
+    let num = Math.round(Math.abs(value) * Math.pow(10, n)) / Math.pow(10, n)
+
+    if (Number(value) >= 0) {
+      return num.toFixed(n)
+    } else {
+      return '-' + num.toFixed(n)
+    }
+  }
+</script>
+<script id="ch0105/22">
+
+    //  utils
+  function rangeValidator(num, range) {
+    if (typeof num !== 'number') {
+      throw new TypeError('Type of variable num is error! Wanted type: number, get:' + typeof num)
+    }
+
+    if (typeof range !== 'object') {
+      throw new TypeError('Type of variable range is error! Wanted type: object, get:' + typeof range)
+    }
+
+    if (range.hasOwnProperty('min')) {
+      if (typeof range.min !== 'number') {
+        throw new TypeError('Type of variable range.min is error! Wanted type: number, get:' + typeof range.min)
+      }
+    }
+
+    if (range.hasOwnProperty('max')) {
+      if (typeof range.max !== 'number') {
+        throw new TypeError('Type of variable range.max is error! Wanted type: number, get:' + typeof range.max)
+      }
+    }
+
+    if (range.hasOwnProperty('min') && range.hasOwnProperty('max')) {
+      return num >= range.min && num <= range.max
+
+    } else if (range.hasOwnProperty('min')) {
+      return num >= range.min
+
+    } else if (range.hasOwnProperty('max')) {
+      return num <= range.max
+    }
+  }
+
+  function isNumber(num) {
+    return typeof num !== 'number'
+  }
+
+  function getNumber(hint, range) {
+    if (typeof hint !== 'string') {
+      throw new TypeError('Type of variable hint is error! Wanted type: string, get:' + typeof num)
+    }
+
+    let num
+    let isValid
+
+    do {
+      num = +prompt(hint)
+      if (range === undefined) {
+        isValid = isNumber(num)
+      } else {
+        isValid = rangeValidator(num, range)
+      }
+      if (!isValid) {
+        alert('输入的数字超出允许范围或者输入的不是数字, 请点击确定后重新输入!')
+      }
+    } while (!isValid)
+
+    return num
+
+  }
+
+  function roundFun(value, n) {
+    // JavaScript 的 Math.round()函数对于 -1.5 的情况, 与预期不同
+    // Math.round(-1.5) ----> -1
+    // 需要先转换为绝对值进行取整
+    let num = Math.round(Math.abs(value) * Math.pow(10, n)) / Math.pow(10, n)
+
+    if (Number(value) >= 0) {
+      return num.toFixed(n)
+    } else {
+      return '-' + num.toFixed(n)
+    }
+  }
+</script>
+<script id="ch0105/23">
+
+    //  utils
+  function rangeValidator(num, range) {
+    if (typeof num !== 'number') {
+      throw new TypeError('Type of variable num is error! Wanted type: number, get:' + typeof num)
+    }
+
+    if (typeof range !== 'object') {
+      throw new TypeError('Type of variable range is error! Wanted type: object, get:' + typeof range)
+    }
+
+    if (range.hasOwnProperty('min')) {
+      if (typeof range.min !== 'number') {
+        throw new TypeError('Type of variable range.min is error! Wanted type: number, get:' + typeof range.min)
+      }
+    }
+
+    if (range.hasOwnProperty('max')) {
+      if (typeof range.max !== 'number') {
+        throw new TypeError('Type of variable range.max is error! Wanted type: number, get:' + typeof range.max)
+      }
+    }
+
+    if (range.hasOwnProperty('min') && range.hasOwnProperty('max')) {
+      return num >= range.min && num <= range.max
+
+    } else if (range.hasOwnProperty('min')) {
+      return num >= range.min
+
+    } else if (range.hasOwnProperty('max')) {
+      return num <= range.max
+    }
+  }
+
+  function isNumber(num) {
+    return typeof num !== 'number'
+  }
+
+  function getNumber(hint, range) {
+    if (typeof hint !== 'string') {
+      throw new TypeError('Type of variable hint is error! Wanted type: string, get:' + typeof num)
+    }
+
+    let num
+    let isValid
+
+    do {
+      num = +prompt(hint)
+      if (range === undefined) {
+        isValid = isNumber(num)
+      } else {
+        isValid = rangeValidator(num, range)
+      }
+      if (!isValid) {
+        alert('输入的数字超出允许范围或者输入的不是数字, 请点击确定后重新输入!')
+      }
+    } while (!isValid)
+
+    return num
+
+  }
+
+  function roundFun(value, n) {
+    // JavaScript 的 Math.round()函数对于 -1.5 的情况, 与预期不同
+    // Math.round(-1.5) ----> -1
+    // 需要先转换为绝对值进行取整
+    let num = Math.round(Math.abs(value) * Math.pow(10, n)) / Math.pow(10, n)
+
+    if (Number(value) >= 0) {
+      return num.toFixed(n)
+    } else {
+      return '-' + num.toFixed(n)
+    }
+  }
+</script>
+<script id="ch0105/24">
+
+    //  utils
+  function rangeValidator(num, range) {
+    if (typeof num !== 'number') {
+      throw new TypeError('Type of variable num is error! Wanted type: number, get:' + typeof num)
+    }
+
+    if (typeof range !== 'object') {
+      throw new TypeError('Type of variable range is error! Wanted type: object, get:' + typeof range)
+    }
+
+    if (range.hasOwnProperty('min')) {
+      if (typeof range.min !== 'number') {
+        throw new TypeError('Type of variable range.min is error! Wanted type: number, get:' + typeof range.min)
+      }
+    }
+
+    if (range.hasOwnProperty('max')) {
+      if (typeof range.max !== 'number') {
+        throw new TypeError('Type of variable range.max is error! Wanted type: number, get:' + typeof range.max)
+      }
+    }
+
+    if (range.hasOwnProperty('min') && range.hasOwnProperty('max')) {
+      return num >= range.min && num <= range.max
+
+    } else if (range.hasOwnProperty('min')) {
+      return num >= range.min
+
+    } else if (range.hasOwnProperty('max')) {
+      return num <= range.max
+    }
+  }
+
+  function isNumber(num) {
+    return typeof num !== 'number'
+  }
+
+  function getNumber(hint, range) {
+    if (typeof hint !== 'string') {
+      throw new TypeError('Type of variable hint is error! Wanted type: string, get:' + typeof num)
+    }
+
+    let num
+    let isValid
+
+    do {
+      num = +prompt(hint)
+      if (range === undefined) {
+        isValid = isNumber(num)
+      } else {
+        isValid = rangeValidator(num, range)
+      }
+      if (!isValid) {
+        alert('输入的数字超出允许范围或者输入的不是数字, 请点击确定后重新输入!')
+      }
+    } while (!isValid)
+
+    return num
+
+  }
+
+  function roundFun(value, n) {
+    // JavaScript 的 Math.round()函数对于 -1.5 的情况, 与预期不同
+    // Math.round(-1.5) ----> -1
+    // 需要先转换为绝对值进行取整
+    let num = Math.round(Math.abs(value) * Math.pow(10, n)) / Math.pow(10, n)
+
+    if (Number(value) >= 0) {
+      return num.toFixed(n)
+    } else {
+      return '-' + num.toFixed(n)
+    }
+  }
+</script>
+<script id="ch0105/25">
+
+    //  utils
+  function rangeValidator(num, range) {
+    if (typeof num !== 'number') {
+      throw new TypeError('Type of variable num is error! Wanted type: number, get:' + typeof num)
+    }
+
+    if (typeof range !== 'object') {
+      throw new TypeError('Type of variable range is error! Wanted type: object, get:' + typeof range)
+    }
+
+    if (range.hasOwnProperty('min')) {
+      if (typeof range.min !== 'number') {
+        throw new TypeError('Type of variable range.min is error! Wanted type: number, get:' + typeof range.min)
+      }
+    }
+
+    if (range.hasOwnProperty('max')) {
+      if (typeof range.max !== 'number') {
+        throw new TypeError('Type of variable range.max is error! Wanted type: number, get:' + typeof range.max)
+      }
+    }
+
+    if (range.hasOwnProperty('min') && range.hasOwnProperty('max')) {
+      return num >= range.min && num <= range.max
+
+    } else if (range.hasOwnProperty('min')) {
+      return num >= range.min
+
+    } else if (range.hasOwnProperty('max')) {
+      return num <= range.max
+    }
+  }
+
+  function isNumber(num) {
+    return typeof num !== 'number'
+  }
+
+  function getNumber(hint, range) {
+    if (typeof hint !== 'string') {
+      throw new TypeError('Type of variable hint is error! Wanted type: string, get:' + typeof num)
+    }
+
+    let num
+    let isValid
+
+    do {
+      num = +prompt(hint)
+      if (range === undefined) {
+        isValid = isNumber(num)
+      } else {
+        isValid = rangeValidator(num, range)
+      }
+      if (!isValid) {
+        alert('输入的数字超出允许范围或者输入的不是数字, 请点击确定后重新输入!')
+      }
+    } while (!isValid)
+
+    return num
+
+  }
+
+  function roundFun(value, n) {
+    // JavaScript 的 Math.round()函数对于 -1.5 的情况, 与预期不同
+    // Math.round(-1.5) ----> -1
+    // 需要先转换为绝对值进行取整
+    let num = Math.round(Math.abs(value) * Math.pow(10, n)) / Math.pow(10, n)
+
+    if (Number(value) >= 0) {
+      return num.toFixed(n)
+    } else {
+      return '-' + num.toFixed(n)
+    }
+  }
+</script>
+<script id="ch0105/26">
+
+    //  utils
+  function rangeValidator(num, range) {
+    if (typeof num !== 'number') {
+      throw new TypeError('Type of variable num is error! Wanted type: number, get:' + typeof num)
+    }
+
+    if (typeof range !== 'object') {
+      throw new TypeError('Type of variable range is error! Wanted type: object, get:' + typeof range)
+    }
+
+    if (range.hasOwnProperty('min')) {
+      if (typeof range.min !== 'number') {
+        throw new TypeError('Type of variable range.min is error! Wanted type: number, get:' + typeof range.min)
+      }
+    }
+
+    if (range.hasOwnProperty('max')) {
+      if (typeof range.max !== 'number') {
+        throw new TypeError('Type of variable range.max is error! Wanted type: number, get:' + typeof range.max)
+      }
+    }
+
+    if (range.hasOwnProperty('min') && range.hasOwnProperty('max')) {
+      return num >= range.min && num <= range.max
+
+    } else if (range.hasOwnProperty('min')) {
+      return num >= range.min
+
+    } else if (range.hasOwnProperty('max')) {
+      return num <= range.max
+    }
+  }
+
+  function isNumber(num) {
+    return typeof num !== 'number'
+  }
+
+  function getNumber(hint, range) {
+    if (typeof hint !== 'string') {
+      throw new TypeError('Type of variable hint is error! Wanted type: string, get:' + typeof num)
+    }
+
+    let num
+    let isValid
+
+    do {
+      num = +prompt(hint)
+      if (range === undefined) {
+        isValid = isNumber(num)
+      } else {
+        isValid = rangeValidator(num, range)
+      }
+      if (!isValid) {
+        alert('输入的数字超出允许范围或者输入的不是数字, 请点击确定后重新输入!')
+      }
+    } while (!isValid)
+
+    return num
+
+  }
+
+  function roundFun(value, n) {
+    // JavaScript 的 Math.round()函数对于 -1.5 的情况, 与预期不同
+    // Math.round(-1.5) ----> -1
+    // 需要先转换为绝对值进行取整
+    let num = Math.round(Math.abs(value) * Math.pow(10, n)) / Math.pow(10, n)
+
+    if (Number(value) >= 0) {
+      return num.toFixed(n)
+    } else {
+      return '-' + num.toFixed(n)
+    }
+  }
+</script>
+<script id="ch0105/27">
+
+    //  utils
+  function rangeValidator(num, range) {
+    if (typeof num !== 'number') {
+      throw new TypeError('Type of variable num is error! Wanted type: number, get:' + typeof num)
+    }
+
+    if (typeof range !== 'object') {
+      throw new TypeError('Type of variable range is error! Wanted type: object, get:' + typeof range)
+    }
+
+    if (range.hasOwnProperty('min')) {
+      if (typeof range.min !== 'number') {
+        throw new TypeError('Type of variable range.min is error! Wanted type: number, get:' + typeof range.min)
+      }
+    }
+
+    if (range.hasOwnProperty('max')) {
+      if (typeof range.max !== 'number') {
+        throw new TypeError('Type of variable range.max is error! Wanted type: number, get:' + typeof range.max)
+      }
+    }
+
+    if (range.hasOwnProperty('min') && range.hasOwnProperty('max')) {
+      return num >= range.min && num <= range.max
+
+    } else if (range.hasOwnProperty('min')) {
+      return num >= range.min
+
+    } else if (range.hasOwnProperty('max')) {
+      return num <= range.max
+    }
+  }
+
+  function isNumber(num) {
+    return typeof num !== 'number'
+  }
+
+  function getNumber(hint, range) {
+    if (typeof hint !== 'string') {
+      throw new TypeError('Type of variable hint is error! Wanted type: string, get:' + typeof num)
+    }
+
+    let num
+    let isValid
+
+    do {
+      num = +prompt(hint)
+      if (range === undefined) {
+        isValid = isNumber(num)
+      } else {
+        isValid = rangeValidator(num, range)
+      }
+      if (!isValid) {
+        alert('输入的数字超出允许范围或者输入的不是数字, 请点击确定后重新输入!')
+      }
+    } while (!isValid)
+
+    return num
+
+  }
+
+  function roundFun(value, n) {
+    // JavaScript 的 Math.round()函数对于 -1.5 的情况, 与预期不同
+    // Math.round(-1.5) ----> -1
+    // 需要先转换为绝对值进行取整
+    let num = Math.round(Math.abs(value) * Math.pow(10, n)) / Math.pow(10, n)
+
+    if (Number(value) >= 0) {
+      return num.toFixed(n)
+    } else {
+      return '-' + num.toFixed(n)
+    }
+  }
+</script>
+<script id="ch0105/28">
+
+    //  utils
+  function rangeValidator(num, range) {
+    if (typeof num !== 'number') {
+      throw new TypeError('Type of variable num is error! Wanted type: number, get:' + typeof num)
+    }
+
+    if (typeof range !== 'object') {
+      throw new TypeError('Type of variable range is error! Wanted type: object, get:' + typeof range)
+    }
+
+    if (range.hasOwnProperty('min')) {
+      if (typeof range.min !== 'number') {
+        throw new TypeError('Type of variable range.min is error! Wanted type: number, get:' + typeof range.min)
+      }
+    }
+
+    if (range.hasOwnProperty('max')) {
+      if (typeof range.max !== 'number') {
+        throw new TypeError('Type of variable range.max is error! Wanted type: number, get:' + typeof range.max)
+      }
+    }
+
+    if (range.hasOwnProperty('min') && range.hasOwnProperty('max')) {
+      return num >= range.min && num <= range.max
+
+    } else if (range.hasOwnProperty('min')) {
+      return num >= range.min
+
+    } else if (range.hasOwnProperty('max')) {
+      return num <= range.max
+    }
+  }
+
+  function isNumber(num) {
+    return typeof num !== 'number'
+  }
+
+  function getNumber(hint, range) {
+    if (typeof hint !== 'string') {
+      throw new TypeError('Type of variable hint is error! Wanted type: string, get:' + typeof num)
+    }
+
+    let num
+    let isValid
+
+    do {
+      num = +prompt(hint)
+      if (range === undefined) {
+        isValid = isNumber(num)
+      } else {
+        isValid = rangeValidator(num, range)
+      }
+      if (!isValid) {
+        alert('输入的数字超出允许范围或者输入的不是数字, 请点击确定后重新输入!')
+      }
+    } while (!isValid)
+
+    return num
+
+  }
+
+  function roundFun(value, n) {
+    // JavaScript 的 Math.round()函数对于 -1.5 的情况, 与预期不同
+    // Math.round(-1.5) ----> -1
+    // 需要先转换为绝对值进行取整
+    let num = Math.round(Math.abs(value) * Math.pow(10, n)) / Math.pow(10, n)
+
+    if (Number(value) >= 0) {
+      return num.toFixed(n)
+    } else {
+      return '-' + num.toFixed(n)
+    }
+  }
+</script>
+<script id="ch0105/29">
+
+    //  utils
+  function rangeValidator(num, range) {
+    if (typeof num !== 'number') {
+      throw new TypeError('Type of variable num is error! Wanted type: number, get:' + typeof num)
+    }
+
+    if (typeof range !== 'object') {
+      throw new TypeError('Type of variable range is error! Wanted type: object, get:' + typeof range)
+    }
+
+    if (range.hasOwnProperty('min')) {
+      if (typeof range.min !== 'number') {
+        throw new TypeError('Type of variable range.min is error! Wanted type: number, get:' + typeof range.min)
+      }
+    }
+
+    if (range.hasOwnProperty('max')) {
+      if (typeof range.max !== 'number') {
+        throw new TypeError('Type of variable range.max is error! Wanted type: number, get:' + typeof range.max)
+      }
+    }
+
+    if (range.hasOwnProperty('min') && range.hasOwnProperty('max')) {
+      return num >= range.min && num <= range.max
+
+    } else if (range.hasOwnProperty('min')) {
+      return num >= range.min
+
+    } else if (range.hasOwnProperty('max')) {
+      return num <= range.max
+    }
+  }
+
+  function isNumber(num) {
+    return typeof num !== 'number'
+  }
+
+  function getNumber(hint, range) {
+    if (typeof hint !== 'string') {
+      throw new TypeError('Type of variable hint is error! Wanted type: string, get:' + typeof num)
+    }
+
+    let num
+    let isValid
+
+    do {
+      num = +prompt(hint)
+      if (range === undefined) {
+        isValid = isNumber(num)
+      } else {
+        isValid = rangeValidator(num, range)
+      }
+      if (!isValid) {
+        alert('输入的数字超出允许范围或者输入的不是数字, 请点击确定后重新输入!')
+      }
+    } while (!isValid)
+
+    return num
+
+  }
+
+  function roundFun(value, n) {
+    // JavaScript 的 Math.round()函数对于 -1.5 的情况, 与预期不同
+    // Math.round(-1.5) ----> -1
+    // 需要先转换为绝对值进行取整
+    let num = Math.round(Math.abs(value) * Math.pow(10, n)) / Math.pow(10, n)
+
+    if (Number(value) >= 0) {
+      return num.toFixed(n)
+    } else {
+      return '-' + num.toFixed(n)
+    }
+  }
+</script>
+<script id="ch0105/30">
+
+    //  utils
+  function rangeValidator(num, range) {
+    if (typeof num !== 'number') {
+      throw new TypeError('Type of variable num is error! Wanted type: number, get:' + typeof num)
+    }
+
+    if (typeof range !== 'object') {
+      throw new TypeError('Type of variable range is error! Wanted type: object, get:' + typeof range)
+    }
+
+    if (range.hasOwnProperty('min')) {
+      if (typeof range.min !== 'number') {
+        throw new TypeError('Type of variable range.min is error! Wanted type: number, get:' + typeof range.min)
+      }
+    }
+
+    if (range.hasOwnProperty('max')) {
+      if (typeof range.max !== 'number') {
+        throw new TypeError('Type of variable range.max is error! Wanted type: number, get:' + typeof range.max)
+      }
+    }
+
+    if (range.hasOwnProperty('min') && range.hasOwnProperty('max')) {
+      return num >= range.min && num <= range.max
+
+    } else if (range.hasOwnProperty('min')) {
+      return num >= range.min
+
+    } else if (range.hasOwnProperty('max')) {
+      return num <= range.max
+    }
+  }
+
+  function isNumber(num) {
+    return typeof num !== 'number'
+  }
+
+  function getNumber(hint, range) {
+    if (typeof hint !== 'string') {
+      throw new TypeError('Type of variable hint is error! Wanted type: string, get:' + typeof num)
+    }
+
+    let num
+    let isValid
+
+    do {
+      num = +prompt(hint)
+      if (range === undefined) {
+        isValid = isNumber(num)
+      } else {
+        isValid = rangeValidator(num, range)
+      }
+      if (!isValid) {
+        alert('输入的数字超出允许范围或者输入的不是数字, 请点击确定后重新输入!')
+      }
+    } while (!isValid)
+
+    return num
+
+  }
+
+  function roundFun(value, n) {
+    // JavaScript 的 Math.round()函数对于 -1.5 的情况, 与预期不同
+    // Math.round(-1.5) ----> -1
+    // 需要先转换为绝对值进行取整
+    let num = Math.round(Math.abs(value) * Math.pow(10, n)) / Math.pow(10, n)
+
+    if (Number(value) >= 0) {
+      return num.toFixed(n)
+    } else {
+      return '-' + num.toFixed(n)
+    }
+  }
+</script>
+<script id="ch0105/31">
+
+    //  utils
+  function rangeValidator(num, range) {
+    if (typeof num !== 'number') {
+      throw new TypeError('Type of variable num is error! Wanted type: number, get:' + typeof num)
+    }
+
+    if (typeof range !== 'object') {
+      throw new TypeError('Type of variable range is error! Wanted type: object, get:' + typeof range)
+    }
+
+    if (range.hasOwnProperty('min')) {
+      if (typeof range.min !== 'number') {
+        throw new TypeError('Type of variable range.min is error! Wanted type: number, get:' + typeof range.min)
+      }
+    }
+
+    if (range.hasOwnProperty('max')) {
+      if (typeof range.max !== 'number') {
+        throw new TypeError('Type of variable range.max is error! Wanted type: number, get:' + typeof range.max)
+      }
+    }
+
+    if (range.hasOwnProperty('min') && range.hasOwnProperty('max')) {
+      return num >= range.min && num <= range.max
+
+    } else if (range.hasOwnProperty('min')) {
+      return num >= range.min
+
+    } else if (range.hasOwnProperty('max')) {
+      return num <= range.max
+    }
+  }
+
+  function isNumber(num) {
+    return typeof num !== 'number'
+  }
+
+  function getNumber(hint, range) {
+    if (typeof hint !== 'string') {
+      throw new TypeError('Type of variable hint is error! Wanted type: string, get:' + typeof num)
+    }
+
+    let num
+    let isValid
+
+    do {
+      num = +prompt(hint)
+      if (range === undefined) {
+        isValid = isNumber(num)
+      } else {
+        isValid = rangeValidator(num, range)
+      }
+      if (!isValid) {
+        alert('输入的数字超出允许范围或者输入的不是数字, 请点击确定后重新输入!')
+      }
+    } while (!isValid)
+
+    return num
+
+  }
+
+  function roundFun(value, n) {
+    // JavaScript 的 Math.round()函数对于 -1.5 的情况, 与预期不同
+    // Math.round(-1.5) ----> -1
+    // 需要先转换为绝对值进行取整
+    let num = Math.round(Math.abs(value) * Math.pow(10, n)) / Math.pow(10, n)
+
+    if (Number(value) >= 0) {
+      return num.toFixed(n)
+    } else {
+      return '-' + num.toFixed(n)
+    }
+  }
+</script>
+<script id="ch0105/32">
+
+    //  utils
+  function rangeValidator(num, range) {
+    if (typeof num !== 'number') {
+      throw new TypeError('Type of variable num is error! Wanted type: number, get:' + typeof num)
+    }
+
+    if (typeof range !== 'object') {
+      throw new TypeError('Type of variable range is error! Wanted type: object, get:' + typeof range)
+    }
+
+    if (range.hasOwnProperty('min')) {
+      if (typeof range.min !== 'number') {
+        throw new TypeError('Type of variable range.min is error! Wanted type: number, get:' + typeof range.min)
+      }
+    }
+
+    if (range.hasOwnProperty('max')) {
+      if (typeof range.max !== 'number') {
+        throw new TypeError('Type of variable range.max is error! Wanted type: number, get:' + typeof range.max)
+      }
+    }
+
+    if (range.hasOwnProperty('min') && range.hasOwnProperty('max')) {
+      return num >= range.min && num <= range.max
+
+    } else if (range.hasOwnProperty('min')) {
+      return num >= range.min
+
+    } else if (range.hasOwnProperty('max')) {
+      return num <= range.max
+    }
+  }
+
+  function isNumber(num) {
+    return typeof num !== 'number'
+  }
+
+  function getNumber(hint, range) {
+    if (typeof hint !== 'string') {
+      throw new TypeError('Type of variable hint is error! Wanted type: string, get:' + typeof num)
+    }
+
+    let num
+    let isValid
+
+    do {
+      num = +prompt(hint)
+      if (range === undefined) {
+        isValid = isNumber(num)
+      } else {
+        isValid = rangeValidator(num, range)
+      }
+      if (!isValid) {
+        alert('输入的数字超出允许范围或者输入的不是数字, 请点击确定后重新输入!')
+      }
+    } while (!isValid)
+
+    return num
+
+  }
+
+  function roundFun(value, n) {
+    // JavaScript 的 Math.round()函数对于 -1.5 的情况, 与预期不同
+    // Math.round(-1.5) ----> -1
+    // 需要先转换为绝对值进行取整
+    let num = Math.round(Math.abs(value) * Math.pow(10, n)) / Math.pow(10, n)
+
+    if (Number(value) >= 0) {
+      return num.toFixed(n)
+    } else {
+      return '-' + num.toFixed(n)
+    }
+  }
+</script>
+<script id="ch0105/33">
+
+    //  utils
+  function rangeValidator(num, range) {
+    if (typeof num !== 'number') {
+      throw new TypeError('Type of variable num is error! Wanted type: number, get:' + typeof num)
+    }
+
+    if (typeof range !== 'object') {
+      throw new TypeError('Type of variable range is error! Wanted type: object, get:' + typeof range)
+    }
+
+    if (range.hasOwnProperty('min')) {
+      if (typeof range.min !== 'number') {
+        throw new TypeError('Type of variable range.min is error! Wanted type: number, get:' + typeof range.min)
+      }
+    }
+
+    if (range.hasOwnProperty('max')) {
+      if (typeof range.max !== 'number') {
+        throw new TypeError('Type of variable range.max is error! Wanted type: number, get:' + typeof range.max)
+      }
+    }
+
+    if (range.hasOwnProperty('min') && range.hasOwnProperty('max')) {
+      return num >= range.min && num <= range.max
+
+    } else if (range.hasOwnProperty('min')) {
+      return num >= range.min
+
+    } else if (range.hasOwnProperty('max')) {
+      return num <= range.max
+    }
+  }
+
+  function isNumber(num) {
+    return typeof num !== 'number'
+  }
+
+  function getNumber(hint, range) {
+    if (typeof hint !== 'string') {
+      throw new TypeError('Type of variable hint is error! Wanted type: string, get:' + typeof num)
+    }
+
+    let num
+    let isValid
+
+    do {
+      num = +prompt(hint)
+      if (range === undefined) {
+        isValid = isNumber(num)
+      } else {
+        isValid = rangeValidator(num, range)
+      }
+      if (!isValid) {
+        alert('输入的数字超出允许范围或者输入的不是数字, 请点击确定后重新输入!')
+      }
+    } while (!isValid)
+
+    return num
+
+  }
+
+  function roundFun(value, n) {
+    // JavaScript 的 Math.round()函数对于 -1.5 的情况, 与预期不同
+    // Math.round(-1.5) ----> -1
+    // 需要先转换为绝对值进行取整
+    let num = Math.round(Math.abs(value) * Math.pow(10, n)) / Math.pow(10, n)
+
+    if (Number(value) >= 0) {
+      return num.toFixed(n)
+    } else {
+      return '-' + num.toFixed(n)
+    }
+  }
+</script>
+<script id="ch0105/34">
+
+    //  utils
+  function rangeValidator(num, range) {
+    if (typeof num !== 'number') {
+      throw new TypeError('Type of variable num is error! Wanted type: number, get:' + typeof num)
+    }
+
+    if (typeof range !== 'object') {
+      throw new TypeError('Type of variable range is error! Wanted type: object, get:' + typeof range)
+    }
+
+    if (range.hasOwnProperty('min')) {
+      if (typeof range.min !== 'number') {
+        throw new TypeError('Type of variable range.min is error! Wanted type: number, get:' + typeof range.min)
+      }
+    }
+
+    if (range.hasOwnProperty('max')) {
+      if (typeof range.max !== 'number') {
+        throw new TypeError('Type of variable range.max is error! Wanted type: number, get:' + typeof range.max)
+      }
+    }
+
+    if (range.hasOwnProperty('min') && range.hasOwnProperty('max')) {
+      return num >= range.min && num <= range.max
+
+    } else if (range.hasOwnProperty('min')) {
+      return num >= range.min
+
+    } else if (range.hasOwnProperty('max')) {
+      return num <= range.max
+    }
+  }
+
+  function isNumber(num) {
+    return typeof num !== 'number'
+  }
+
+  function getNumber(hint, range) {
+    if (typeof hint !== 'string') {
+      throw new TypeError('Type of variable hint is error! Wanted type: string, get:' + typeof num)
+    }
+
+    let num
+    let isValid
+
+    do {
+      num = +prompt(hint)
+      if (range === undefined) {
+        isValid = isNumber(num)
+      } else {
+        isValid = rangeValidator(num, range)
+      }
+      if (!isValid) {
+        alert('输入的数字超出允许范围或者输入的不是数字, 请点击确定后重新输入!')
+      }
+    } while (!isValid)
+
+    return num
+
+  }
+
+  function roundFun(value, n) {
+    // JavaScript 的 Math.round()函数对于 -1.5 的情况, 与预期不同
+    // Math.round(-1.5) ----> -1
+    // 需要先转换为绝对值进行取整
+    let num = Math.round(Math.abs(value) * Math.pow(10, n)) / Math.pow(10, n)
+
+    if (Number(value) >= 0) {
+      return num.toFixed(n)
+    } else {
+      return '-' + num.toFixed(n)
+    }
+  }
+</script>
+<script id="ch0105/35">
+
+    //  utils
+  function rangeValidator(num, range) {
+    if (typeof num !== 'number') {
+      throw new TypeError('Type of variable num is error! Wanted type: number, get:' + typeof num)
+    }
+
+    if (typeof range !== 'object') {
+      throw new TypeError('Type of variable range is error! Wanted type: object, get:' + typeof range)
+    }
+
+    if (range.hasOwnProperty('min')) {
+      if (typeof range.min !== 'number') {
+        throw new TypeError('Type of variable range.min is error! Wanted type: number, get:' + typeof range.min)
+      }
+    }
+
+    if (range.hasOwnProperty('max')) {
+      if (typeof range.max !== 'number') {
+        throw new TypeError('Type of variable range.max is error! Wanted type: number, get:' + typeof range.max)
+      }
+    }
+
+    if (range.hasOwnProperty('min') && range.hasOwnProperty('max')) {
+      return num >= range.min && num <= range.max
+
+    } else if (range.hasOwnProperty('min')) {
+      return num >= range.min
+
+    } else if (range.hasOwnProperty('max')) {
+      return num <= range.max
+    }
+  }
+
+  function isNumber(num) {
+    return typeof num !== 'number'
+  }
+
+  function getNumber(hint, range) {
+    if (typeof hint !== 'string') {
+      throw new TypeError('Type of variable hint is error! Wanted type: string, get:' + typeof num)
+    }
+
+    let num
+    let isValid
+
+    do {
+      num = +prompt(hint)
+      if (range === undefined) {
+        isValid = isNumber(num)
+      } else {
+        isValid = rangeValidator(num, range)
+      }
+      if (!isValid) {
+        alert('输入的数字超出允许范围或者输入的不是数字, 请点击确定后重新输入!')
+      }
+    } while (!isValid)
+
+    return num
+
+  }
+
+  function roundFun(value, n) {
+    // JavaScript 的 Math.round()函数对于 -1.5 的情况, 与预期不同
+    // Math.round(-1.5) ----> -1
+    // 需要先转换为绝对值进行取整
+    let num = Math.round(Math.abs(value) * Math.pow(10, n)) / Math.pow(10, n)
+
+    if (Number(value) >= 0) {
+      return num.toFixed(n)
+    } else {
+      return '-' + num.toFixed(n)
+    }
+  }
+</script>
+<script id="ch0105/36">
+
+    //  utils
+  function rangeValidator(num, range) {
+    if (typeof num !== 'number') {
+      throw new TypeError('Type of variable num is error! Wanted type: number, get:' + typeof num)
+    }
+
+    if (typeof range !== 'object') {
+      throw new TypeError('Type of variable range is error! Wanted type: object, get:' + typeof range)
+    }
+
+    if (range.hasOwnProperty('min')) {
+      if (typeof range.min !== 'number') {
+        throw new TypeError('Type of variable range.min is error! Wanted type: number, get:' + typeof range.min)
+      }
+    }
+
+    if (range.hasOwnProperty('max')) {
+      if (typeof range.max !== 'number') {
+        throw new TypeError('Type of variable range.max is error! Wanted type: number, get:' + typeof range.max)
+      }
+    }
+
+    if (range.hasOwnProperty('min') && range.hasOwnProperty('max')) {
+      return num >= range.min && num <= range.max
+
+    } else if (range.hasOwnProperty('min')) {
+      return num >= range.min
+
+    } else if (range.hasOwnProperty('max')) {
+      return num <= range.max
+    }
+  }
+
+  function isNumber(num) {
+    return typeof num !== 'number'
+  }
+
+  function getNumber(hint, range) {
+    if (typeof hint !== 'string') {
+      throw new TypeError('Type of variable hint is error! Wanted type: string, get:' + typeof num)
+    }
+
+    let num
+    let isValid
+
+    do {
+      num = +prompt(hint)
+      if (range === undefined) {
+        isValid = isNumber(num)
+      } else {
+        isValid = rangeValidator(num, range)
+      }
+      if (!isValid) {
+        alert('输入的数字超出允许范围或者输入的不是数字, 请点击确定后重新输入!')
+      }
+    } while (!isValid)
+
+    return num
+
+  }
+
+  function roundFun(value, n) {
+    // JavaScript 的 Math.round()函数对于 -1.5 的情况, 与预期不同
+    // Math.round(-1.5) ----> -1
+    // 需要先转换为绝对值进行取整
+    let num = Math.round(Math.abs(value) * Math.pow(10, n)) / Math.pow(10, n)
+
+    if (Number(value) >= 0) {
+      return num.toFixed(n)
+    } else {
+      return '-' + num.toFixed(n)
+    }
+  }
+</script>
+<script id="ch0105/37">
+
+    //  utils
+  function rangeValidator(num, range) {
+    if (typeof num !== 'number') {
+      throw new TypeError('Type of variable num is error! Wanted type: number, get:' + typeof num)
+    }
+
+    if (typeof range !== 'object') {
+      throw new TypeError('Type of variable range is error! Wanted type: object, get:' + typeof range)
+    }
+
+    if (range.hasOwnProperty('min')) {
+      if (typeof range.min !== 'number') {
+        throw new TypeError('Type of variable range.min is error! Wanted type: number, get:' + typeof range.min)
+      }
+    }
+
+    if (range.hasOwnProperty('max')) {
+      if (typeof range.max !== 'number') {
+        throw new TypeError('Type of variable range.max is error! Wanted type: number, get:' + typeof range.max)
+      }
+    }
+
+    if (range.hasOwnProperty('min') && range.hasOwnProperty('max')) {
+      return num >= range.min && num <= range.max
+
+    } else if (range.hasOwnProperty('min')) {
+      return num >= range.min
+
+    } else if (range.hasOwnProperty('max')) {
+      return num <= range.max
+    }
+  }
+
+  function isNumber(num) {
+    return typeof num !== 'number'
+  }
+
+  function getNumber(hint, range) {
+    if (typeof hint !== 'string') {
+      throw new TypeError('Type of variable hint is error! Wanted type: string, get:' + typeof num)
+    }
+
+    let num
+    let isValid
+
+    do {
+      num = +prompt(hint)
+      if (range === undefined) {
+        isValid = isNumber(num)
+      } else {
+        isValid = rangeValidator(num, range)
+      }
+      if (!isValid) {
+        alert('输入的数字超出允许范围或者输入的不是数字, 请点击确定后重新输入!')
+      }
+    } while (!isValid)
+
+    return num
+
+  }
+
+  function roundFun(value, n) {
+    // JavaScript 的 Math.round()函数对于 -1.5 的情况, 与预期不同
+    // Math.round(-1.5) ----> -1
+    // 需要先转换为绝对值进行取整
+    let num = Math.round(Math.abs(value) * Math.pow(10, n)) / Math.pow(10, n)
+
+    if (Number(value) >= 0) {
+      return num.toFixed(n)
+    } else {
+      return '-' + num.toFixed(n)
+    }
+  }
+</script>
+<script id="ch0105/38">
+
+    //  utils
+  function rangeValidator(num, range) {
+    if (typeof num !== 'number') {
+      throw new TypeError('Type of variable num is error! Wanted type: number, get:' + typeof num)
+    }
+
+    if (typeof range !== 'object') {
+      throw new TypeError('Type of variable range is error! Wanted type: object, get:' + typeof range)
+    }
+
+    if (range.hasOwnProperty('min')) {
+      if (typeof range.min !== 'number') {
+        throw new TypeError('Type of variable range.min is error! Wanted type: number, get:' + typeof range.min)
+      }
+    }
+
+    if (range.hasOwnProperty('max')) {
+      if (typeof range.max !== 'number') {
+        throw new TypeError('Type of variable range.max is error! Wanted type: number, get:' + typeof range.max)
+      }
+    }
+
+    if (range.hasOwnProperty('min') && range.hasOwnProperty('max')) {
+      return num >= range.min && num <= range.max
+
+    } else if (range.hasOwnProperty('min')) {
+      return num >= range.min
+
+    } else if (range.hasOwnProperty('max')) {
+      return num <= range.max
+    }
+  }
+
+  function isNumber(num) {
+    return typeof num !== 'number'
+  }
+
+  function getNumber(hint, range) {
+    if (typeof hint !== 'string') {
+      throw new TypeError('Type of variable hint is error! Wanted type: string, get:' + typeof num)
+    }
+
+    let num
+    let isValid
+
+    do {
+      num = +prompt(hint)
+      if (range === undefined) {
+        isValid = isNumber(num)
+      } else {
+        isValid = rangeValidator(num, range)
+      }
+      if (!isValid) {
+        alert('输入的数字超出允许范围或者输入的不是数字, 请点击确定后重新输入!')
+      }
+    } while (!isValid)
+
+    return num
+
+  }
+
+  function roundFun(value, n) {
+    // JavaScript 的 Math.round()函数对于 -1.5 的情况, 与预期不同
+    // Math.round(-1.5) ----> -1
+    // 需要先转换为绝对值进行取整
+    let num = Math.round(Math.abs(value) * Math.pow(10, n)) / Math.pow(10, n)
+
+    if (Number(value) >= 0) {
+      return num.toFixed(n)
+    } else {
+      return '-' + num.toFixed(n)
+    }
+  }
+</script>
+<script id="ch0105/39">
+
+    //  utils
+  function rangeValidator(num, range) {
+    if (typeof num !== 'number') {
+      throw new TypeError('Type of variable num is error! Wanted type: number, get:' + typeof num)
+    }
+
+    if (typeof range !== 'object') {
+      throw new TypeError('Type of variable range is error! Wanted type: object, get:' + typeof range)
+    }
+
+    if (range.hasOwnProperty('min')) {
+      if (typeof range.min !== 'number') {
+        throw new TypeError('Type of variable range.min is error! Wanted type: number, get:' + typeof range.min)
+      }
+    }
+
+    if (range.hasOwnProperty('max')) {
+      if (typeof range.max !== 'number') {
+        throw new TypeError('Type of variable range.max is error! Wanted type: number, get:' + typeof range.max)
+      }
+    }
+
+    if (range.hasOwnProperty('min') && range.hasOwnProperty('max')) {
+      return num >= range.min && num <= range.max
+
+    } else if (range.hasOwnProperty('min')) {
+      return num >= range.min
+
+    } else if (range.hasOwnProperty('max')) {
+      return num <= range.max
+    }
+  }
+
+  function isNumber(num) {
+    return typeof num !== 'number'
+  }
+
+  function getNumber(hint, range) {
+    if (typeof hint !== 'string') {
+      throw new TypeError('Type of variable hint is error! Wanted type: string, get:' + typeof num)
+    }
+
+    let num
+    let isValid
+
+    do {
+      num = +prompt(hint)
+      if (range === undefined) {
+        isValid = isNumber(num)
+      } else {
+        isValid = rangeValidator(num, range)
+      }
+      if (!isValid) {
+        alert('输入的数字超出允许范围或者输入的不是数字, 请点击确定后重新输入!')
+      }
+    } while (!isValid)
+
+    return num
+
+  }
+
+  function roundFun(value, n) {
+    // JavaScript 的 Math.round()函数对于 -1.5 的情况, 与预期不同
+    // Math.round(-1.5) ----> -1
+    // 需要先转换为绝对值进行取整
+    let num = Math.round(Math.abs(value) * Math.pow(10, n)) / Math.pow(10, n)
+
+    if (Number(value) >= 0) {
+      return num.toFixed(n)
+    } else {
+      return '-' + num.toFixed(n)
+    }
+  }
+</script>
+<script id="ch0105/40">
+
+    //  utils
+  function rangeValidator(num, range) {
+    if (typeof num !== 'number') {
+      throw new TypeError('Type of variable num is error! Wanted type: number, get:' + typeof num)
+    }
+
+    if (typeof range !== 'object') {
+      throw new TypeError('Type of variable range is error! Wanted type: object, get:' + typeof range)
+    }
+
+    if (range.hasOwnProperty('min')) {
+      if (typeof range.min !== 'number') {
+        throw new TypeError('Type of variable range.min is error! Wanted type: number, get:' + typeof range.min)
+      }
+    }
+
+    if (range.hasOwnProperty('max')) {
+      if (typeof range.max !== 'number') {
+        throw new TypeError('Type of variable range.max is error! Wanted type: number, get:' + typeof range.max)
+      }
+    }
+
+    if (range.hasOwnProperty('min') && range.hasOwnProperty('max')) {
+      return num >= range.min && num <= range.max
+
+    } else if (range.hasOwnProperty('min')) {
+      return num >= range.min
+
+    } else if (range.hasOwnProperty('max')) {
+      return num <= range.max
+    }
+  }
+
+  function isNumber(num) {
+    return typeof num !== 'number'
+  }
+
+  function getNumber(hint, range) {
+    if (typeof hint !== 'string') {
+      throw new TypeError('Type of variable hint is error! Wanted type: string, get:' + typeof num)
+    }
+
+    let num
+    let isValid
+
+    do {
+      num = +prompt(hint)
+      if (range === undefined) {
+        isValid = isNumber(num)
+      } else {
+        isValid = rangeValidator(num, range)
+      }
+      if (!isValid) {
+        alert('输入的数字超出允许范围或者输入的不是数字, 请点击确定后重新输入!')
+      }
+    } while (!isValid)
+
+    return num
+
+  }
+
+  function roundFun(value, n) {
+    // JavaScript 的 Math.round()函数对于 -1.5 的情况, 与预期不同
+    // Math.round(-1.5) ----> -1
+    // 需要先转换为绝对值进行取整
+    let num = Math.round(Math.abs(value) * Math.pow(10, n)) / Math.pow(10, n)
+
+    if (Number(value) >= 0) {
+      return num.toFixed(n)
+    } else {
+      return '-' + num.toFixed(n)
+    }
+  }
+</script>
+<script id="ch0105/41">
+
+    //  utils
+  function rangeValidator(num, range) {
+    if (typeof num !== 'number') {
+      throw new TypeError('Type of variable num is error! Wanted type: number, get:' + typeof num)
+    }
+
+    if (typeof range !== 'object') {
+      throw new TypeError('Type of variable range is error! Wanted type: object, get:' + typeof range)
+    }
+
+    if (range.hasOwnProperty('min')) {
+      if (typeof range.min !== 'number') {
+        throw new TypeError('Type of variable range.min is error! Wanted type: number, get:' + typeof range.min)
+      }
+    }
+
+    if (range.hasOwnProperty('max')) {
+      if (typeof range.max !== 'number') {
+        throw new TypeError('Type of variable range.max is error! Wanted type: number, get:' + typeof range.max)
+      }
+    }
+
+    if (range.hasOwnProperty('min') && range.hasOwnProperty('max')) {
+      return num >= range.min && num <= range.max
+
+    } else if (range.hasOwnProperty('min')) {
+      return num >= range.min
+
+    } else if (range.hasOwnProperty('max')) {
+      return num <= range.max
+    }
+  }
+
+  function isNumber(num) {
+    return typeof num !== 'number'
+  }
+
+  function getNumber(hint, range) {
+    if (typeof hint !== 'string') {
+      throw new TypeError('Type of variable hint is error! Wanted type: string, get:' + typeof num)
+    }
+
+    let num
+    let isValid
+
+    do {
+      num = +prompt(hint)
+      if (range === undefined) {
+        isValid = isNumber(num)
+      } else {
+        isValid = rangeValidator(num, range)
+      }
+      if (!isValid) {
+        alert('输入的数字超出允许范围或者输入的不是数字, 请点击确定后重新输入!')
+      }
+    } while (!isValid)
+
+    return num
+
+  }
+
+  function roundFun(value, n) {
+    // JavaScript 的 Math.round()函数对于 -1.5 的情况, 与预期不同
+    // Math.round(-1.5) ----> -1
+    // 需要先转换为绝对值进行取整
+    let num = Math.round(Math.abs(value) * Math.pow(10, n)) / Math.pow(10, n)
+
+    if (Number(value) >= 0) {
+      return num.toFixed(n)
+    } else {
+      return '-' + num.toFixed(n)
+    }
+  }
+</script>
+<script id="ch0105/42">
+
+    //  utils
+  function rangeValidator(num, range) {
+    if (typeof num !== 'number') {
+      throw new TypeError('Type of variable num is error! Wanted type: number, get:' + typeof num)
+    }
+
+    if (typeof range !== 'object') {
+      throw new TypeError('Type of variable range is error! Wanted type: object, get:' + typeof range)
+    }
+
+    if (range.hasOwnProperty('min')) {
+      if (typeof range.min !== 'number') {
+        throw new TypeError('Type of variable range.min is error! Wanted type: number, get:' + typeof range.min)
+      }
+    }
+
+    if (range.hasOwnProperty('max')) {
+      if (typeof range.max !== 'number') {
+        throw new TypeError('Type of variable range.max is error! Wanted type: number, get:' + typeof range.max)
+      }
+    }
+
+    if (range.hasOwnProperty('min') && range.hasOwnProperty('max')) {
+      return num >= range.min && num <= range.max
+
+    } else if (range.hasOwnProperty('min')) {
+      return num >= range.min
+
+    } else if (range.hasOwnProperty('max')) {
+      return num <= range.max
+    }
+  }
+
+  function isNumber(num) {
+    return typeof num !== 'number'
+  }
+
+  function getNumber(hint, range) {
+    if (typeof hint !== 'string') {
+      throw new TypeError('Type of variable hint is error! Wanted type: string, get:' + typeof num)
+    }
+
+    let num
+    let isValid
+
+    do {
+      num = +prompt(hint)
+      if (range === undefined) {
+        isValid = isNumber(num)
+      } else {
+        isValid = rangeValidator(num, range)
+      }
+      if (!isValid) {
+        alert('输入的数字超出允许范围或者输入的不是数字, 请点击确定后重新输入!')
+      }
+    } while (!isValid)
+
+    return num
+
+  }
+
+  function roundFun(value, n) {
+    // JavaScript 的 Math.round()函数对于 -1.5 的情况, 与预期不同
+    // Math.round(-1.5) ----> -1
+    // 需要先转换为绝对值进行取整
+    let num = Math.round(Math.abs(value) * Math.pow(10, n)) / Math.pow(10, n)
+
+    if (Number(value) >= 0) {
+      return num.toFixed(n)
+    } else {
+      return '-' + num.toFixed(n)
+    }
+  }
+</script>
+<script id="ch0105/43">
+
+    //  utils
+  function rangeValidator(num, range) {
+    if (typeof num !== 'number') {
+      throw new TypeError('Type of variable num is error! Wanted type: number, get:' + typeof num)
+    }
+
+    if (typeof range !== 'object') {
+      throw new TypeError('Type of variable range is error! Wanted type: object, get:' + typeof range)
+    }
+
+    if (range.hasOwnProperty('min')) {
+      if (typeof range.min !== 'number') {
+        throw new TypeError('Type of variable range.min is error! Wanted type: number, get:' + typeof range.min)
+      }
+    }
+
+    if (range.hasOwnProperty('max')) {
+      if (typeof range.max !== 'number') {
+        throw new TypeError('Type of variable range.max is error! Wanted type: number, get:' + typeof range.max)
+      }
+    }
+
+    if (range.hasOwnProperty('min') && range.hasOwnProperty('max')) {
+      return num >= range.min && num <= range.max
+
+    } else if (range.hasOwnProperty('min')) {
+      return num >= range.min
+
+    } else if (range.hasOwnProperty('max')) {
+      return num <= range.max
+    }
+  }
+
+  function isNumber(num) {
+    return typeof num !== 'number'
+  }
+
+  function getNumber(hint, range) {
+    if (typeof hint !== 'string') {
+      throw new TypeError('Type of variable hint is error! Wanted type: string, get:' + typeof num)
+    }
+
+    let num
+    let isValid
+
+    do {
+      num = +prompt(hint)
+      if (range === undefined) {
+        isValid = isNumber(num)
+      } else {
+        isValid = rangeValidator(num, range)
+      }
+      if (!isValid) {
+        alert('输入的数字超出允许范围或者输入的不是数字, 请点击确定后重新输入!')
+      }
+    } while (!isValid)
+
+    return num
+
+  }
+
+  function roundFun(value, n) {
+    // JavaScript 的 Math.round()函数对于 -1.5 的情况, 与预期不同
+    // Math.round(-1.5) ----> -1
+    // 需要先转换为绝对值进行取整
+    let num = Math.round(Math.abs(value) * Math.pow(10, n)) / Math.pow(10, n)
+
+    if (Number(value) >= 0) {
+      return num.toFixed(n)
+    } else {
+      return '-' + num.toFixed(n)
+    }
+  }
+</script>
+<script id="ch0105/44">
+
+    //  utils
+  function rangeValidator(num, range) {
+    if (typeof num !== 'number') {
+      throw new TypeError('Type of variable num is error! Wanted type: number, get:' + typeof num)
+    }
+
+    if (typeof range !== 'object') {
+      throw new TypeError('Type of variable range is error! Wanted type: object, get:' + typeof range)
+    }
+
+    if (range.hasOwnProperty('min')) {
+      if (typeof range.min !== 'number') {
+        throw new TypeError('Type of variable range.min is error! Wanted type: number, get:' + typeof range.min)
+      }
+    }
+
+    if (range.hasOwnProperty('max')) {
+      if (typeof range.max !== 'number') {
+        throw new TypeError('Type of variable range.max is error! Wanted type: number, get:' + typeof range.max)
+      }
+    }
+
+    if (range.hasOwnProperty('min') && range.hasOwnProperty('max')) {
+      return num >= range.min && num <= range.max
+
+    } else if (range.hasOwnProperty('min')) {
+      return num >= range.min
+
+    } else if (range.hasOwnProperty('max')) {
+      return num <= range.max
+    }
+  }
+
+  function isNumber(num) {
+    return typeof num !== 'number'
+  }
+
+  function getNumber(hint, range) {
+    if (typeof hint !== 'string') {
+      throw new TypeError('Type of variable hint is error! Wanted type: string, get:' + typeof num)
+    }
+
+    let num
+    let isValid
+
+    do {
+      num = +prompt(hint)
+      if (range === undefined) {
+        isValid = isNumber(num)
+      } else {
+        isValid = rangeValidator(num, range)
+      }
+      if (!isValid) {
+        alert('输入的数字超出允许范围或者输入的不是数字, 请点击确定后重新输入!')
+      }
+    } while (!isValid)
+
+    return num
+
+  }
+
+  function roundFun(value, n) {
+    // JavaScript 的 Math.round()函数对于 -1.5 的情况, 与预期不同
+    // Math.round(-1.5) ----> -1
+    // 需要先转换为绝对值进行取整
+    let num = Math.round(Math.abs(value) * Math.pow(10, n)) / Math.pow(10, n)
+
+    if (Number(value) >= 0) {
+      return num.toFixed(n)
+    } else {
+      return '-' + num.toFixed(n)
+    }
+  }
+</script>
+<script id="ch0105/45">
+
+    //  utils
+  function rangeValidator(num, range) {
+    if (typeof num !== 'number') {
+      throw new TypeError('Type of variable num is error! Wanted type: number, get:' + typeof num)
+    }
+
+    if (typeof range !== 'object') {
+      throw new TypeError('Type of variable range is error! Wanted type: object, get:' + typeof range)
+    }
+
+    if (range.hasOwnProperty('min')) {
+      if (typeof range.min !== 'number') {
+        throw new TypeError('Type of variable range.min is error! Wanted type: number, get:' + typeof range.min)
+      }
+    }
+
+    if (range.hasOwnProperty('max')) {
+      if (typeof range.max !== 'number') {
+        throw new TypeError('Type of variable range.max is error! Wanted type: number, get:' + typeof range.max)
+      }
+    }
+
+    if (range.hasOwnProperty('min') && range.hasOwnProperty('max')) {
+      return num >= range.min && num <= range.max
+
+    } else if (range.hasOwnProperty('min')) {
+      return num >= range.min
+
+    } else if (range.hasOwnProperty('max')) {
+      return num <= range.max
+    }
+  }
+
+  function isNumber(num) {
+    return typeof num !== 'number'
+  }
+
+  function getNumber(hint, range) {
+    if (typeof hint !== 'string') {
+      throw new TypeError('Type of variable hint is error! Wanted type: string, get:' + typeof num)
+    }
+
+    let num
+    let isValid
+
+    do {
+      num = +prompt(hint)
+      if (range === undefined) {
+        isValid = isNumber(num)
+      } else {
+        isValid = rangeValidator(num, range)
+      }
+      if (!isValid) {
+        alert('输入的数字超出允许范围或者输入的不是数字, 请点击确定后重新输入!')
+      }
+    } while (!isValid)
+
+    return num
+
+  }
+
+  function roundFun(value, n) {
+    // JavaScript 的 Math.round()函数对于 -1.5 的情况, 与预期不同
+    // Math.round(-1.5) ----> -1
+    // 需要先转换为绝对值进行取整
+    let num = Math.round(Math.abs(value) * Math.pow(10, n)) / Math.pow(10, n)
+
+    if (Number(value) >= 0) {
+      return num.toFixed(n)
+    } else {
+      return '-' + num.toFixed(n)
+    }
+  }
+</script>
