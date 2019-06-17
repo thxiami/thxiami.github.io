@@ -30,6 +30,9 @@
       return num <= range.max
     }
   }
+  function isNumber(num) {
+    return typeof num !== 'number'
+  }
 
   function getNumber(hint, range) {
     if (typeof hint !== 'string') {
@@ -38,9 +41,14 @@
 
     let num
     let isValid
+
     do {
       num = +prompt(hint)
-      isValid = rangeValidator(num, range)
+      if (range === undefined) {
+        isValid = isNumber(num)
+      } else {
+        isValid = rangeValidator(num, range)
+      }
       if (!isValid) {
         alert('输入的数字超出允许范围或者输入的不是数字, 请点击确定后重新输入!')
       }
@@ -84,10 +92,7 @@
   }
 </script>
 
-<script id="ch0105/01" type="x">
-  function getNumber(hint) {
-    return +prompt(hint)
-  }
+<script id="ch0105/01">
   let count = getNumber('请输入学生总数n, n 的允许取值范围为: 1 <= n <= 100', {
     min: 1,
     max: 100,
@@ -101,6 +106,89 @@
   }
   let avr = roundFun(total / count, 2)
   console.log(avr)
+
+  //  utils
+  function rangeValidator(num, range) {
+    if (typeof num !== 'number') {
+      throw new TypeError('Type of variable num is error! Wanted type: number, get:' + typeof num)
+    }
+
+    if (typeof range !== 'object') {
+      throw new TypeError('Type of variable range is error! Wanted type: object, get:' + typeof range)
+    }
+
+    if (range.hasOwnProperty('min')) {
+      if (typeof range.min !== 'number') {
+        throw new TypeError('Type of variable range.min is error! Wanted type: number, get:' + typeof range.min)
+      }
+    }
+
+    if (range.hasOwnProperty('max')) {
+      if (typeof range.max !== 'number') {
+        throw new TypeError('Type of variable range.max is error! Wanted type: number, get:' + typeof range.max)
+      }
+    }
+
+    if (range.hasOwnProperty('min') && range.hasOwnProperty('max')) {
+      return num >= range.min && num <= range.max
+
+    } else if (range.hasOwnProperty('min')) {
+      return num >= range.min
+
+    } else if (range.hasOwnProperty('max')) {
+      return num <= range.max
+    }
+  }
+  function isNumber(num) {
+    return typeof num !== 'number'
+  }
+
+  function getNumber(hint, range) {
+    if (typeof hint !== 'string') {
+      throw new TypeError('Type of variable hint is error! Wanted type: string, get:' + typeof num)
+    }
+
+    let num
+    let isValid
+
+    do {
+      num = +prompt(hint)
+      if (range === undefined) {
+        isValid = isNumber(num)
+      } else {
+        isValid = rangeValidator(num, range)
+      }
+      if (!isValid) {
+        alert('输入的数字超出允许范围或者输入的不是数字, 请点击确定后重新输入!')
+      }
+    } while (!isValid)
+
+    return num
+
+  }
+
+  /**
+   * 自定义保留小数的方法, 规则为四舍五入, 解决 toFixed() 方法的问题
+   * 因为javascript 内部对于小数的存储机制的问题, 使用 toFixed 方法有时候会出现五舍六入情况, 不便于工程使用
+   * 比如: "3.155".toFixed(2)  // "3.15"
+   * @param {string/number}value  需要舍入的浮点数
+   * @param {number}n             需要保留的位数
+   * @return {string}             处理后的数字
+   *                              以 string 形式返回,目的是为了能保留如 1.0 这样的形式,
+   *                              如果以 number 形式返回, 则会返回 1
+   */
+  function roundFun(value, n) {
+    // JavaScript 的 Math.round()函数对于 -1.5 的情况, 与预期不同
+    // Math.round(-1.5) ----> -1
+    // 需要先转换为绝对值进行取整
+    let num = Math.round(Math.abs(value) * Math.pow(10, n)) / Math.pow(10, n)
+
+    if (Number(value) >= 0) {
+      return num.toFixed(n)
+    } else {
+      return '-' + num.toFixed(n)
+    }
+  }
 </script>
 
 <script id="ch0105/02" type="x">
@@ -112,9 +200,210 @@
   }
   let avr = roundFun(total / 12, 2)
   console.log( '$' + avr)
+
+
+  //  utils
+  function rangeValidator(num, range) {
+    if (typeof num !== 'number') {
+      throw new TypeError('Type of variable num is error! Wanted type: number, get:' + typeof num)
+    }
+
+    if (typeof range !== 'object') {
+      throw new TypeError('Type of variable range is error! Wanted type: object, get:' + typeof range)
+    }
+
+    if (range.hasOwnProperty('min')) {
+      if (typeof range.min !== 'number') {
+        throw new TypeError('Type of variable range.min is error! Wanted type: number, get:' + typeof range.min)
+      }
+    }
+
+    if (range.hasOwnProperty('max')) {
+      if (typeof range.max !== 'number') {
+        throw new TypeError('Type of variable range.max is error! Wanted type: number, get:' + typeof range.max)
+      }
+    }
+
+    if (range.hasOwnProperty('min') && range.hasOwnProperty('max')) {
+      return num >= range.min && num <= range.max
+
+    } else if (range.hasOwnProperty('min')) {
+      return num >= range.min
+
+    } else if (range.hasOwnProperty('max')) {
+      return num <= range.max
+    }
+  }
+  function isNumber(num) {
+    return typeof num !== 'number'
+  }
+
+  function getNumber(hint, range) {
+    if (typeof hint !== 'string') {
+      throw new TypeError('Type of variable hint is error! Wanted type: string, get:' + typeof num)
+    }
+
+    let num
+    let isValid
+
+    do {
+      num = +prompt(hint)
+      if (range === undefined) {
+        isValid = isNumber(num)
+      } else {
+        isValid = rangeValidator(num, range)
+      }
+      if (!isValid) {
+        alert('输入的数字超出允许范围或者输入的不是数字, 请点击确定后重新输入!')
+      }
+    } while (!isValid)
+
+    return num
+
+  }
+
+  /**
+   * 自定义保留小数的方法, 规则为四舍五入, 解决 toFixed() 方法的问题
+   * 因为javascript 内部对于小数的存储机制的问题, 使用 toFixed 方法有时候会出现五舍六入情况, 不便于工程使用
+   * 比如: "3.155".toFixed(2)  // "3.15"
+   * @param {string/number}value  需要舍入的浮点数
+   * @param {number}n             需要保留的位数
+   * @return {string}             处理后的数字
+   *                              以 string 形式返回,目的是为了能保留如 1.0 这样的形式,
+   *                              如果以 number 形式返回, 则会返回 1
+   */
+  function roundFun(value, n) {
+    // JavaScript 的 Math.round()函数对于 -1.5 的情况, 与预期不同
+    // Math.round(-1.5) ----> -1
+    // 需要先转换为绝对值进行取整
+    let num = Math.round(Math.abs(value) * Math.pow(10, n)) / Math.pow(10, n)
+
+    if (Number(value) >= 0) {
+      return num.toFixed(n)
+    } else {
+      return '-' + num.toFixed(n)
+    }
+  }
 </script>
 
-<script id="ch0105/03"></script>
+<script id="ch0105/03" type="x">
+  function validator_ch0105_03(arr) {
+    for (let i = 0; i < arr.length; i++) {
+      num = arr[i]
+      if (isNaN(num)) {
+        alert('输入了非数字, 请重新输入样本数据')
+        return false
+      } else if (Math.abs(num) > 1000) {
+        alert('输入的浮点数的绝对值超过 1000, 请重新输入样本数据')
+        return false
+      }
+    }
+    return true
+  }
+  let count = getNumber('请输入样本容量 n, 允许范围为 1 ~ 100', {min: 1, max: 100})
+  let numsStr = prompt("请输入 n 个绝对值不超过1000的浮点数，代表各个样本数据")
+  let numsArr = numsStr.split(' ')
+  let total
+  let avr
+  let num
+  let isValid
+
+  do {
+    numsArr = numsStr.split(' ')
+    isValid = numsArr.length !== count || validator_ch0105_03(numsArr)
+    if (!isValid) {
+      alert(`输入的样本数据总数量不等于${count}, 点击确定后重新输入`)
+      numsStr = prompt("请输入 n 个绝对值不超过1000的浮点数，代表各个样本数据")
+    }
+  } while (!isValid)
+
+  total = numsArr.reduce((acc, cur) => +acc + +cur)
+  avr = roundFun(total / count, 4)
+  console.log(avr)
+
+  //  utils
+  function rangeValidator(num, range) {
+    if (typeof num !== 'number') {
+      throw new TypeError('Type of variable num is error! Wanted type: number, get:' + typeof num)
+    }
+
+    if (typeof range !== 'object') {
+      throw new TypeError('Type of variable range is error! Wanted type: object, get:' + typeof range)
+    }
+
+    if (range.hasOwnProperty('min')) {
+      if (typeof range.min !== 'number') {
+        throw new TypeError('Type of variable range.min is error! Wanted type: number, get:' + typeof range.min)
+      }
+    }
+
+    if (range.hasOwnProperty('max')) {
+      if (typeof range.max !== 'number') {
+        throw new TypeError('Type of variable range.max is error! Wanted type: number, get:' + typeof range.max)
+      }
+    }
+
+    if (range.hasOwnProperty('min') && range.hasOwnProperty('max')) {
+      return num >= range.min && num <= range.max
+
+    } else if (range.hasOwnProperty('min')) {
+      return num >= range.min
+
+    } else if (range.hasOwnProperty('max')) {
+      return num <= range.max
+    }
+  }
+  function isNumber(num) {
+    return typeof num !== 'number'
+  }
+
+  function getNumber(hint, range) {
+    if (typeof hint !== 'string') {
+      throw new TypeError('Type of variable hint is error! Wanted type: string, get:' + typeof num)
+    }
+
+    let num
+    let isValid
+
+    do {
+      num = +prompt(hint)
+      if (range === undefined) {
+        isValid = isNumber(num)
+      } else {
+        isValid = rangeValidator(num, range)
+      }
+      if (!isValid) {
+        alert('输入的数字超出允许范围或者输入的不是数字, 请点击确定后重新输入!')
+      }
+    } while (!isValid)
+
+    return num
+
+  }
+
+  /**
+   * 自定义保留小数的方法, 规则为四舍五入, 解决 toFixed() 方法的问题
+   * 因为javascript 内部对于小数的存储机制的问题, 使用 toFixed 方法有时候会出现五舍六入情况, 不便于工程使用
+   * 比如: "3.155".toFixed(2)  // "3.15"
+   * @param {string/number}value  需要舍入的浮点数
+   * @param {number}n             需要保留的位数
+   * @return {string}             处理后的数字
+   *                              以 string 形式返回,目的是为了能保留如 1.0 这样的形式,
+   *                              如果以 number 形式返回, 则会返回 1
+   */
+  function roundFun(value, n) {
+    // JavaScript 的 Math.round()函数对于 -1.5 的情况, 与预期不同
+    // Math.round(-1.5) ----> -1
+    // 需要先转换为绝对值进行取整
+    let num = Math.round(Math.abs(value) * Math.pow(10, n)) / Math.pow(10, n)
+
+    if (Number(value) >= 0) {
+      return num.toFixed(n)
+    } else {
+      return '-' + num.toFixed(n)
+    }
+  }
+</script>
 <script id="ch0105/04"></script>
 <script id="ch0105/05"></script>
 <script id="ch0105/06"></script>
