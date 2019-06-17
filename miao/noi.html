@@ -1,4 +1,4 @@
-<script title="utils">
+<script title="utils" type="utils">
   function rangeValidator(num, range) {
     if (typeof num !== 'number') {
       throw new TypeError('Type of variable num is error! Wanted type: number, get:' + typeof num)
@@ -395,7 +395,7 @@
     }
   }
 </script>
-<script id="ch0105/04" type="x">
+<script id="ch0105/05" type="x">
   let count = getNumber('请输入考试总人数 n（1 <= n < 100）', {min: 1, max: 99})
   let highestScore = 0
   let tempScore
@@ -479,7 +479,7 @@
     }
   }
 </script>
-<script id="ch0105/05">
+<script id="ch0105/06">
   let count = getNumber('请输入序列的个数 n（1 <= n <= 1000）', {min: 1, max: 1000})
   let maxNum = 0
   let minNum = 1000
