@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>画图</title>
+  <style>
+    canvas {
+      border: 2px solid #f0f;
+      display: block;
+      margin: auto;
+    }
+  </style>
+</head>
+<body>
+<canvas width="400" height="300"></canvas>
+</body>
+<script>
+  var canvas = document.querySelector('canvas')
+  canvas.style.imageRendering = 'pixelated'
+  var ctx = canvas.getContext('2d')
+
+  function dot(x, y, color = 'black') {
+    ctx.fillStyle = color
+    ctx.fillRect(x, y, 1, 1)
+  }
+
+  /**
+   * YOUR TASK
+   画图的题：
+   画一条实线
+   画一条一个实点一个空点的虚线
+   画一条两个实点两个空点的虚线
+   画一条三个实点两个空点的虚线
+   画一条45度的斜线
+   画一条跨越画布左上角和右下角的对角线
+   画一个空心矩形
+   画一个实心矩形
+   画一个rgb色彩空间的某一面
+   画一个空心的圆
+   画一个实心的圆
+   画一个大小合适的sin(x)的图像
+   */
+</script>
+<script>
+  // YOUR CODE GOES BELOW
+
+  /*
+  * 在指定坐标点画一条指定长度的实线, 方向为水平
+  * */
+  function horizontalLine(startCoodX, startCoodY, length, color = 'black') {
+    for (var i = 0; i < length; i++) {
+      dot(startCoodX + i, startCoodY, color)
+    }
+  }
+
+  /*
+  * 在指定坐标点画一条指定长度的实线, 方向为垂直
+  * */
+  function verticalLine(startCoodX, startCoodY, length, color = 'black') {
+    for (var i = 0; i < length; i++) {
+      dot(startCoodX, startCoodY + i, color)
+    }
+  }
+  /*
+  * 以(0, coodY) 为坐标画一条线
+  * 可以指定每一段点划线中点的个数以及点划线之间间隔的点个数
+  * */
+  function mixedLine(pointCount, space, coodY = 10) {
+    var coodX = 0
+    for (var i = 0; i < 401; i++) {
+      horizontalLine(coodX, coodY, pointCount)
+      coodX = coodX + pointCount + space
+    }
+  }
+
+
+  
+  function slashLine() {
+    for (var i = 0; i < 300; i++) {
+      dot(i, i, 'red')
+    }
+  }
+
+
+
+  function diagonalLine() {
+    for (var i = 0; i < 400; i++) {
+      dot(i, i * 3 / 4, 'red')
+    }
+  }
+
+  function main() {
+    // 画一条实线
+    mixedLine(1, 0, 10)
+
+    // 画一条一个实点一个空点的虚线
+    mixedLine(1, 1, 20)
+
+    // 画一条两个实点两个空点的虚线
+    mixedLine(2, 2, 30)
+
+    // 画一条三个实点两个空点的虚线
+    mixedLine(3, 2, 40)
+
+    // 画一条 45°的斜线
+    slashLine()
+    // 画一条对角线
+    diagonalLine()
+
+    // 画一个空心矩形
+    hollowRectangle()
+
+    solidRectangle()
+
+    rgbColorRect()
+
+    hollowCircle(100, 200, 30)
+    solidCircle(320, 200, 30)
+
+    // 画一个大小合适的sin(x)的图像
+    plotSinx()
+  }
+
+  main()
+
+
+  // 画一个空心矩形
+  
+  function hollowRectangle() {
+    var length = 100
+    var coodX = 55
+    var coodY = 55
+    horizontalLine(coodX, coodY, length)
+    horizontalLine(coodX, coodY + length, length)
+    verticalLine(coodX, coodY, length)
+    verticalLine(coodX + length, coodY, length)
+  }
+
+  // 画一个实心矩形
+
+  function solidRectangle() {
+    var length = 100
+    var coodX = 160
+    var coodY = 55
+    for (var i = 0; i <= length; i++) {
+      horizontalLine(coodX, coodY + i, length)
+    }
+  }
+
+  // 画一个rgb色彩空间的某一面
+
+  function rgbColorRect() {
+    var length = 100
+    var startCoodX = 270
+    var startCoodY = 55
+    var coodX = startCoodX
+    var coodY = startCoodY
+
+    for (var i = 0; i < length; i++) {
+      coodY++
+      coodX = startCoodX
+      for (var j = 0; j < length; j++) {
+        coodX++
+        var color = getRgbColor(coodX, coodY, startCoodX, startCoodY, length, length)
+        dot(coodX, coodY, color)
+      }
+    }
+
+  }
+
+  function getRgbColor(x, y, startX, startY, rangeOfX, rangeOfY) {
+    // 根据坐标计算对应的 rgb 色彩, 沿 x 轴红色线性变化, 沿 y 轴绿色线性变化
+    var red = 255 * (((x - startX) % (rangeOfX + 1)) / rangeOfX)
+    var green = 255 * (((y - startY) % (rangeOfY + 1)) / rangeOfY)
+    return `rgb(${red}, ${green}, 0)`
+  }
+
+  function hollowCircle(centerX, centerY, r) {
+    var pixelDensity = 10
+    for (var i = 0; i < 360 * pixelDensity; i++) {
+      var cood = getPointCoodByAngle(centerX, centerY, r, i / pixelDensity)
+      dot(cood.x, cood.y)
+    }
+  }
+  
+  function solidCircle(centerX, centerY, r) {
+    for (var i = 1; i <= r; i++) {
+      hollowCircle(centerX, centerY, i)
+    }
+  }
+
+  /*
+  * 根据圆心, 半径以及角度得到对应圆弧上点的坐标
+  * */
+  function getPointCoodByAngle(centerX, centerY, r, degree) {
+    var coodX = centerX + r * Math.cos(degree / Math.PI)
+    var coodY = centerY + r * Math.sin(degree / Math.PI)
+    return {
+      x: coodX,
+      y: coodY,
+    }
+  }
+
+  // 画一个大小合适的sin(x)的图像
+  function plotSinx() {
+    var pixelDensity = 10
+    var amplificationFactor = 20
+    var startCoodX = 0
+    var startCoodY = 260
+    var coodX
+    var coodY
+    for (var i = 0; i < 400 * pixelDensity; i++) {
+      coodX = startCoodX + i / pixelDensity
+      coodY = startCoodY + amplificationFactor * Math.sin(coodX / amplificationFactor)
+      dot(coodX, coodY)
+    }
+  }
+</script>
+</html>
