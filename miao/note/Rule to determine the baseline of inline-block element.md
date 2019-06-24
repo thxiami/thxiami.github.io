@@ -21,4 +21,4 @@ _原来对于规范的理解有误, 认为设置 overflow属性为除了 visible
   - [w3中关于Line height calculations的规则](<https://www.w3.org/TR/CSS2/visudet.html#line-height>)
 - ~~触发 BFC 的条件~~
   - ~~![](https://ws2.sinaimg.cn/large/006tNc79ly1g3g4gym9hgj30vu0npafb.jpg)~~
-  - ~~[Block Format Context介绍及触发条件~~](<https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Block_formatting_context>)
+  - ~~[Block Format Context介绍及触发条件]~~(<https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Block_formatting_context>)
