@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>3D 平面绘制</title>
+</head>
+<style>
+
+  html {
+    background-color: rgba(0, 0, 0, .3);
+  }
+
+  .wrap {
+    height: 800px;
+    transform-style: preserve-3d;
+  }
+
+  #surface {
+    position: relative;
+    transform:  perspective(1000px) rotateX(80deg) rotateZ(0deg) scale3d(50,50,50);
+    transform-style: preserve-3d;
+  }
+
+  .surface-slice {
+    display: inline-block;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: palevioletred;
+  }
+
+  .flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /*
+    旋转相关
+  */
+  .btn {
+    display: inline-block;
+    border: 1px solid;
+    position: relative;
+    z-index: 10;
+  }
+
+  .rotate-x-btn:hover ~ .wrap-x {
+    animation-play-state: running;
+  }
+
+  .wrap-x {
+    animation: spin-x infinite linear 6s;
+    animation-play-state: paused;
+  }
+
+
+  .rotate-z-btn:hover ~ .wrap .wrap-z {
+    animation-play-state: running;
+  }
+
+  .wrap-z {
+    animation: spin-z infinite linear 6s;
+    animation-play-state: paused;
+  }
+
+
+  .rotate-y-btn:hover ~ .wrap .wrap-y {
+    animation-play-state: running;
+  }
+
+  .wrap-y {
+    animation: spin-y infinite linear 6s;
+    animation-play-state: paused;
+  }
+
+  [type="radio"] {
+    position: relative;
+    z-index: 10;
+  }
+
+  #xoz:checked ~ .wrap-x {
+    transform: rotateX(89deg);
+    animation: none;
+  }
+
+  #yoz:checked ~ .wrap .wrap-y {
+    transform: rotateY(89deg);
+    animation: none;
+  }
+
+
+  @keyframes spin-x {
+    from {
+      transform: rotateX(0deg);
+    }
+
+    to {
+      transform: rotateX(360deg);
+    }
+  }
+
+  @keyframes spin-y {
+    from {
+      transform: rotateY(0deg);
+    }
+
+    to {
+      transform: rotateY(360deg);
+    }
+  }
+
+  @keyframes spin-z {
+    from {
+      transform: rotateZ(0deg);
+    }
+
+    to {
+      transform: rotateZ(360deg);
+    }
+  }
+</style>
+<body>
+<div class="btn rotate-x-btn">绕 X 轴旋转</div>
+<div class="btn rotate-y-btn">绕 Y 轴旋转</div>
+<div class="btn rotate-z-btn">绕 Z 轴旋转</div>
+<span>快速查看:</span>
+<input id="xoz" type="radio" name="observation-surface"> xOz 面
+<input id="yoz" type="radio" name="observation-surface"> yOz 面
+<div class="wrap wrap-x">
+  <div class="wrap wrap-z">
+    <div class="wrap wrap-y flex-center">
+      <div id="surface"
+           class="flex-center"
+      ></div>
+    </div>
+  </div>
+</div>
+
+<script>
+
+  // 画出[-PI, PI] 范围内的曲面
+  let pricision = 3
+  let scaleFactor = 50
+  let sliceDimX = Math.PI / 6
+  let sliceDimY = sliceDimX
+  // let sliceDimY = 0.4
+
+  let surfaceDimX = roundFun(sliceDimX * 12, pricision)
+  let surfaceDimY = roundFun(sliceDimY * 12, pricision)
+
+  let surfaceDom = document.getElementById('surface')
+  // let transXBoundary = (surfaceDimX - sliceDimX) / 2
+  // let transYBoundary = (surfaceDimY - sliceDimY) / 2
+
+  let transXBoundary = Math.PI
+  let transYBoundary = Math.PI
+
+  // transYBoundary = 0.001
+
+  surfaceDom.style.height = surfaceDimY + 'px'
+  surfaceDom.style.width = surfaceDimX + 'px'
+
+  function createDiv() {
+    let transX,transY,transZ
+    let rotateY, rotateX
+    let slicesHtml = ''
+
+    for (let x = -transXBoundary; x <= transXBoundary; x += sliceDimX) {
+      console.log(x)
+      for (let y = -transYBoundary; y <= transYBoundary; y += sliceDimY) {
+
+        // 0, 计算矩形面中点处的坐标, 从而得到其相对于(0,0)的偏移值
+        // y = 0.1
+        transX = roundFun(x, pricision)
+        transY = roundFun(y, pricision)
+        transZ = roundFun(Math.sin(x) + Math.cos(y), pricision)
+        // transZ = 0
+
+        // 1, 矩形面需要旋转角度才能去逼近曲面
+        // f'x(x, y) = cos(x)
+        // f'y(x, y) = -sin(x)
+        rotateY = Math.atan(Math.cos(x)) / Math.PI * 180 * -1 + 'deg'  // f'x(x, y) 转换为角度时 arctan(f'x(x, y)) 角度为负, 是 x 转向 z
+        rotateX = Math.atan(-Math.sin(y)) / Math.PI * 180 + 'deg'  // f'y(x, y) 转换为角度时 arctan(f'y(x, y))  角度为正, 是 y 转向 z
+        // rotateY = 0
+        // rotateX = 0
+        // 2, 举行面旋转后, 其 x 和 y 方向的尺寸也要改变
+
+
+        let sliceHtml = `<div class="surface-slice"
+                                  style="
+                                  height: ${sliceDimY}px;
+                                  width: ${sliceDimX}px;
+                                  transform:
+                                    translateX(${transX}px) translateY(${transY}px) translateZ(${transZ}px) rotateY(${rotateY}) rotateX(${rotateX})"
+                         ></div>`
+
+        slicesHtml +=sliceHtml
+        // debugger
+        surfaceDom.innerHTML = slicesHtml
+      }
+    }
+
+
+  }
+
+  function roundFun(value, n) {
+    // JavaScript 的 Math.round()函数对于 -1.5 的情况, 与预期不同
+    // Math.round(-1.5) ----> -1
+    // 需要先转换为绝对值进行取整
+    let num = Math.round(Math.abs(value) * Math.pow(10, n)) / Math.pow(10, n)
+
+    num = parseFloat(num.toFixed(n))
+
+    if (Number(value) < 0) {
+      num *= -1
+    }
+    return num
+  }
+  createDiv()
+
+</script>
+</body>
+</html>
