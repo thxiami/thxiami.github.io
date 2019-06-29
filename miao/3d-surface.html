@@ -17,18 +17,18 @@
 
   #surface {
     position: relative;
-    transform:  perspective(1000px) rotateX(80deg) rotateZ(0deg) scale3d(50,50,50);
+    transform:  perspective(1000px) rotateX(80deg) rotateZ(0deg) scale3d(2,2,2);
     transform-style: preserve-3d;
   }
 
   .surface-slice {
     display: inline-block;
     position: absolute;
-    margin: auto;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    /*margin: auto;*/
+    /*top: 0;*/
+    /*bottom: 0;*/
+    /*left: 0;*/
+    /*right: 0;*/
     background-color: palevioletred;
   }
 
@@ -143,9 +143,9 @@
 <script>
 
   // 画出[-PI, PI] 范围内的曲面
-  let pricision = 3
+  let pricision = 1
   let scaleFactor = 50
-  let sliceDimX = Math.PI / 6
+  let sliceDimX = (Math.PI / 6) * scaleFactor
   let sliceDimY = sliceDimX
   // let sliceDimY = 0.4
 
@@ -156,8 +156,8 @@
   // let transXBoundary = (surfaceDimX - sliceDimX) / 2
   // let transYBoundary = (surfaceDimY - sliceDimY) / 2
 
-  let transXBoundary = Math.PI
-  let transYBoundary = Math.PI
+  let transXBoundary = Math.PI * scaleFactor
+  let transYBoundary = Math.PI * scaleFactor
 
   // transYBoundary = 0.001
 
@@ -177,14 +177,15 @@
         // y = 0.1
         transX = roundFun(x, pricision)
         transY = roundFun(y, pricision)
-        transZ = roundFun(Math.sin(x) + Math.cos(y), pricision)
-        // transZ = 0
+        let scaledX = x / scaleFactor
+        let scaledY = y / scaleFactor
+        transZ = roundFun(Math.sin(scaledX) + Math.cos(scaledY), pricision) * scaleFactor
 
         // 1, 矩形面需要旋转角度才能去逼近曲面
         // f'x(x, y) = cos(x)
         // f'y(x, y) = -sin(x)
-        rotateY = Math.atan(Math.cos(x)) / Math.PI * 180 * -1 + 'deg'  // f'x(x, y) 转换为角度时 arctan(f'x(x, y)) 角度为负, 是 x 转向 z
-        rotateX = Math.atan(-Math.sin(y)) / Math.PI * 180 + 'deg'  // f'y(x, y) 转换为角度时 arctan(f'y(x, y))  角度为正, 是 y 转向 z
+        rotateY = Math.atan(Math.cos(scaledX)) / Math.PI * 180 * -1 + 'deg'  // f'x(x, y) 转换为角度时 arctan(f'x(x, y)) 角度为负, 是 x 转向 z
+        rotateX = Math.atan(-Math.sin(scaledY)) / Math.PI * 180 + 'deg'  // f'y(x, y) 转换为角度时 arctan(f'y(x, y))  角度为正, 是 y 转向 z
         // rotateY = 0
         // rotateX = 0
         // 2, 举行面旋转后, 其 x 和 y 方向的尺寸也要改变
