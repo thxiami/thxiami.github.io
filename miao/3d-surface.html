@@ -215,7 +215,7 @@
     let smoothness = +document.getElementById('option-smoothness').value
     let countOfSliceInOnePeriod
     if (!isNaN(smoothness)) {
-      countOfSliceInOnePeriod = 5 + Math.min(smoothness, 10) / 10 * 20
+      countOfSliceInOnePeriod = 5 + Math.min(smoothness, 10) / 10 * 60
     }
 
     createSlices({
@@ -243,7 +243,7 @@
 
     createSlices({
       countOfPeriod: 1,
-      countOfSliceInOnePeriod: 24,
+      countOfSliceInOnePeriod: 25,
     })
   }
 
