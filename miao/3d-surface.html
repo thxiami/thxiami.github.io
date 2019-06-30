@@ -17,18 +17,13 @@
 
   #surface {
     position: relative;
-    transform:  perspective(1000px) rotateX(80deg) rotateZ(0deg) scale3d(2,2,2);
+    transform:  perspective(1000px) scale3d(2,2,2);
     transform-style: preserve-3d;
   }
 
   .surface-slice {
     display: inline-block;
     position: absolute;
-    /*margin: auto;*/
-    /*top: 0;*/
-    /*bottom: 0;*/
-    /*left: 0;*/
-    /*right: 0;*/
     background-color: palevioletred;
   }
 
@@ -77,22 +72,6 @@
     animation-play-state: paused;
   }
 
-  [type="radio"] {
-    position: relative;
-    z-index: 10;
-  }
-
-  #xoz:checked ~ .wrap-x {
-    transform: rotateX(89deg);
-    animation: none;
-  }
-
-  #yoz:checked ~ .wrap .wrap-y {
-    transform: rotateY(89deg);
-    animation: none;
-  }
-
-
   @keyframes spin-x {
     from {
       transform: rotateX(0deg);
@@ -127,9 +106,7 @@
 <div class="btn rotate-x-btn">绕 X 轴旋转</div>
 <div class="btn rotate-y-btn">绕 Y 轴旋转</div>
 <div class="btn rotate-z-btn">绕 Z 轴旋转</div>
-<span>快速查看:</span>
-<input id="xoz" type="radio" name="observation-surface"> xOz 面
-<input id="yoz" type="radio" name="observation-surface"> yOz 面
+
 <div class="wrap wrap-x">
   <div class="wrap wrap-z">
     <div class="wrap wrap-y flex-center">
@@ -142,24 +119,26 @@
 
 <script>
 
-  // 画出[-PI, PI] 范围内的曲面
-  let pricision = 1
+  let pricision = 3
   let scaleFactor = 50
-  let sliceDimX = (Math.PI / 6) * scaleFactor
+  // 1, 要保证 slice 的双向尺寸大于 1, 否则会造成平移后的重叠
+  // 比如 x 方向尺寸 0.5px, 平移 0.5px. 实际浏览器会把 x 方向尺寸(width)设置为 1px(因为至少 1 px 起画), 那么相邻 slice 就会重叠 0.5px
+  // 2, 同时又要画出[-PI, PI] 范围内的曲面, 尽可能 slice 要小(以直代曲效果好), 但又不能太多(性能)
+  //    所以引入一个 scaleFactor 变量, 作用是相当于将函数等比例放大
+  //    比如scaleFactor = 2,
+  //        那么当x 实际取值范围 -2PI <= x <= 2PI, 那么 -PI <= x / scaleFactor  <= PI
+  //        计算 z 时使用 x / scaleFactor 即可
+  let sliceDimX = (Math.PI / 8) * scaleFactor
   let sliceDimY = sliceDimX
-  // let sliceDimY = 0.4
 
   let surfaceDimX = roundFun(sliceDimX * 12, pricision)
   let surfaceDimY = roundFun(sliceDimY * 12, pricision)
 
   let surfaceDom = document.getElementById('surface')
-  // let transXBoundary = (surfaceDimX - sliceDimX) / 2
-  // let transYBoundary = (surfaceDimY - sliceDimY) / 2
 
   let transXBoundary = Math.PI * scaleFactor
   let transYBoundary = Math.PI * scaleFactor
 
-  // transYBoundary = 0.001
 
   surfaceDom.style.height = surfaceDimY + 'px'
   surfaceDom.style.width = surfaceDimX + 'px'
@@ -174,7 +153,6 @@
       for (let y = -transYBoundary; y <= transYBoundary; y += sliceDimY) {
 
         // 0, 计算矩形面中点处的坐标, 从而得到其相对于(0,0)的偏移值
-        // y = 0.1
         transX = roundFun(x, pricision)
         transY = roundFun(y, pricision)
         let scaledX = x / scaleFactor
@@ -184,28 +162,34 @@
         // 1, 矩形面需要旋转角度才能去逼近曲面
         // f'x(x, y) = cos(x)
         // f'y(x, y) = -sin(x)
-        rotateY = Math.atan(Math.cos(scaledX)) / Math.PI * 180 * -1 + 'deg'  // f'x(x, y) 转换为角度时 arctan(f'x(x, y)) 角度为负, 是 x 转向 z
-        rotateX = Math.atan(-Math.sin(scaledY)) / Math.PI * 180 + 'deg'  // f'y(x, y) 转换为角度时 arctan(f'y(x, y))  角度为正, 是 y 转向 z
-        // rotateY = 0
-        // rotateX = 0
-        // 2, 举行面旋转后, 其 x 和 y 方向的尺寸也要改变
 
+        rotateY = Math.atan(Math.cos(scaledX)) / Math.PI * 180 * -1  // f'x(x, y) 转换为角度时 arctan(f'x(x, y)) 角度为负, 是 x 转向 z
+        rotateX = Math.atan(-Math.sin(scaledY)) / Math.PI * 180  // f'y(x, y) 转换为角度时 arctan(f'y(x, y))  角度为正, 是 y 转向 z
 
+        // 2, 矩形面旋转后, 其 x 和 y 方向的尺寸也要改变
+        // inclinedSliceDim = sliceDim / cos(theta)
+        // 因为 -1<= tan(theta) <=1
+        // 所以 theta 的变化范围是 [-pi/4, pi/4], cos(theta)的值都是正的, 所以不用管 theta 的正负
+
+        let inclinedSliceDimX = sliceDimX / Math.cos(rotateY / 180 * Math.PI)
+        let inclinedSliceDimY = sliceDimY / Math.cos(rotateX / 180 * Math.PI)
+
+        // 3, 根据 z 方向的坐标设置颜色
+        let color = Math.abs(transZ / scaleFactor) / 2 * 255
         let sliceHtml = `<div class="surface-slice"
                                   style="
-                                  height: ${sliceDimY}px;
-                                  width: ${sliceDimX}px;
+                                  height: ${inclinedSliceDimY}px;
+                                  width: ${inclinedSliceDimX}px;
+                                  background-color: rgb(${color},0,0);
                                   transform:
-                                    translateX(${transX}px) translateY(${transY}px) translateZ(${transZ}px) rotateY(${rotateY}) rotateX(${rotateX})"
+                                    translateX(${transX}px) translateY(${transY}px) translateZ(${transZ}px) rotateY(${rotateY}deg) rotateX(${rotateX}deg)"
                          ></div>`
 
         slicesHtml +=sliceHtml
-        // debugger
-        surfaceDom.innerHTML = slicesHtml
       }
     }
 
-
+    surfaceDom.innerHTML = slicesHtml
   }
 
   function roundFun(value, n) {
