@@ -34,6 +34,14 @@
   }
 
   /*
+    交互
+  */
+  .draw-option {
+    position: relative;
+    /*防止图像旋转时覆盖交互区域*/
+    z-index: 10;
+  }
+  /*
     旋转相关
   */
   .btn {
@@ -106,7 +114,18 @@
 <div class="btn rotate-x-btn">绕 X 轴旋转</div>
 <div class="btn rotate-y-btn">绕 Y 轴旋转</div>
 <div class="btn rotate-z-btn">绕 Z 轴旋转</div>
-
+<div class="draw-option">
+  <input type="text"
+         id="option-period"
+         placeholder="请输入周期,建议0~3"
+  >
+  <input type="text"
+         id="option-smoothness"
+         placeholder="请输入光滑程度: 0~10, 10 最光滑"
+         style="width: 15em"
+  >
+  <button onclick="redraw()">重绘</button>
+</div>
 <div class="wrap wrap-x">
   <div class="wrap wrap-z">
     <div class="wrap wrap-y flex-center">
@@ -119,47 +138,41 @@
 
 <script>
 
-  let pricision = 3
-  let scaleFactor = 50
-  // 1, 要保证 slice 的双向尺寸大于 1, 否则会造成平移后的重叠
-  // 比如 x 方向尺寸 0.5px, 平移 0.5px. 实际浏览器会把 x 方向尺寸(width)设置为 1px(因为至少 1 px 起画), 那么相邻 slice 就会重叠 0.5px
-  // 2, 同时又要画出[-PI, PI] 范围内的曲面, 尽可能 slice 要小(以直代曲效果好), 但又不能太多(性能)
-  //    所以引入一个 scaleFactor 变量, 作用是相当于将函数等比例放大
-  //    比如scaleFactor = 2,
-  //        那么当x 实际取值范围 -2PI <= x <= 2PI, 那么 -PI <= x / scaleFactor  <= PI
-  //        计算 z 时使用 x / scaleFactor 即可
-  let sliceDimX = (Math.PI / 8) * scaleFactor
-  let sliceDimY = sliceDimX
+  function createSlices(options) {
+    let toFixedPrecision = options.precision || 3
+    let countOfPeriod = options.countOfPeriod
+    let countOfSliceInOnePeriod = options.countOfSliceInOnePeriod || 13
+    // 为何引入 scaleFactor?
+    // 1, 要保证 slice 的双向尺寸大于 1px, 否则会造成平移后的重叠
+    // 比如 x 方向尺寸 0.5px, 平移 0.5px. 实际浏览器会把 x 方向尺寸(width)设置为 1px(因为至少 1 px 起画), 那么相邻 slice 就会重叠 0.5px
+    // 2, 同时又要画出[-PI, PI] 范围内的曲面, 尽可能 slice 要小(以直代曲效果好), 但又不能太多(性能)
+    //    所以引入一个 scaleFactor 变量, 作用是相当于将函数等比例放大
+    //    比如scaleFactor = 2,
+    //        那么当x 实际取值范围 -2PI <= x <= 2PI, 那么 -PI <= x / scaleFactor  <= PI
+    //        计算 z 时使用 x / scaleFactor 即可
+    let scaleFactor = 40 / countOfPeriod
+    let sliceDimX = (2 * Math.PI / (countOfSliceInOnePeriod - 1)) * scaleFactor
+    let sliceDimY = sliceDimX
 
-  let surfaceDimX = roundFun(sliceDimX * 12, pricision)
-  let surfaceDimY = roundFun(sliceDimY * 12, pricision)
+    let transXBoundary = Math.PI * countOfPeriod * scaleFactor
+    let transYBoundary = Math.PI * countOfPeriod * scaleFactor
 
-  let surfaceDom = document.getElementById('surface')
-
-  let transXBoundary = Math.PI * scaleFactor
-  let transYBoundary = Math.PI * scaleFactor
-
-
-  surfaceDom.style.height = surfaceDimY + 'px'
-  surfaceDom.style.width = surfaceDimX + 'px'
-
-  function createDiv() {
     let transX,transY,transZ
     let rotateY, rotateX
     let slicesHtml = ''
-
     for (let x = -transXBoundary; x <= transXBoundary; x += sliceDimX) {
-      console.log(x)
       for (let y = -transYBoundary; y <= transYBoundary; y += sliceDimY) {
 
         // 0, 计算矩形面中点处的坐标, 从而得到其相对于(0,0)的偏移值
-        transX = roundFun(x, pricision)
-        transY = roundFun(y, pricision)
+        transX = roundFun(x, toFixedPrecision)
+        transY = roundFun(y, toFixedPrecision)
         let scaledX = x / scaleFactor
         let scaledY = y / scaleFactor
-        transZ = roundFun(Math.sin(scaledX) + Math.cos(scaledY), pricision) * scaleFactor
+        transZ = roundFun(Math.sin(scaledX) + Math.cos(scaledY), toFixedPrecision) * scaleFactor
 
         // 1, 矩形面需要旋转角度才能去逼近曲面
+        // xOz 面的 slice 是绕 y 轴转
+        // yOz 面的 slice 是绕 X 轴转
         // f'x(x, y) = cos(x)
         // f'y(x, y) = -sin(x)
 
@@ -189,7 +202,27 @@
       }
     }
 
+    let surfaceDom = document.getElementById('surface')
     surfaceDom.innerHTML = slicesHtml
+  }
+
+  function redraw() {
+    let countOfPeriod = +document.getElementById('option-period').value
+    if (isNaN(countOfPeriod) || countOfPeriod === 0) {
+      countOfPeriod = 1
+    }
+
+    let smoothness = +document.getElementById('option-smoothness').value
+    let countOfSliceInOnePeriod
+    if (!isNaN(smoothness)) {
+      countOfSliceInOnePeriod = 5 + Math.min(smoothness, 10) / 10 * 20
+    }
+
+    createSlices({
+      countOfPeriod: countOfPeriod,
+      countOfSliceInOnePeriod: countOfSliceInOnePeriod,
+    })
+
   }
 
   function roundFun(value, n) {
@@ -205,7 +238,16 @@
     }
     return num
   }
-  createDiv()
+
+  function main() {
+
+    createSlices({
+      countOfPeriod: 1,
+      countOfSliceInOnePeriod: 24,
+    })
+  }
+
+  main()
 
 </script>
 </body>
