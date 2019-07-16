@@ -78,6 +78,7 @@ var thxiami = {
   flatten,
   flattenDeep,
   flattenDepth,
+  flip,
   before,
   // every,
   // some,
