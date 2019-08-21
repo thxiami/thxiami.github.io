@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Web Storage - 展示 localStorage 变化的页面</title>
+  <style>
+    .eventOutput {
+      margin: 0;
+      padding-left: 16px;
+      border: 3px solid black;
+    }
+
+    .res {
+      padding: 5px 0;
+    }
+
+    .res label {
+      display: inline-block;
+      width: 7em;
+      padding-right: 1em;
+      text-align: right;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <h2>Event Output</h2>
+</header>
+<main>
+  <div class="eventOutput">
+    <div class="res">
+      <label>Key:</label>
+      <span id="key"></span>
+    </div>
+    <div class="res">
+      <label>Old value:</label>
+      <span id="oldValue"></span>
+    </div>
+    <div class="res">
+      <label>New value:</label>
+      <span id="newValue"></span>
+    </div>
+    <div class="res">
+      <label>URL:</label>
+      <span id="url"></span>
+    </div>
+    <div class="res">
+      <label>Storage area::</label>
+      <span id="storageArea"></span>
+    </div>
+  </div>
+</main>
+</body>
+<script>
+  const key = window.key
+  const oldValue = window.oldValue
+  const newValue = window.newValue
+  const url = window.url
+  const storageArea = window.storageArea
+
+  function bindEvents() {
+    window.addEventListener('storage', e => {
+      console.log(`**DEBUG e:`, e)
+      key.textContent = e.key
+      oldValue.textContent = e.oldValue
+      newValue.textContent = e.newValue
+      url.textContent = e.url
+      storageArea.textContent = JSON.stringify(e.storageArea)
+    })
+  }
+
+  function main() {
+    bindEvents()
+  }
+
+  main()
+</script>
+</html>

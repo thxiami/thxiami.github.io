@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Web Storage - Main Page</title>
+  <style>
+    #hint {
+      height: 30px;
+      margin: 0;
+      padding: 5px 0;
+      line-height: 30px;
+      text-align: center;
+      border: 5px solid #000000;
+    }
+
+    .options {
+      margin: 0;
+      padding-left: 16px;
+    }
+
+    .option {
+      padding: 5px 0;
+    }
+
+    .option label {
+      display: inline-block;
+      width: 7em;
+      padding-right: 1em;
+      text-align: right;
+    }
+  </style>
+</head>
+<body>
+<main>
+  <p id="hint">选择背景色, 字体, 在 Option Page 页面可以看到变化的内容</p>
+  <div class="options">
+    <div class="option">
+      <label for="color">选择背景色:</label>
+      <input type="color" name="color" id="color" value="#00c294">
+      <span id="colorHex">#00c294</span>
+    </div>
+    <div class="option">
+      <label>选择字体:</label>
+      <select name="fontStyle" id="fontStyle">
+        <option value="Sans-serif">Sans-serif</option>
+        <option value="Serif">Serif</option>
+        <option value="Monospace">Monospace</option>
+      </select>
+    </div>
+  </div>
+</main>
+</body>
+<script>
+  const colorIp = document.querySelector('#color')
+  const colorHexSpan = document.querySelector('#colorHex')
+  const fontStyleIp = document.querySelector('#fontStyle')
+  const hint = document.querySelector('#hint')
+
+
+
+  function bindEvents() {
+    colorIp.addEventListener('change', function (e) {
+      localStorage.setItem('color', this.value)
+      colorHexSpan.textContent = this.value
+      document.body.style.backgroundColor = this.value
+    })
+
+    fontStyleIp.addEventListener('change', function (e) {
+      localStorage.setItem('fontFamily', this.value)
+      hint.style.fontFamily = this.value
+    })
+  }
+
+  function initBackgroundColor() {
+    const bckColor = localStorage.getItem('color') || colorIp.value
+    colorIp.value = bckColor
+    colorHexSpan.textContent = bckColor
+    document.body.style.backgroundColor = bckColor
+  }
+
+
+  function main() {
+    bindEvents()
+    initBackgroundColor()
+    window.addEventListener('storage', e => {
+      console.log(`**DEBUG e:`, e)
+    })
+  }
+
+  main()
+</script>
+</html>
