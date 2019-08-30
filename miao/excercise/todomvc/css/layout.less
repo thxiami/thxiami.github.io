@@ -1,0 +1,139 @@
+/*layout*/
+* {
+  box-sizing: border-box;
+}
+
+
+header,
+footer {
+  width: 600px;
+  margin: 0 auto;
+}
+
+header h1,
+footer p {
+  text-align: center;
+}
+
+main {
+  width: 600px;
+  margin: 0 auto;
+}
+
+.inputs-container {
+  position: relative;
+}
+
+.inputs-container__ckall-input {
+  position: absolute;
+  visibility: hidden;
+}
+
+.inputs-container__ckall-label {
+  height: 40px;
+  width: 40px;
+  //background-color: #ff00ff;
+
+  position: absolute;
+  top: 0;
+  left: 4px;
+  line-height: 40px;
+  transform: rotate(90deg);
+
+  &::after {
+    content: "❯";
+    display: block;
+    height: 100%;
+    line-height: 40px;
+    padding-left: 20px;
+  }
+}
+
+.inputs-container__input {
+  height: 58px;
+  width: 100%;
+  padding-left: 58px;
+}
+
+.item {
+  height: 58px;
+  position: relative;
+  border-bottom: 1px solid;
+
+  .item__ckbox,
+  .item__icon-check {
+    width: 40px;
+    height: 40px;
+    margin: 9px 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .item__text {
+    padding: 15px 30px 14px 60px;
+    line-height: 28px;
+  }
+
+  .item__edit-input {
+    width: 490px;
+    margin-left: 58px;
+    margin-right: 28px;
+    padding: 13px 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    line-height: 28px;
+  }
+
+  .item__btn-delete {
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    font-size: 18px;
+    margin: 14px 0;
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+}
+
+.footer {
+  margin: 10px 0;
+  position: relative;
+
+  .footer__left-info {
+    width: 70px;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .footer__tabs-container {
+    margin-left: 70px;
+    margin-right: 110px;
+    padding: 0 30px;
+  }
+
+  .footer__clear-btn {
+    width: 110px;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+}
+
+.footer__tabs-container {
+  display: flex;
+
+  .footer__tab {
+    flex: 1 1 0;
+    text-align: center;
+  }
+}
+
+.footer__clear-btn {
+  text-align: right;
+}
+
+

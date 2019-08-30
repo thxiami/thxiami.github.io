@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>jQuery 实现的 todo mvc</title>
+  <script src="./js/jquery.min.js"></script>
+  <link rel="stylesheet" type="text/less" href="css/layout.less">
+  <link rel="stylesheet" type="text/less" href="css/style.less">
+  <script type="text/javascript" src="../../js/less.min.js"></script>
+</head>
+<body>
+  <header>
+    <h1>todos</h1>
+  </header>
+  <main>
+    <div class="inputs-container">
+      <input type="checkbox" id="btn-ckall" class="inputs-container__ckall-input">
+      <label class="inputs-container__ckall-label"
+             for="btn-ckall"
+      ></label>
+      <input type="text"
+             id="input-todo"
+             class="inputs-container__input"
+             placeholder="What needs to be done?"
+      ></div>
+    <ul class="items-container">
+      <!--<li class="item"-->
+          <!--data-id="0"-->
+      <!--&gt;-->
+        <!--<input type="checkbox" class="item__ckbox">-->
+        <!--<div class="item__text">todo item</div>-->
+        <!--<div class="item__btn-delete">X</div>-->
+      <!--</li>-->
+    </ul>
+    <div class="footer">
+      <div class="footer__left-info">
+        <span id="left-count"></span> items left
+      </div>
+      <div class="footer__tabs-container">
+        <div class="footer__tab footer__tab_selected"
+             id="tab-all"
+        >All</div>
+        <div class="footer__tab"
+             id="tab-active"
+        >Active</div>
+        <div class="footer__tab"
+             id="tab-completed"
+        >Completed</div>
+      </div>
+      <button
+              class="footer__clear-btn"
+              id="btn-del-completed"
+      >
+        Clear completed
+      </button>
+    </div>
+  </main>
+  <footer>
+    <p>Double-click to edit a todo</p>
+  </footer>
+
+</body>
+<script src="./js/todomvc-jquery.js"></script>
+</html>
